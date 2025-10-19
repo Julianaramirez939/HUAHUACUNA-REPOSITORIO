@@ -16,7 +16,7 @@
   >
     <!-- USUARIO -->
     <div class="form-group">
-      <label for="email" class="login-label">Usuario</label>
+      <label for="email" class="login-label">Correo electrónico</label>
       <input
         type="text"
         id="email"
@@ -34,6 +34,14 @@
         role="alert"
       >
         El usuario es obligatorio.
+      </p>
+
+      <p
+        *ngIf="f['email'].touched && f['email'].hasError('pattern')"
+        class="error-message"
+        role="alert"
+      >
+        El usuario debe ser una dirección de correo válida.
       </p>
     </div>
 
@@ -70,16 +78,21 @@
     </div>
 
     <!-- BOTONES -->
-    <button
-      type="submit"
-      class="btn-login"
-      [disabled]="formularioLogin.invalid || cargando"
-      [attr.aria-disabled]="formularioLogin.invalid || cargando"
-    >
-      {{ cargando ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
-    </button>
+   <button
+  type="submit"
+  class="btn-login"
+  [disabled]="formularioLogin.invalid"
+  [attr.aria-disabled]="formularioLogin.invalid"
+>
+  Iniciar Sesión
+</button>
 
-    <button type="button" class="btn-register" (click)="irARegistro()">
+
+    <button
+      type="button"
+      class="btn-register"
+      (click)="irARegistro()"
+    >
       Registrarse
     </button>
 
