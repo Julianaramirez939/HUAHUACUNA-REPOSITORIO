@@ -1,0 +1,85 @@
+<app-fondo-imagen [brillo]="0.6"></app-fondo-imagen>
+
+<div class="register-container">
+  <div class="register-card">
+    <!-- Logo -->
+    <img [src]="logo" alt="Logo Fundación Huahuacuna" class="register-logo" />
+    <h2 class="register-title">Registro</h2>
+
+    <form [formGroup]="formularioRegistro" (ngSubmit)="enviarFormulario()" novalidate>
+      <!-- Nombre -->
+      <label for="name" class="register-label">Nombre</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="register-input"
+        [ngClass]="{ 'input-error': formularioRegistro.get('name')?.invalid && (formularioRegistro.get('name')?.touched || formularioRegistro.get('name')?.dirty) }"
+      />
+      <p *ngIf="formularioRegistro.get('name')?.invalid && (formularioRegistro.get('name')?.touched || formularioRegistro.get('name')?.dirty)"
+         class="error-message">{{ obtenerMensajeError('name') }}</p>
+
+      <!-- Apellido -->
+      <label for="last_name" class="register-label">Apellido</label>
+      <input
+        type="text"
+        id="last_name"
+        formControlName="last_name"
+        class="register-input"
+        [ngClass]="{ 'input-error': formularioRegistro.get('last_name')?.invalid && (formularioRegistro.get('last_name')?.touched || formularioRegistro.get('last_name')?.dirty) }"
+      />
+      <p *ngIf="formularioRegistro.get('last_name')?.invalid && (formularioRegistro.get('last_name')?.touched || formularioRegistro.get('last_name')?.dirty)"
+         class="error-message">{{ obtenerMensajeError('last_name') }}</p>
+
+      <!-- Correo -->
+      <label for="email" class="register-label">Correo electrónico</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="register-input"
+        [ngClass]="{ 'input-error': formularioRegistro.get('email')?.invalid && (formularioRegistro.get('email')?.touched || formularioRegistro.get('email')?.dirty) }"
+      />
+      <p *ngIf="formularioRegistro.get('email')?.invalid && (formularioRegistro.get('email')?.touched || formularioRegistro.get('email')?.dirty)"
+         class="error-message">{{ obtenerMensajeError('email') }}</p>
+
+      <!-- Contraseña -->
+      <label for="password" class="register-label">Contraseña</label>
+      <input
+        [type]="mostrarContrasena ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        class="register-input"
+        [ngClass]="{ 'input-error': formularioRegistro.get('password')?.invalid && (formularioRegistro.get('password')?.touched || formularioRegistro.get('password')?.dirty) }"
+      />
+      <p *ngIf="formularioRegistro.get('password')?.invalid && (formularioRegistro.get('password')?.touched || formularioRegistro.get('password')?.dirty)"
+         class="error-message">{{ obtenerMensajeError('password') }}</p>
+
+      <!-- Confirmar contraseña -->
+      <label for="confirmPassword" class="register-label">Confirmar contraseña</label>
+      <input
+        [type]="mostrarContrasena ? 'text' : 'password'"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        class="register-input"
+        [ngClass]="{ 'input-error': formularioRegistro.get('confirmPassword')?.invalid && (formularioRegistro.get('confirmPassword')?.touched || formularioRegistro.get('confirmPassword')?.dirty) }"
+      />
+      <p *ngIf="formularioRegistro.get('confirmPassword')?.invalid && (formularioRegistro.get('confirmPassword')?.touched || formularioRegistro.get('confirmPassword')?.dirty)"
+         class="error-message">{{ obtenerMensajeError('confirmPassword') }}</p>
+
+      <!-- Mostrar contraseña -->
+      <div class="checkbox-container">
+        <input type="checkbox" id="showPassword" [checked]="mostrarContrasena" (change)="alternarContrasena()" />
+        <label for="showPassword">Mostrar contraseñas</label>
+      </div>
+
+      <!-- Botón -->
+      <button type="submit" class="btn-register-submit">Registrarse</button>
+
+      <!-- Volver -->
+      <div class="back-to-login">
+        <a (click)="volverAlInicio()">Volver al inicio</a>
+      </div>
+    </form>
+  </div>
+</div>
