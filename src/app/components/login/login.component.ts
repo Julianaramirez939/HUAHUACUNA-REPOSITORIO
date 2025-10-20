@@ -145,6 +145,6 @@ export class LoginComponent {
    * si todo fue exitoso.
    */
   irADashboard(): void {
-    this.enrutador.navigate(['/dashboard']);
+    this.enrutador.navigate(['/perfil']);
   }
 }

@@ -1,0 +1,20 @@
+<div class="perfil-container">
+  <img [src]="logo" alt="Logo Fundación Huahuacuna" class="perfil-logo" />
+  <h1 class="perfil-title">Perfil de usuario</h1>
+  <h1 class="perfil-title">{{ user?.full_name }}</h1>
+
+  <div class="perfil-info">
+    <p><strong>Nombre:</strong> {{ user?.name }}</p>
+    <p><strong>Apellido:</strong> {{ user?.last_name }}</p>
+    <p><strong>Correo:</strong> {{ user?.email }}</p>
+    <p>
+      <strong>Estado:</strong>
+      <span [style.color]="user?.state?.color || 'black'">
+        {{ user?.state?.name }}
+      </span>
+    </p>
+    <p><strong>Registrado el:</strong> {{ user?.created_at | date:'longDate' }}</p>
+  </div>
+
+  <button class="btn-back" (click)="irAlInicio()">Volver</button>
+</div>
