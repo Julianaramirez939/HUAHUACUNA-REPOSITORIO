@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../services/login.service';
 import { CredencialesLogin } from '../../interfaces/credenciales-login';
 import { FondoComponent } from "../fondo-imagen/fondo.component";
+import { LOGO } from '../../../global'; 
 
 /**
  * Componente encargado de gestionar el inicio de sesión de los usuarios
@@ -33,6 +34,8 @@ export class LoginComponent {
    //Controla la visibilidad del campo de la contraseña.
   mostrarContrasena = false;
 
+  //contiene el logo de la fundación desde global.ts
+  logo = LOGO; 
   /**
    * @constructor
    * Inicializa el formulario reactivo con validaciones básicas.

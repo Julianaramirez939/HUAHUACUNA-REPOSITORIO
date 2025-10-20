@@ -1,0 +1,106 @@
+
+.forgot-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+
+.forgot-logo {
+  width: 260px; /* triple del tamaño original */
+  height: 260px;
+  margin-bottom: 1rem;
+}
+
+.forgot-content {
+  max-width: 600px;
+  width: 100%;
+}
+
+
+.forgot-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.forgot-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #111215ff;
+}
+
+.forgot-input {
+  width: 65%;
+  text-align: center;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+.forgot-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.btn-send {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  background-color: #162663;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  /* Limita el ancho del botón */
+  width: fit-content;
+  min-width: 120px;
+  margin: 0 auto; /* centra horizontalmente */
+  display: block;
+}
+
+.btn-send:hover {
+  background-color: #1e3a8a;
+}
+
+/* Esto reemplaza tu anterior .back-to-login y .back-to-login:hover */
+.back-to-login {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.back-to-login a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #1e3a8a;
+}
+
+.back-to-login a:hover {
+  text-decoration: underline;
+}
+.error-msg {
+  color: red;
+  font-size: 1.2rem;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.forgot-container {
+  flex-direction: column;
+  text-align: center;
+}

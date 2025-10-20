@@ -21,6 +21,11 @@
   color: #2c3e50;
   font-size: 1.5rem;
 }
+.login-form {
+  align-items: center; /* centra los inputs horizontalmente */
+  text-align: center;
+}
+
 
 label {
   display: block;
@@ -31,7 +36,7 @@ label {
 
 input[type="text"],
 input[type="password"] {
-  width: 100%;
+  width: 90%;
   padding: 0.6rem 0.8rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;

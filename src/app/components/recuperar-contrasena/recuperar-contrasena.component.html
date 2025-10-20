@@ -1,0 +1,31 @@
+<app-fondo-imagen [brillo]="0.6"></app-fondo-imagen>
+
+<div class="forgot-container">
+  <div class="forgot-content">
+    <!-- Logo -->
+    <img [src]="logo" alt="Logo Fundación Huahuacuna" class="forgot-logo" />
+
+    <h2 class="forgot-title">Recuperar Contraseña</h2>
+
+    <form (ngSubmit)="enviarFormulario()" #formRecuperar="ngForm">
+      <label for="email" class="forgot-label">Correo electrónico</label>
+      <input
+        type="email"
+        id="email"
+        class="forgot-input"
+        [(ngModel)]="correo"
+        name="correo"
+        required
+      />
+      <div *ngIf="errorCorreo" class="error-msg">
+        {{ errorCorreo }}
+      </div>
+
+      <button type="submit" class="btn-send">Enviar</button>
+    </form>
+
+    <div class="back-to-login">
+      <a (click)="volverAlInicio()">Volver al inicio</a>
+    </div>
+  </div>
+</div>
