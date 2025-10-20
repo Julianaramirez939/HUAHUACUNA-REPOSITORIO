@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { LoginService } from '../../services/login.service';
 import { CredencialesLogin } from '../../interfaces/credenciales-login';
+import { FondoComponent } from "../fondo-imagen/fondo.component";
 
 /**
  * Componente encargado de gestionar el inicio de sesión de los usuarios
@@ -19,7 +20,7 @@ import { CredencialesLogin } from '../../interfaces/credenciales-login';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FondoComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
