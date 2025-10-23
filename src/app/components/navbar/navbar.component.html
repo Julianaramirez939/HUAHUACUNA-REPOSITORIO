@@ -1,22 +1,29 @@
 <nav class="navbar">
-  <!-- Logo -->
+
   <div class="navbar-logo" (click)="irA('/')">
     <img [src]="logo" alt="Logo Fundación Huahuacuna" />
   </div>
 
-  <!-- Enlaces -->
+
   <ul class="navbar-links">
     <li (click)="irA('/')">Inicio</li>
     <li (click)="irA('/quienes-somos')">¿Quiénes somos?</li>
     <li (click)="irA('/que-hacemos')">¿Qué hacemos?</li>
-    <li (click)="irA('/contacto')">Contáctanos</li>
     <li (click)="irA('/unete')">Únete</li>
+    <li (click)="irA('/contacto')">Contáctanos</li>
+   
   </ul>
 
-  <!-- Botones -->
-  <div class="navbar-actions">
-    <button class="btn-donar">Donar</button>
-    <button class="btn-login" (click)="irA('/login')">Iniciar Sesión</button>
-  </div>
-</nav>
+ <div class="navbar-actions">
+  <button class="btn-donar">
+    <i class="fa-solid fa-heart"></i>
+    Donar
+  </button>
+
+  <button class="btn-login" (click)="irA('/login')">
+    <i class="fa-solid fa-right-to-bracket"></i>
+    Iniciar Sesión
+  </button>
+</div>
+
 <router-outlet></router-outlet>

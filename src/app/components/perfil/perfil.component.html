@@ -1,20 +1,71 @@
 <div class="perfil-container">
-  <img [src]="logo" alt="Logo Fundación Huahuacuna" class="perfil-logo" />
-  <h1 class="perfil-title">Perfil de usuario</h1>
-  <h1 class="perfil-title">{{ user?.full_name }}</h1>
 
-  <div class="perfil-info">
-    <p><strong>Nombre:</strong> {{ user?.name }}</p>
-    <p><strong>Apellido:</strong> {{ user?.last_name }}</p>
+
+  <h1 class="perfil-title">Mi perfil</h1>
+  <h2 class="perfil-subtitle">{{ user?.full_name }}</h2>
+
+  <form class="perfil-info" (ngSubmit)="guardarCambios()">
+   
+    <label><strong>Nombre:</strong></label>
+    <input
+      type="text"
+      [(ngModel)]="user.name"
+      name="name"
+      class="perfil-input"
+    />
+
+  
+    <label><strong>Apellido:</strong></label>
+    <input
+      type="text"
+      [(ngModel)]="user.last_name"
+      name="last_name"
+      class="perfil-input"
+    />
+
+  
     <p><strong>Correo:</strong> {{ user?.email }}</p>
+
+ 
     <p>
       <strong>Estado:</strong>
       <span [style.color]="user?.state?.color || 'black'">
         {{ user?.state?.name }}
       </span>
     </p>
+
     <p><strong>Registrado el:</strong> {{ user?.created_at | date:'longDate' }}</p>
-  </div>
+
+ 
+    <div class="password-section">
+      <button type="button" class="btn-password" (click)="togglePassword()">
+        <i class="fa fa-key"></i> {{ mostrarPassword ? 'Cancelar' : 'Deseo cambiar contraseña' }}
+      </button>
+
+      <div *ngIf="mostrarPassword" class="password-fields">
+        <label><strong>Nueva contraseña:</strong></label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          class="perfil-input"
+        />
+
+        <label><strong>Confirmar contraseña:</strong></label>
+        <input
+          type="password"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          class="perfil-input"
+        />
+
+        <p *ngIf="passwordError" class="error-message">{{ passwordError }}</p>
+      </div>
+    </div>
+
+   
+    <button type="submit" class="btn-save">Guardar cambios</button>
+  </form>
 
   <button class="btn-back" (click)="irAlInicio()">Volver</button>
 </div>

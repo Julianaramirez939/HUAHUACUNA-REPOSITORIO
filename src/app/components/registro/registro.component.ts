@@ -10,14 +10,12 @@ import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FondoComponent } from '../fondo-imagen/fondo.component';
 import { LOGO } from '../../../global';
-//import { RegistroService } from '../../services/registro.service';
+import { RegisterService } from '../../services/register.service';
+import { RegisterUser } from '../../interfaces/register';
 
 /**
- * Componente encargado del registro de nuevos usuarios.
- *
- * Permite crear una cuenta mediante la validación de nombre, apellido, correo
- * y confirmación de contraseña. Proporciona validaciones visuales, alertas
- * y navegación al login tras un registro exitoso.
+ * Componente para el registro de nuevos usuarios.
+ * Maneja formulario reactivo, validaciones y envío al backend.
  */
 @Component({
   selector: 'app-registro',
@@ -27,20 +25,21 @@ import { LOGO } from '../../../global';
   styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent {
-  /** Formulario reactivo para el registro del usuario */
+  /** Formulario de registro */
   formularioRegistro: FormGroup;
 
-  /** Controla la visibilidad de las contraseñas */
+  /** Mostrar/ocultar contraseña */
   mostrarContrasena = false;
 
-  /** URL del logo institucional */
+  /** Logo de la app */
   logo = LOGO;
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-   // private registroService: RegistroService
+    private fb: FormBuilder, // Para crear formularios reactivos
+    private router: Router, // Para navegación
+    private registerService: RegisterService // Servicio de registro
   ) {
+    // Inicializa el formulario con validaciones
     this.formularioRegistro = this.fb.group(
       {
         name: ['', [Validators.required, Validators.minLength(2)]],
@@ -51,69 +50,120 @@ export class RegistroComponent {
           [
             Validators.required,
             Validators.pattern(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/ // Contraseña segura
             ),
           ],
         ],
         confirmPassword: ['', Validators.required],
       },
-      { validators: this.validarCoincidencia }
+      { validators: this.validarCoincidencia } // Valida que las contraseñas coincidan
     );
   }
 
-  /** Valida que las contraseñas coincidan */
-validarCoincidencia(form: FormGroup) {
-  const passControl = form.get('password');
-  const confirmControl = form.get('confirmPassword');
+  /** Valida que password y confirmPassword coincidan */
+  validarCoincidencia(form: FormGroup) {
+    const passControl = form.get('password');
+    const confirmControl = form.get('confirmPassword');
+    if (!confirmControl || !passControl) return null;
 
-  if (!confirmControl || !passControl) return null;
+    if (!confirmControl.value) {
+      confirmControl.setErrors({ required: true });
+      return { noCoincide: true };
+    }
 
-  // Si confirmPassword está vacío, no hacemos la validación de coincidencia aún
-  if (!confirmControl.value) {
-    confirmControl.setErrors({ required: true });
-    return { noCoincide: true };
+    if (passControl.value !== confirmControl.value) {
+      confirmControl.setErrors({ noCoincide: true });
+      return { noCoincide: true };
+    }
+
+    if (confirmControl.hasError('noCoincide')) {
+      const errors = { ...confirmControl.errors };
+      delete errors['noCoincide'];
+      confirmControl.setErrors(Object.keys(errors).length ? errors : null);
+    }
+
+    return null;
   }
 
-  // Si no coinciden, asignamos error al confirmPassword
-  if (passControl.value !== confirmControl.value) {
-    confirmControl.setErrors({ noCoincide: true });
-    return { noCoincide: true };
-  }
-
-  // Si coinciden, eliminamos errores de noCoincide
-  if (confirmControl.hasError('noCoincide')) {
-    const errors = { ...confirmControl.errors };
-    delete errors['noCoincide'];
-    confirmControl.setErrors(Object.keys(errors).length ? errors : null);
-  }
-
-  return null;
-}
-
-
-  /** Alterna la visibilidad de los campos de contraseña */
+  /** Alterna la visibilidad de la contraseña */
   alternarContrasena(): void {
     this.mostrarContrasena = !this.mostrarContrasena;
   }
 
-  /** Envía el formulario si es válido */
+  /** Envía el formulario de registro al backend */
   enviarFormulario(): void {
     if (this.formularioRegistro.invalid) {
       this.formularioRegistro.markAllAsTouched();
       return;
     }
 
-    const { name, last_name, email, password } = this.formularioRegistro.value;
+    const { name, last_name, email, password, confirmPassword } =
+      this.formularioRegistro.value;
 
-    
+    const data: RegisterUser = {
+      name,
+      last_name,
+      email,
+      password,
+      password_confirmation: confirmPassword,
+    };
+
+    this.registerService.registrarUsuario(data).subscribe({
+      next: async (respuesta: any) => {
+        console.log('✅ Usuario registrado:', respuesta);
+
+        await Swal.fire({
+          icon: 'success',
+          title: 'Registro exitoso',
+          text:
+            respuesta?.message ||
+            'Tu cuenta ha sido creada correctamente. Por favor, inicia sesión.',
+          confirmButtonColor: '#162663',
+          confirmButtonText: 'Aceptar',
+        });
+
+        this.volverAlInicio();
+      },
+      error: async (error: any) => {
+        console.error('❌ Error al registrar usuario:', error);
+
+        // Detectar si el correo ya está registrado
+        const emailDuplicado =
+          error?.errors?.email?.[0]?.includes('ya está en uso');
+
+        // Detectar si hay error de confirmación de contraseña
+        const confirmacionIncorrecta =
+          error?.errors?.password?.[0]?.includes('no coincide');
+
+        let mensaje =
+          error?.message || 'No se pudo completar el registro. Intenta nuevamente.';
+        let icono: 'error' | 'info' = 'error';
+        let titulo = 'Error';
+
+        if (emailDuplicado) {
+          mensaje = 'El correo ya está en uso. Usa otro correo o inicia sesión.';
+          titulo = 'Correo existente';
+          icono = 'info';
+        } else if (confirmacionIncorrecta) {
+          mensaje = 'Las contraseñas no coinciden. Verifica e inténtalo de nuevo.';
+          titulo = 'Contraseñas no coinciden';
+        }
+
+        await Swal.fire({
+          icon: icono,
+          title: titulo,
+          text: mensaje,
+          confirmButtonColor: '#162663',
+          confirmButtonText: 'Aceptar',
+        });
+      },
+    });
   }
 
-  /** Muestra una alerta de error */
-  private mostrarAlertaError(title: string, text: string): void {
-    Swal.fire({ icon: 'error', title, text });
-  }
-
-  /** Devuelve mensajes personalizados para cada campo */
+  /**
+   * Retorna el mensaje de error correspondiente para un campo
+   * según las validaciones configuradas
+   */
   obtenerMensajeError(campo: string): string {
     const control = this.formularioRegistro.get(campo);
     if (!control || !control.errors) return '';
@@ -141,7 +191,10 @@ validarCoincidencia(form: FormGroup) {
       },
     };
 
-    if (this.formularioRegistro.errors?.['noCoincide'] && campo === 'confirmPassword') {
+    if (
+      this.formularioRegistro.errors?.['noCoincide'] &&
+      campo === 'confirmPassword'
+    ) {
       return 'Las contraseñas no coinciden';
     }
 
@@ -149,7 +202,7 @@ validarCoincidencia(form: FormGroup) {
     return mensajes[campo]?.[errorKey] || 'Campo inválido';
   }
 
-  /** Redirige al usuario al login */
+  /** Redirige al login */
   volverAlInicio(): void {
     this.router.navigate(['/login']);
   }

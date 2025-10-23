@@ -1,5 +1,5 @@
 
-.register-container {
+.reset-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,9 +8,9 @@
 }
 
 
-.register-card {
+.reset-card {
   background: #ffffff;
-  max-width: 380px; 
+  max-width: 380px;
   width: 100%;
   padding: 1.5rem;
   border-radius: 12px;
@@ -19,34 +19,35 @@
 }
 
 
-.register-logo {
-  width: 130px;
-  height: 130px;
-  margin-bottom: 0.8rem;
+.reset-logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1rem;
 }
 
 
-.register-title {
+.reset-title {
   color: #2c3e50;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
   font-family: "Segoe UI", sans-serif;
 }
 
 
-.register-label {
+.reset-label {
   display: block;
   text-align: left;
   font-weight: 600;
-  color: #000000ff;
-  margin-bottom: 0.3rem;
+  color: #000000;
+  margin-bottom: 0.5rem;
   font-size: 0.95rem;
+  margin-top: 0.7rem;
   font-family: "Segoe UI", sans-serif;
 }
 
 
-.register-input {
+.reset-input {
   width: 95%;
   padding: 0.6rem;
   margin-bottom: 0.7rem;
@@ -57,18 +58,22 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.register-input:focus {
+.reset-input:focus {
   outline: none;
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
 }
 
 
+.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+}
+
 .error-message {
-  color: red;
+  color: #ef4444;
   font-size: 1rem;
   margin: 2px 0 0.8rem;
-  font-family: "Segoe UI", sans-serif;
   text-align: left;
 }
 
@@ -78,8 +83,9 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 1rem;
-  color: #11161eff;
+  color: #11161e;
   margin-bottom: 1rem;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .checkbox-container input[type="checkbox"] {
@@ -87,7 +93,7 @@
 }
 
 
-.btn-register-submit {
+.btn-reset-submit {
   background-color: #162663;
   color: white;
   border: none;
@@ -101,7 +107,7 @@
   width: 100%;
 }
 
-.btn-register-submit:hover {
+.btn-reset-submit:hover {
   background-color: #1e3a8a;
 }
 
@@ -114,9 +120,18 @@
   color: #1e3a8a;
   text-decoration: none;
   font-size: 1rem;
+  font-weight: 500;
 }
 
 .back-to-login a:hover {
   text-decoration: underline;
 }
-
+.reset-email {
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  color: #000056ff;
+  margin-bottom: 0.3rem;
+  font-size: 1.2rem;
+  font-family: "Segoe UI", sans-serif;
+}

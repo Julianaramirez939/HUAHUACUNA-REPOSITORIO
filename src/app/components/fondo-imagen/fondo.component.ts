@@ -3,22 +3,27 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-fondo-imagen',
-  imports: [CommonModule],
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './fondo.component.html',
-  styleUrl: './fondo.component.css'
+  styleUrl: './fondo.component.css',
 })
 export class FondoComponent {
-
   /**
- * Componente encargado de gestionar la imagen de fondo de app web
- * de la fundación Huahuacuna con la posibildad de modificarla 
- * según el componente y ajustar su brillo
- */
-  //Imagen de fondo
+   * Componente de fondo
+   * 
+   * Este componente se encarga de mostrar una imagen de fondo
+   * para las vistas de la aplicación de la Fundación Huahuacuna.
+   * 
+   * Permite:
+   * - Cambiar dinámicamente la imagen de fondo.
+   * - Ajustar el nivel de brillo mediante un input.
+   */
+
+  // 🖼️ URL de la imagen de fondo
   @Input() imagenUrl: string =
     'https://images.pexels.com/photos/764681/pexels-photo-764681.jpeg';
 
-  //Brillo del fondo
+  // 💡 Nivel de brillo aplicado al fondo 
   @Input() brillo: number = 0.9;
 }

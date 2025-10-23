@@ -1,0 +1,72 @@
+<app-fondo-imagen [brillo]="0.6"></app-fondo-imagen>
+
+<div class="reset-container">
+  <div class="reset-card">
+   
+    <img [src]="logo" alt="Logo Fundación Huahuacuna" class="reset-logo" />
+    <h2 class="reset-title">Restablecer Contraseña</h2>
+
+    <form [formGroup]="formularioReestablecer" (ngSubmit)="guardar()" novalidate>
+     
+      <label for="email" class="reset-label">Correo electrónico</label>
+      <p class="reset-email">{{ formularioReestablecer.get('email')?.value }}</p>
+
+      <p
+        *ngIf="formularioReestablecer.get('email')?.invalid && (formularioReestablecer.get('email')?.touched || formularioReestablecer.get('email')?.dirty)"
+        class="error-message"
+      >
+        {{ obtenerMensajeError('email') }}
+      </p>
+
+  
+      <label for="password" class="reset-label">Nueva contraseña</label>
+      <input
+        [type]="mostrarContrasena ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        class="reset-input"
+        [ngClass]="{ 'input-error': formularioReestablecer.get('password')?.invalid && (formularioReestablecer.get('password')?.touched || formularioReestablecer.get('password')?.dirty) }"
+      />
+      <p
+        *ngIf="formularioReestablecer.get('password')?.invalid && (formularioReestablecer.get('password')?.touched || formularioReestablecer.get('password')?.dirty)"
+        class="error-message"
+      >
+        {{ obtenerMensajeError('password') }}
+      </p>
+
+      <label for="confirmPassword" class="reset-label">Confirmar contraseña</label>
+      <input
+        [type]="mostrarContrasena ? 'text' : 'password'"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        class="reset-input"
+        [ngClass]="{ 'input-error': formularioReestablecer.get('confirmPassword')?.invalid && (formularioReestablecer.get('confirmPassword')?.touched || formularioReestablecer.get('confirmPassword')?.dirty) }"
+      />
+      <p
+        *ngIf="formularioReestablecer.get('confirmPassword')?.invalid && (formularioReestablecer.get('confirmPassword')?.touched || formularioReestablecer.get('confirmPassword')?.dirty)"
+        class="error-message"
+      >
+        {{ obtenerMensajeError('confirmPassword') }}
+      </p>
+
+     
+      <div class="checkbox-container">
+        <input
+          type="checkbox"
+          id="showPassword"
+          [checked]="mostrarContrasena"
+          (change)="alternarContrasena()"
+        />
+        <label for="showPassword">Mostrar contraseñas</label>
+      </div>
+
+   
+      <button type="submit" class="btn-reset-submit">Guardar</button>
+
+     
+      <div class="back-to-login">
+        <a (click)="volverAlInicio()">Volver al inicio</a>
+      </div>
+    </form>
+  </div>
+</div>

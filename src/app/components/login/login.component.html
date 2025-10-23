@@ -1,4 +1,7 @@
 <app-fondo-imagen [brillo]="0.6"></app-fondo-imagen>
+<button class="btn-back" (click)="volverInicio()" aria-label="Volver al inicio">
+  <i class="fa-solid fa-arrow-left"></i>
+</button>
 <div class="login-container">
   <!-- Logo -->
   <img
@@ -38,7 +41,7 @@
       </p>
 
       <p
-        *ngIf="f['email'].touched && f['email'].hasError('pattern')"
+        *ngIf="f['email'].touched && f['email'].hasError('email')"
         class="error-message"
         role="alert"
       >

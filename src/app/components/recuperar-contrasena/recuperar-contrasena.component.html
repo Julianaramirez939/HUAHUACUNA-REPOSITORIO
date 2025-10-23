@@ -2,26 +2,31 @@
 
 <div class="forgot-container">
   <div class="forgot-content">
-    <!-- Logo -->
     <img [src]="logo" alt="Logo Fundación Huahuacuna" class="forgot-logo" />
 
     <h2 class="forgot-title">Recuperar Contraseña</h2>
 
-    <form (ngSubmit)="enviarFormulario()" #formRecuperar="ngForm">
-      <label for="email" class="forgot-label">Correo electrónico</label>
+    <form [formGroup]="formularioRecuperar" (ngSubmit)="enviarEmail()" novalidate>
+      <label for="correo" class="forgot-label">Correo electrónico</label>
       <input
         type="email"
-        id="email"
+        id="correo"
+        formControlName="correo"
         class="forgot-input"
-        [(ngModel)]="correo"
-        name="correo"
-        required
+        [class.input-error]="f['correo'].touched && f['correo'].invalid"
+        [attr.aria-invalid]="f['correo'].invalid"
       />
-      <div *ngIf="errorCorreo" class="error-msg">
-        {{ errorCorreo }}
-      </div>
 
-      <button type="submit" class="btn-send">Enviar</button>
+      <p *ngIf="f['correo'].touched && f['correo'].hasError('required')" class="error-msg">
+        El correo es obligatorio.
+      </p>
+      <p *ngIf="f['correo'].touched && f['correo'].hasError('pattern')" class="error-msg">
+        Por favor, ingresa un correo electrónico válido.
+      </p>
+
+      <button type="submit" class="btn-send" [disabled]="formularioRecuperar.invalid">
+        Enviar
+      </button>
     </form>
 
     <div class="back-to-login">

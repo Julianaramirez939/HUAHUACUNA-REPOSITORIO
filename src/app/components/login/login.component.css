@@ -1,52 +1,68 @@
+
 .login-container {
-  max-width: 360px; /* un poco más angosto */
-  margin: 40px auto; /* reduce separación superior/inferior */
-  padding: 1.5rem; /* menos padding interno */
+  max-width: 420px; 
+  margin: 50px auto; 
+  padding: 2rem; 
   background-color: #fff;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
   font-family: "Segoe UI", sans-serif;
 }
 
-/* Logo más pequeño */
+
 .login-logo {
-  width: 150px;
-  height: 150px;
+  width: 180px; 
+  height: 180px;
   display: block;
-  margin: 0 auto 1rem;
+  margin: 0 auto 1.3rem;
 }
+
 
 .login-title {
   text-align: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
   color: #2c3e50;
-  font-size: 1.3rem;
+  font-size: 1.6rem; 
+  font-weight: 600;
 }
 
-/* Centra los inputs */
+
 .login-form {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
+  text-align: left;
 }
 
-/* Etiquetas más compactas */
-label {
-  display: block;
-  margin-bottom: 0.3rem;
-  color: #333;
-  font-weight: 500;
-  font-size: 0.95rem;
+
+.form-group {
+  width: 90%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-/* Inputs más pequeños */
+
+.form-group label {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 0.4rem;
+  color: #000000ff;
+  font-weight: 600;
+  font-size: 1.05rem; 
+}
+
+
 input[type="text"],
 input[type="password"] {
-  width: 85%;
-  padding: 0.5rem 0.7rem;
-  margin-bottom: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  width: 100%;
+  padding: 0.7rem 0.9rem; 
+  margin-bottom: 0.9rem;
+  border: 1.2px solid #ccc;
+  border-radius: 7px;
+  font-size: 1.05rem; 
   transition: border-color 0.3s ease;
 }
 
@@ -55,28 +71,29 @@ input:focus {
   outline: none;
 }
 
-/* Checkbox más compacto */
+
 .show-password-checkbox {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  font-size: 0.85rem;
-  margin-bottom: 0.8rem;
+  font-size: 0.95rem; 
+  margin-bottom: 0.9rem;
 }
 
-/* Botones */
+
 .btn-login,
 .btn-register {
   width: 100%;
-  padding: 0.6rem;
-  margin-top: 0.3rem;
+  padding: 0.8rem; 
+  margin-top: 0.4rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 7px;
   color: white;
-  font-size: 0.95rem;
+  font-size: 1.05rem; 
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-weight: 500;
 }
 
 .btn-login {
@@ -93,30 +110,56 @@ input:focus {
   background-color: #298dff;
 }
 
-/* Errores */
 .input-error {
   border-color: #dc3545;
 }
 
 .error-message {
-  color: #dc3545;
-  font-size: 0.8rem;
-  margin-top: -0.5rem;
-  margin-bottom: 0.6rem;
+  color:red;
+  font-size: 0.9rem; 
+  margin-top: -0.4rem;
+  margin-bottom: 0.7rem;
 }
 
-/* Enlace de recuperar contraseña */
 .forgot-password {
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   text-align: center;
 }
 
 .forgot-password a {
   color: #007bff;
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .forgot-password a:hover {
   text-decoration: underline;
+}
+
+.btn-back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.btn-back i {
+  color: black;
+  font-size: 1.3rem; 
+}
+
+.btn-back:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.07);
 }
