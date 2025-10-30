@@ -1,29 +1,26 @@
 <nav class="navbar">
-
-  <div class="navbar-logo" (click)="irA('/')">
+  <div class="navbar-logo" (click)="onNavClick('inicio')">
     <img [src]="logo" alt="Logo Fundación Huahuacuna" />
   </div>
 
-
   <ul class="navbar-links">
-    <li (click)="irA('/')">Inicio</li>
-    <li (click)="irA('/quienes-somos')">¿Quiénes somos?</li>
-    <li (click)="irA('/que-hacemos')">¿Qué hacemos?</li>
-    <li (click)="irA('/unete')">Únete</li>
-    <li (click)="irA('/contacto')">Contáctanos</li>
-   
+    <li (click)="onNavClick('inicio')">Inicio</li>
+    <li (click)="onNavClick('quienes-somos')">¿Quiénes somos?</li>
+    <li (click)="onNavClick('que-hacemos')">¿Qué hacemos?</li>
+    <li (click)="onNavClick('unete')">Únete</li>
+    <li (click)="onNavClick('contacto')">Contáctanos</li>
   </ul>
 
- <div class="navbar-actions">
-  <button class="btn-donar">
-    <i class="fa-solid fa-heart"></i>
-    Donar
-  </button>
+  <div class="navbar-actions">
+    <button class="btn-donar" (click)="onNavClick('donar')">
+      <i class="fa-solid fa-heart"></i> Donar
+    </button>
 
-  <button class="btn-login" (click)="irA('/login')">
-    <i class="fa-solid fa-right-to-bracket"></i>
-    Iniciar Sesión
-  </button>
-</div>
+    <button class="btn-login" (click)="irA('/login')">
+      <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+    </button>
+  </div>
+</nav>
 
+<!-- Este router-outlet carga Landing o Donar -->
 <router-outlet></router-outlet>

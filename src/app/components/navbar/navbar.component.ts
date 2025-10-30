@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { LOGO } from '../../../global';
 
-/**
- * Navbar principal de la aplicación.
- * Muestra el logo, enlaces de navegación y botones de acción.
- */
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -15,13 +12,39 @@ import { LOGO } from '../../../global';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  /** Logo institucional */
   logo = LOGO;
 
   constructor(private router: Router) {}
 
-  /** Navega hacia una ruta */
-  irA(ruta: string): void {
+  /** Manejador de clics en los links del navbar */
+  onNavClick(sectionId: string) {
+    if (sectionId === 'donar') {
+      // Caso especial: Donar es una ruta separada
+      this.router.navigate(['/donar']);
+      return;
+    }
+
+    if (this.router.url !== '/') {
+      // Si NO estamos en el landing, primero navegamos al inicio
+      this.router.navigate(['/']).then(() => {
+        setTimeout(() => this.scrollToSection(sectionId), 400);
+      });
+    } else {
+      // Si ya estamos en el landing, solo hacemos scroll
+      this.scrollToSection(sectionId);
+    }
+  }
+
+  /** Desplaza suavemente a una sección del landing */
+  private scrollToSection(sectionId: string) {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  /** Navegación normal (por ejemplo, login) */
+  irA(ruta: string) {
     this.router.navigate([ruta]);
   }
 }

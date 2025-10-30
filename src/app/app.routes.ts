@@ -1,37 +1,41 @@
 import { Routes } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { NavbarHomeComponent } from './components/navbar-home/navbar-home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
+import { RestablecerContrasenaComponent } from './components/restablecer-contrasena/restablecer-contrasena.component';
 import { RegistroComponent } from './components/registro/registro.component';
+import { NavbarHomeComponent } from './components/navbar-home/navbar-home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardHomeComponent } from './components/dashboard-home/dashboard-home.component';
-import { RestablecerContrasenaComponent } from './components/restablecer-contrasena/restablecer-contrasena.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { DonarComponent } from './components/donar/donar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 export const routes: Routes = [
-  // Ruta raíz pública → muestra el navbar principal
   {
     path: '',
-    component: NavbarComponent,
+    component: NavbarComponent, // Navbar siempre cargado
+    children: [
+      { path: '', component: LandingComponent },  // Landing debajo del navbar
+      { path: 'donar', component: DonarComponent } // Donar debajo del navbar
+    ]
   },
 
-  // Rutas públicas → accesibles sin autenticación
+  // 🔐 Otras rutas públicas (sin navbar)
   { path: 'login', component: LoginComponent },
   { path: 'recuperar', component: RecuperarContrasenaComponent },
   { path: 'restablecer', component: RestablecerContrasenaComponent },
   { path: 'registro', component: RegistroComponent },
 
-  // Rutas privadas → requieren estar logueado
+  // 🏠 Privadas
   {
     path: 'home',
-    component: NavbarHomeComponent, // Navbar interno para usuarios autenticados
+    component: NavbarHomeComponent,
     children: [
-      { path: 'perfil', component: PerfilComponent }, // Perfil de usuario
-      { path: 'dashboard', component: DashboardHomeComponent }, // Panel principal
-      // Puedes agregar más rutas internas privadas aquí
+      { path: 'perfil', component: PerfilComponent },
+      { path: 'dashboard', component: DashboardHomeComponent },
     ],
   },
 
-  // Ruta comodín → redirige cualquier URL desconocida a la raíz
+  // 🚨 Comodín
   { path: '**', redirectTo: '' },
 ];

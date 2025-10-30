@@ -1,0 +1,12 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.landing-container {
+  margin-top: 80px;
+}
+
+section {
+  min-height: 100vh;
+  padding: 60px 20px;
+}
