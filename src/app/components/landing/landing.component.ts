@@ -4,14 +4,14 @@ import { QuienesSomosComponent } from "../quienes-somos/quienes-somos.component"
 import { QueHacemosComponent } from "../que-hacemos/que-hacemos.component";
 import { UneteComponent } from "../unete/unete.component";
 import { ContactanosComponent } from "../contactanos/contactanos.component";
-import { NavbarComponent } from "../navbar/navbar.component";
+import { InicioComponent } from "../inicio/inicio.component";
 
 @Component({
   selector: 'app-landing',
    standalone: true,
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
-  imports: [QuienesSomosComponent, QueHacemosComponent, UneteComponent, ContactanosComponent, NavbarComponent]
+  imports: [QuienesSomosComponent, QueHacemosComponent, UneteComponent, ContactanosComponent, InicioComponent]
 })
 export class LandingComponent {
   logo = 'assets/logo.png';

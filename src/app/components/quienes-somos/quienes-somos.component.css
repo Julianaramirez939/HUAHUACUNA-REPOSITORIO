@@ -1,0 +1,43 @@
+.quienes-somos-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 550px; /* opcional, altura mínima */
+}
+
+.imagen-lado {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+}
+
+.texto-lado {
+  flex: 1;
+  background-color: #2863e3ff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.texto-lado h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.texto-lado p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-bottom: 15px;
+}
+.texto-lado.amarillo {
+  background-color: #ffcc00; /* amarillo */
+  color: #020202ff; /* texto oscuro sobre amarillo */
+  justify-content: center; /* centrado vertical */
+  padding: 40px 20px;
+}

@@ -2,11 +2,31 @@ html {
   scroll-behavior: smooth;
 }
 
-.landing-container {
-  margin-top: 80px;
+.landing-container #quienes-somos {
+  margin-top: 50px;
+  padding: 70px 20px;
 }
 
+.landing-container #que-hacemos {
+  margin-top: 50px;
+  padding: 70px 20px;
+}
+
+.landing-container #que-hacemos{
+  margin-top: 50px;
+  padding: 70px 20px;
+}
+
+.landing-container #unete {
+  margin-top: 50px;
+  padding: 70px 20px;
+}
+
+.landing-container #contacto {
+  margin-top: 50px;
+  padding: 70px 20px;
+}
 section {
   min-height: 100vh;
-  padding: 60px 20px;
+  padding: 15px 20px;
 }

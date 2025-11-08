@@ -13,11 +13,13 @@ import { LOGO } from '../../../global';
 })
 export class NavbarComponent {
   logo = LOGO;
+    activeLink: string = 'inicio';
 
   constructor(private router: Router) {}
 
   /** Manejador de clics en los links del navbar */
   onNavClick(sectionId: string) {
+      this.activeLink = sectionId; 
     if (sectionId === 'donar') {
       // Caso especial: Donar es una ruta separada
       this.router.navigate(['/donar']);

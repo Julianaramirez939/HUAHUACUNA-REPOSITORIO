@@ -24,7 +24,6 @@
   transform: scale(1.05);
 }
 
-
 .navbar-links {
   display: flex;
   list-style: none;
@@ -38,6 +37,7 @@
 
 
 .navbar-links li {
+  position: relative; /* necesario para ::after */
   cursor: pointer;
   color: #162663;
   font-weight: 500;
@@ -46,11 +46,20 @@
   white-space: nowrap;
 }
 
+.navbar-links li.active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px; /* grosor del subrayado */
+  bottom: -5px; /* distancia entre el texto y la línea */
+  left: 0;
+  background-color: #2863e3ff; /* color de la línea */
+}
+
 .navbar-links li:hover {
   color: #225a9b;
   transform: translateY(-2px);
 }
-
 
 .navbar-actions {
   display: flex;
