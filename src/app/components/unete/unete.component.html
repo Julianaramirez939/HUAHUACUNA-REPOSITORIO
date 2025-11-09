@@ -1,1 +1,38 @@
-<p>unete works!</p>
+<div class="unete-wrapper">
+<div class="unete-banner">
+  <h1>ÚNETE</h1>
+</div>
+<div class="unete-container" [style.height.px]="altura">
+  <!-- Voluntariado -->
+  <div
+    class="unete-card"
+    [style.background-image]="'url(' + imagenVoluntariado + ')'"
+    [style.filter]="'brightness(' + brillo + ')'"
+    (click)="irA('/voluntariado')"
+  >
+    <div class="overlay">
+      <div class="overlay-content">
+        <h2>Voluntariado</h2>
+        <p>Comparta sus conocimientos académicos, habilidades en artes y oficios, o simplemente su tiempo para apoyar nuestras iniciativas.</p>
+        <h3>¡Postulate ya!</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apadrinamiento -->
+  <div
+    class="unete-card"
+    [style.background-image]="'url(' + imagenApadrinamiento + ')'"
+    [style.filter]="'brightness(' + brillo + ')'"
+    (click)="irA('/apadrinamiento')"
+  >
+    <div class="overlay">
+      <div class="overlay-content">
+        <h2>Apadrinamiento</h2>
+        <p>Brinde apoyo constante en educación, salud y bienestar a un niño vulnerable. Una relación que transforma vidas.</p>
+        <h3>¡Regístrate ya!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

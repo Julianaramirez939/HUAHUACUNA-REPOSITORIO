@@ -9,6 +9,8 @@ import { DashboardHomeComponent } from './components/dashboard-home/dashboard-ho
 import { LandingComponent } from './components/landing/landing.component';
 import { DonarComponent } from './components/donar/donar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { VoluntariadoComponent } from './components/voluntariado/voluntariado.component';
+import { ApadrinamientoComponent } from './components/apadrinamiento/apadrinamiento.component';
 
 export const routes: Routes = [
   {
@@ -16,7 +18,9 @@ export const routes: Routes = [
     component: NavbarComponent, // Navbar siempre cargado
     children: [
       { path: '', component: LandingComponent },  // Landing debajo del navbar
-      { path: 'donar', component: DonarComponent } // Donar debajo del navbar
+      { path: 'donar', component: DonarComponent },
+      { path: 'voluntariado', component: VoluntariadoComponent },
+      { path: 'apadrinamiento', component: ApadrinamientoComponent },
     ]
   },
 
