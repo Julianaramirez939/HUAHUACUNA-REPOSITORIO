@@ -1,0 +1,202 @@
+.voluntariado-fullpage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem 4%;
+  overflow: hidden;
+}
+
+/* Header */
+.header-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.header-logo h1 {
+  color: #162663;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+
+/* Formulario */
+.formulario-voluntariado {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Campos en grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem 3rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+/* Grupos de campos */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+/* Inputs normales */
+input,
+select {
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #ffffff;
+}
+
+input:focus,
+select:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+/* --- NG-SELECT --- */
+::ng-deep .ng-select {
+  width: 100%;
+  font-size: 1rem;
+}
+
+::ng-deep .ng-select .ng-select-container {
+  min-height: 42px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centra el texto del placeholder */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+::ng-deep .ng-select .ng-select-container:hover {
+  border-color: #2563eb;
+}
+
+::ng-deep .ng-select .ng-select-container:focus-within {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  border-color: #2563eb;
+}
+
+/* Placeholder centrado */
+::ng-deep .ng-select .ng-placeholder {
+  color: #6b7280;
+  text-align: center;
+  width: 100%;
+  font-style: italic;
+}
+
+/* Texto del valor seleccionado */
+::ng-deep .ng-select .ng-value {
+  text-align: left;
+  color: #111827;
+}
+
+/* Dropdown (lista de opciones) */
+::ng-deep .ng-dropdown-panel {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .ng-dropdown-panel .ng-option {
+  padding: 0.7rem 1rem;
+  color: #111827;
+  background-color: #ffffff;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Hover azul */
+::ng-deep .ng-dropdown-panel .ng-option:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Seleccionado */
+::ng-deep .ng-dropdown-panel .ng-option-selected {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  font-weight: 600;
+}
+/* Oculta el placeholder cuando hay una opción seleccionada */
+::ng-deep .ng-select.ng-select-single .ng-has-value .ng-placeholder {
+  display: none !important;
+}
+/* Centrar el texto del valor seleccionado */
+::ng-deep .ng-select .ng-value-container {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* Asegura que el icono del dropdown no desplace el texto */
+::ng-deep .ng-select .ng-arrow-wrapper {
+  position: absolute;
+  right: 10px;
+}
+
+/* Corrige el centrado cuando ya hay una opción seleccionada */
+::ng-deep .ng-select.ng-select-single .ng-value {
+  width: 100%;
+  text-align: center !important;
+  justify-content: center !important;
+  display: flex;
+  color: #111827;
+}
+
+/* Archivo */
+.file-group input[type='file'] {
+  border: none;
+  padding: 0.5rem 0;
+}
+
+/* Errores */
+.error-message {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+/* Botón */
+.btn-voluntariado-submit {
+  background-color: #162663;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-voluntariado-submit:hover {
+  background-color: #1e3a8a;
+}
+

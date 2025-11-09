@@ -1,0 +1,58 @@
+/* voluntarios-home.component.css */
+.tabla-voluntarios {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.tabla-voluntarios th,
+.tabla-voluntarios td {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.tabla-voluntarios th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.acciones {
+  position: relative;
+}
+
+.acciones .fas {
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.acciones .menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.3rem 0;
+  min-width: 120px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.acciones .menu li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.acciones .menu li:hover {
+  background-color: #2563eb;
+  color: white;
+}
+ition: background 0.2s;
+}
+
+.acciones .menu li:hover {
+  background-color: #2563eb;
+  color: white;
+}

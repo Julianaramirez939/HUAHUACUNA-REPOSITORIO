@@ -1,0 +1,38 @@
+<!-- voluntarios-home.component.html -->
+<div class="voluntarios-home">
+  <h2>Lista de Voluntarios</h2>
+
+  <table class="tabla-voluntarios" *ngIf="!cargando && voluntarios.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Profesión</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of voluntarios">
+        <td>{{ v.name }}</td>
+        <td>{{ v.last_name }}</td>
+        <td>{{ v.phone_number }}</td>
+        <td>{{ v.email }}</td>
+        <td>{{ v.profession }}</td>
+        <td class="acciones">
+          <div class="dropdown">
+            <i class="fas fa-ellipsis-v" (click)="v.showMenu = !v.showMenu"></i>
+            <ul class="menu" *ngIf="v.showMenu">
+              <li (click)="actualizar(v)">Actualizar</li>
+              <li (click)="eliminar(v)">Eliminar</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && voluntarios.length === 0">No hay voluntarios registrados.</p>
+  <p *ngIf="cargando">Cargando voluntarios...</p>
+</div>

@@ -11,6 +11,9 @@ import { DonarComponent } from './components/donar/donar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { VoluntariadoComponent } from './components/voluntariado/voluntariado.component';
 import { ApadrinamientoComponent } from './components/apadrinamiento/apadrinamiento.component';
+import { UsuariosHomeComponent } from './components/usuarios-home/usuarios-home.component';
+import { RolesHomeComponent } from './components/roles-home/roles-home.component';
+import { VoluntariosHomeComponent } from './components/voluntarios-home/voluntarios-home.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +40,9 @@ export const routes: Routes = [
     children: [
       { path: 'perfil', component: PerfilComponent },
       { path: 'dashboard', component: DashboardHomeComponent },
+      { path: 'usuarios', component: UsuariosHomeComponent },
+      { path: 'roles', component: RolesHomeComponent },
+      { path: 'voluntarios', component: VoluntariosHomeComponent },
     ],
   },
 
