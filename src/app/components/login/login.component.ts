@@ -158,10 +158,24 @@ export class LoginComponent {
     this.enrutador.navigate(['/registro']);
   }
 
-  /** Redirige al dashboard principal tras el inicio de sesión */
-  irADashboard(): void {
+
+/** Redirige al dashboard según el rol del usuario */
+irADashboard(): void {
+  // Obtén el usuario del sessionStorage
+  const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+
+  // Busca el rol del usuario
+  const rol = user.roles?.[0]?.name; // asumimos que siempre hay al menos un rol
+
+  if (rol === 'Administrador') {
     this.enrutador.navigate(['home/dashboard']);
+  } else if (rol === 'Padrino') {
+    this.enrutador.navigate(['padrino/dashboard']);
+  } else {
+    // Si no tiene rol conocido, se puede redirigir a home o mostrar error
+    this.enrutador.navigate(['']);
   }
+}
 
   /** Redirige al inicio (por ahora al navbar principal) */
   volverInicio(): void {

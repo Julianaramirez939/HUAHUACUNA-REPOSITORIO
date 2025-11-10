@@ -1,31 +1,44 @@
 <!-- voluntarios-home.component.html -->
 <div class="voluntarios-home">
-  <h2>Lista de Voluntarios</h2>
+  <h2 class="titulo-voluntarios">
+    <i class="fa-solid fa-face-smile"></i> Voluntarios
+  </h2>
 
   <table class="tabla-voluntarios" *ngIf="!cargando && voluntarios.length > 0">
     <thead>
       <tr>
         <th>Nombre</th>
         <th>Apellidos</th>
+        <th>Identificación</th>
         <th>Teléfono</th>
-        <th>Email</th>
+        <th>Correo electrónico</th>
         <th>Profesión</th>
+        <th>Estado</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let v of voluntarios">
-        <td>{{ v.name }}</td>
-        <td>{{ v.last_name }}</td>
-        <td>{{ v.phone_number }}</td>
-        <td>{{ v.email }}</td>
-        <td>{{ v.profession }}</td>
-        <td class="acciones">
+        <td class="centrado">{{ v.name }}</td>
+        <td class="centrado">{{ v.last_name }}</td>
+        <td class="centrado">{{ v.identification }}</td>
+        <td class="centrado">{{ v.phone_number }}</td>
+        <td class="centrado">{{ v.email }}</td>
+        <td class="centrado">{{ v.profession }}</td>
+        <td class="centrado">
+          <span 
+            class="estado-cuadro-full" 
+            [style.background-color]="v.state.color">
+            {{ v.state.name }}
+          </span>
+        </td>
+        <td class="centrado acciones">
           <div class="dropdown">
             <i class="fas fa-ellipsis-v" (click)="v.showMenu = !v.showMenu"></i>
             <ul class="menu" *ngIf="v.showMenu">
-              <li (click)="actualizar(v)">Actualizar</li>
-              <li (click)="eliminar(v)">Eliminar</li>
+              <li (click)="actualizarVoluntario(v)"><i class="fas fa-edit"></i> Actualizar Estado</li>
+              <li (click)="eliminarVoluntario(v)"><i class="fas fa-trash-alt"></i> Eliminar</li>
+              <li (click)="verDetallesVoluntario(v)"><i class="fas fa-info-circle"></i> Ver Detalles</li>
             </ul>
           </div>
         </td>

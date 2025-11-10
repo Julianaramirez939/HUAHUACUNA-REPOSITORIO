@@ -1,0 +1,79 @@
+.donar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 4%;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.donar-header {
+  background-color: #2863e3ff; /* azul */
+  padding: 1rem 2rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  width: 100%; /* ocupa todo el ancho */
+  border-radius: 0;
+  text-align: center;
+}
+
+.donar-intro {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.donar-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.donar-card {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  flex: 1 1 45%;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: default;
+  height: 400px; /* altura fija para que la imagen se vea */
+  
+  /* Imagen de fondo */
+  background-size: cover;        /* que la imagen cubra toda la card */
+  background-position: center;   /* centrado */
+  background-repeat: no-repeat;  /* no repetir la imagen */
+  filter: brightness(0.85);      /* brillo opaco */
+  display: flex;
+  align-items: flex-end;
+  transition: filter 0.3s ease;
+}
+
+.donar-card:hover {
+  filter: brightness(1); /* al pasar el mouse se ilumina */
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35); /* semitransparente solo abajo */
+  padding: 1rem;
+  text-align: center;
+}
+
+.overlay-content {
+  color: #fff;
+}
+
+.overlay-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.overlay-content p {
+  font-size: 1rem;
+}

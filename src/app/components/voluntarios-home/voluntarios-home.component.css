@@ -1,4 +1,3 @@
-/* voluntarios-home.component.css */
 .tabla-voluntarios {
   width: 100%;
   border-collapse: collapse;
@@ -9,7 +8,8 @@
 .tabla-voluntarios td {
   border: 1px solid #d1d5db;
   padding: 0.5rem 1rem;
-  text-align: left;
+  text-align: center; /* centramos todo */
+  vertical-align: middle;
 }
 
 .tabla-voluntarios th {
@@ -34,7 +34,7 @@
   border: 1px solid #d1d5db;
   border-radius: 6px;
   padding: 0.3rem 0;
-  min-width: 120px;
+  min-width: 140px;
   z-index: 10;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
@@ -43,16 +43,34 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* espacio entre icono y texto */
 }
 
 .acciones .menu li:hover {
   background-color: #2563eb;
   color: white;
 }
-ition: background 0.2s;
+
+.estado-cuadro-full {
+  display: inline-block;
+  width: 100%;
+  padding: 6px 0;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  box-sizing: border-box; /* asegura que ocupe toda la celda */
 }
 
-.acciones .menu li:hover {
-  background-color: #2563eb;
-  color: white;
+.titulo-voluntarios {
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* espacio entre icono y texto */
+  margin-bottom: 1rem;
 }

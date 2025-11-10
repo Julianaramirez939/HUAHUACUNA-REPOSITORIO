@@ -4,6 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { API_URL } from '../../global';
 import { Voluntario } from '../interfaces/voluntario';
+import { Estado } from '../interfaces/estados';
+import { map } from 'rxjs/operators';
+import { VoluntarioActualizar } from '../interfaces/voluntario-actualizar';
+
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +39,34 @@ export class VoluntarioService {
     );
   }
 
+  actualizarVoluntario(voluntario: VoluntarioActualizar): Observable<any> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  const url = `${this.endpoint}/${voluntario.id}`;
+
+  return this.http.put<any>(url, voluntario, { headers }).pipe(
+    tap(() => console.log(`[VoluntarioService] Voluntario ${voluntario.id} actualizado correctamente.`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
+eliminarVoluntario(id: number): Observable<any> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+
+  const url = `${this.endpoint}/${id}`;
+
+  return this.http.delete<any>(url, { headers }).pipe(
+    tap(() => console.log(`[VoluntarioService] Voluntario ${id} eliminado correctamente.`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
+
   /**
    * Obtiene la lista de voluntarios (requiere token en sessionStorage)
    */
@@ -49,6 +81,26 @@ export class VoluntarioService {
       catchError((error) => this.manejarError(error))
     );
   }
+
+  /**
+ * Obtiene la lista de estados de voluntarios
+ */
+
+getEstados(): Observable<Estado[]> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+
+  const url = `${this.endpoint}/get-states`;
+
+  return this.http.get<any>(url, { headers }).pipe(
+    tap(() => console.log('[VoluntarioService] Lista de estados obtenida.')),
+    catchError((error) => this.manejarError(error)),
+    map(response => response.data as Estado[])
+  );
+}
+
 
   /**
    * Manejo de errores unificado

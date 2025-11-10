@@ -8,6 +8,7 @@
   text-align: center;
   position: relative;       /* para que el card quede sobre el fondo */
   z-index: 1;
+   font-family: "Segoe UI", sans-serif;
 }
 
 .admin-welcome {

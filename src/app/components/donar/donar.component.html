@@ -1,1 +1,50 @@
-<p>donar works!</p>
+<!-- donar.component.html -->
+<div class="donar-wrapper">
+  <div class="donar-header">
+    <h1>¿Cómo deseas apoyarnos?</h1>
+  </div>
+  <p class="donar-intro">
+    Tu aporte nos acerca cada vez más a cumplir el sueño de una Colombia en la que las niñas
+    y los niños sean amados, protegidos y respetados.
+  </p>
+
+  <div class="donar-container" [style.height.px]="altura">
+    <!-- PSE -->
+    <div
+      class="donar-card"
+      [style.background-image]="'url(' + imagenPSE + ')'"
+      [style.filter]="'brightness(' + brillo + ')'"
+    >
+      <div class="overlay">
+        <div class="overlay-content">
+          <h2>PSE</h2>
+          <p>
+            Contribuye mediante pagos electrónicos, seguros y cómodos, para apoyar
+            nuestras iniciativas.
+          </p>
+           <h3>
+           ¡DONA AHORA!
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- En especie -->
+    <div
+      class="donar-card"
+      [style.background-image]="'url(' + imagenEspecie + ')'"
+      [style.filter]="'brightness(' + brillo + ')'"
+    >
+      <div class="overlay">
+        <div class="overlay-content">
+          <h2>EN ESPECIE</h2>
+          <p>
+            Dona materiales, ropa, alimentos o insumos para nuestras actividades
+            y programas de ayuda.
+          </p>
+          <h3>Contáctanos al: +57 3122570141 </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
