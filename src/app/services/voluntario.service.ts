@@ -70,17 +70,19 @@ eliminarVoluntario(id: number): Observable<any> {
   /**
    * Obtiene la lista de voluntarios (requiere token en sessionStorage)
    */
-  getVoluntarios(): Observable<Voluntario[]> {
-    const token = sessionStorage.getItem('token') || '';
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
+getVoluntarios(page: number = 1): Observable<any> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
 
-    return this.http.get<Voluntario[]>(this.endpoint, { headers }).pipe(
-      tap(() => console.log('[VoluntarioService] Lista de voluntarios obtenida.')),
-      catchError((error) => this.manejarError(error))
-    );
-  }
+  const url = `${this.endpoint}?page=${page}`;
+
+  return this.http.get<any>(url, { headers }).pipe(
+    tap(() => console.log(`[VoluntarioService] Lista de voluntarios obtenida. Página ${page}`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
 
   /**
  * Obtiene la lista de estados de voluntarios

@@ -80,7 +80,7 @@
       <!-- Documento -->
       <div class="form-group file-group">
         <label for="documento">Adjunta tu documento de identificación</label>
-        <input id="documento" type="file" (change)="onFileSelected($event)" />
+        <input #inputDocumento id="documento" type="file" (change)="onFileSelected($event)" />
         <p *ngIf="formularioVoluntariado.get('documento')?.invalid && (formularioVoluntariado.get('documento')?.touched || formularioVoluntariado.get('documento')?.dirty)"
            class="error-message">{{ obtenerMensajeError('documento') }}</p>
       </div>

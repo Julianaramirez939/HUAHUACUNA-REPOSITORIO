@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,7 +12,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ConstantesService } from '../../services/constantes.service';
 import { VoluntarioService } from '../../services/voluntario.service';
 import { Voluntario } from '../../interfaces/voluntario';
-
 
 @Component({
   selector: 'app-voluntariado',
@@ -28,20 +27,41 @@ export class VoluntariadoComponent implements OnInit {
   documentoFile: File | null = null;
   enviando = false;
 
+  // Referencia al input file para poder limpiarlo
+  @ViewChild('inputDocumento') inputDocumento!: ElementRef<HTMLInputElement>;
+
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private constantesService: ConstantesService,
     private voluntarioService: VoluntarioService
   ) {
     this.formularioVoluntariado = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellidos: ['', [Validators.required, Validators.minLength(2)]],
-      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{7,15}$/)]],
+      nombre: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+      ],
+      apellidos: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+      ],
+  telefono: [
+  '',
+  [
+    Validators.required,
+    Validators.pattern(/^[+0-9\s]{7,20}$/),
+  ],
+],
+
       email: ['', [Validators.required, Validators.email]],
       tipoIdentificacion: ['', Validators.required],
-      identificacion: ['', [Validators.required, Validators.pattern(/^[0-9A-Za-z-]+$/)]],
-      profesion: ['', [Validators.required, Validators.minLength(2)]],
+      identificacion: [
+        '',
+        [Validators.required, Validators.pattern(/^[0-9]{5,15}$/)],
+      ],
+      profesion: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+      ],
       documento: [null, Validators.required],
     });
   }
@@ -50,7 +70,6 @@ export class VoluntariadoComponent implements OnInit {
     this.cargarTiposIdentificacion();
   }
 
-  /** Obtiene los tipos de identificación desde el backend */
   cargarTiposIdentificacion(): void {
     this.cargandoTipos = true;
     this.constantesService.obtenerTiposIdentificacion().subscribe({
@@ -70,7 +89,6 @@ export class VoluntariadoComponent implements OnInit {
     });
   }
 
-  /** Captura el archivo subido */
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -79,65 +97,68 @@ export class VoluntariadoComponent implements OnInit {
     }
   }
 
-  /** Envía el formulario */
-enviarFormulario(): void {
-  if (this.formularioVoluntariado.invalid) {
-    this.formularioVoluntariado.markAllAsTouched();
-    return;
-  }
+  enviarFormulario(): void {
+    if (this.formularioVoluntariado.invalid) {
+      this.formularioVoluntariado.markAllAsTouched();
+      return;
+    }
 
-  if (!this.documentoFile) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Advertencia',
-      text: 'Debes adjuntar tu documento de identificación',
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#003366', // color personalizado
+    if (!this.documentoFile) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Advertencia',
+        text: 'Debes adjuntar tu documento de identificación',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#003366',
+      });
+      return;
+    }
+
+    const voluntario: Voluntario = {
+      name: this.formularioVoluntariado.value.nombre,
+      last_name: this.formularioVoluntariado.value.apellidos,
+      phone_number: this.formularioVoluntariado.value.telefono,
+      email: this.formularioVoluntariado.value.email,
+      identification_type: this.formularioVoluntariado.value.tipoIdentificacion,
+      identification: this.formularioVoluntariado.value.identificacion,
+      profession: this.formularioVoluntariado.value.profesion,
+      attachment: this.documentoFile,
+    };
+
+    this.enviando = true;
+
+    this.voluntarioService.postularVoluntario(voluntario).subscribe({
+      next: () => {
+        this.enviando = false;
+        Swal.fire({
+          icon: 'success',
+          title: '¡Postulación enviada!',
+          text: 'Recibirás un correo con la respuesta a tu solicitud.',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#003366',
+        }).then(() => {
+          this.formularioVoluntariado.reset();
+          this.documentoFile = null;
+          if (this.inputDocumento) {
+            this.inputDocumento.nativeElement.value = ''; // limpia el input file
+          }
+        });
+      },
+      error: (error) => {
+        this.enviando = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text:
+            error.message ||
+            'No se pudo enviar la postulación. Intenta nuevamente.',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#003366',
+        });
+      },
     });
-    return;
   }
 
-  const voluntario: Voluntario = {
-    name: this.formularioVoluntariado.value.nombre,
-    last_name: this.formularioVoluntariado.value.apellidos,
-    phone_number: this.formularioVoluntariado.value.telefono,
-    email: this.formularioVoluntariado.value.email,
-    identification_type: this.formularioVoluntariado.value.tipoIdentificacion,
-    identification: this.formularioVoluntariado.value.identificacion,
-    profession: this.formularioVoluntariado.value.profesion,
-    attachment: this.documentoFile,
-  };
-
-  this.enviando = true;
-
-  this.voluntarioService.postularVoluntario(voluntario).subscribe({
-    next: () => {
-      this.enviando = false;
-      Swal.fire({
-        icon: 'success',
-        title: '¡Postulación enviada!',
-        text: 'Recibirás un correo con la respuesta a tu solicitud.',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#003366', // color consistente
-      }).then(() => {
-        this.formularioVoluntariado.reset();
-        this.documentoFile = null;
-      });
-    },
-    error: (error) => {
-      this.enviando = false;
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error.message || 'No se pudo enviar la postulación. Intenta nuevamente.',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#003366', // color personalizado
-      });
-    },
-  });
-}
-
-  /** Mensajes de validación */
   obtenerMensajeError(campo: string): string {
     const control = this.formularioVoluntariado.get(campo);
     if (!control || !control.errors) return '';
@@ -146,14 +167,16 @@ enviarFormulario(): void {
       nombre: {
         required: 'El nombre es obligatorio',
         minlength: 'Debe tener al menos 2 caracteres',
+        pattern: 'Solo se permiten letras y espacios',
       },
       apellidos: {
         required: 'El apellido es obligatorio',
         minlength: 'Debe tener al menos 2 caracteres',
+        pattern: 'Solo se permiten letras y espacios',
       },
       telefono: {
         required: 'El teléfono es obligatorio',
-        pattern: 'Debe contener solo números (7 a 15 dígitos)',
+        pattern: 'Solo se permiten números, espacios y el signo + (7 a 20 caracteres)',
       },
       email: {
         required: 'El correo es obligatorio',
@@ -164,11 +187,12 @@ enviarFormulario(): void {
       },
       identificacion: {
         required: 'La identificación es obligatoria',
-        pattern: 'Debe contener solo letras, números o guiones',
+        pattern: 'Debe tener entre 5 y 15 números',
       },
       profesion: {
         required: 'La profesión es obligatoria',
         minlength: 'Debe tener al menos 2 caracteres',
+        pattern: 'Solo se permiten letras y espacios',
       },
       documento: {
         required: 'Debes adjuntar tu documento de identificación',

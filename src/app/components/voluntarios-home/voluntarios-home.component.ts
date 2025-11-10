@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import { VoluntarioListado } from "../../interfaces/voluntario-listado";
 import { VoluntarioService } from "../../services/voluntario.service";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 
@@ -13,7 +13,7 @@ interface VoluntarioUI extends VoluntarioListado {
 @Component({
   selector: 'app-voluntarios-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './voluntarios-home.component.html',
   styleUrls: ['./voluntarios-home.component.css'],
 })
@@ -26,34 +26,103 @@ export class VoluntariosHomeComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerVoluntarios();
   }
+paginaActual = 1;
+ultimaPagina = 1;
 
-  obtenerVoluntarios(): void {
-    this.cargando = true;
-    this.voluntarioService.getVoluntarios().subscribe({
-      next: (response: any) => {
-        this.voluntarios = (response?.data?.[0] || []).map((v: any) => ({
-          id: v.id,
-          name: v.name,
-          last_name: v.last_name,
-          phone_number: v.phone_number,
-          email: v.email,
-          identification_type: v.identification_type,
-          identification: v.identification,
-          profession: v.profession,
-          state: v.state,
-          identification_type_name: v.identification_type_name,
-          media_file_url: v.media_file_url,
-          showMenu: false,
-        }));
-        this.cargando = false;
-      },
-      error: (error) => {
-        console.error('Error al obtener voluntarios:', error);
-        Swal.fire('Error', error.message || 'No se pudieron cargar los voluntarios', 'error');
-        this.cargando = false;
-      },
+obtenerVoluntarios(): void {
+  this.cargando = true;
+
+  this.voluntarioService.getVoluntarios(this.paginaActual).subscribe({
+    next: (response: any) => {
+      const data = response?.data?.volunteers || [];
+
+      this.voluntarios = data.map((v: any) => ({
+        id: v.id,
+        name: v.name,
+        last_name: v.last_name,
+        phone_number: v.phone_number,
+        email: v.email,
+        identification_type: v.identification_type,
+        identification: v.identification,
+        profession: v.profession,
+        state: v.state, // objeto completo
+        identification_type_name: v.identification_type_name,
+        media_file_url: v.media_file_url,
+        showMenu: false,
+      }));
+
+      // ✅ Paginación desde response.data.pagination
+      const paginacion = response?.data?.pagination;
+      this.paginaActual = paginacion?.current_page || 1;
+      this.ultimaPagina = paginacion?.last_page || 1;
+
+      // ✅ Mantiene sincronizado el input de "Ir a página"
+      this.paginaIr = this.paginaActual;
+
+      this.cargando = false;
+    },
+    error: (error) => {
+      console.error('Error al obtener voluntarios:', error);
+      Swal.fire({
+        title: 'Error',
+        text: error.message || 'No se pudieron cargar los voluntarios.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#003366'
+      });
+      this.cargando = false;
+    },
+  });
+}
+
+paginaIr: number = 1;
+
+
+// Llama cuando quieras ir a la página ingresada
+irAPagina(): void {
+  // forzamos a entero y comprobamos que sea número válido
+  const destino = Number(this.paginaIr);
+  if (!Number.isInteger(destino) || isNaN(destino)) {
+    Swal.fire({
+      title: 'Atención',
+      text: 'Ingrese un número de página válido',
+      icon: 'warning',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#003366'
+    });
+    return;
+  }
+
+  if (destino >= 1 && destino <= this.ultimaPagina) {
+    this.paginaActual = destino;
+    this.obtenerVoluntarios();
+  } else {
+    Swal.fire({
+      title: 'Atención',
+      text: 'Este número de página no existe',
+      icon: 'warning',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#003366'
     });
   }
+}
+
+
+// Cambia de página
+paginaSiguiente(): void {
+  if (this.paginaActual < this.ultimaPagina) {
+    this.paginaActual++;
+    this.obtenerVoluntarios();
+  }
+}
+
+paginaAnterior(): void {
+  if (this.paginaActual > 1) {
+    this.paginaActual--;
+    this.obtenerVoluntarios();
+  }
+}
+
 actualizarVoluntario(voluntario: VoluntarioUI) {
   voluntario.showMenu = false;
   this.voluntarioService.getEstados().subscribe({
