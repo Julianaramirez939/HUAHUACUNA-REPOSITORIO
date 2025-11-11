@@ -1,0 +1,165 @@
+.tabla-ninos {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.tabla-ninos th,
+.tabla-ninos td {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tabla-ninos th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.acciones {
+  position: relative;
+}
+
+.acciones .fas {
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.acciones .menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.3rem 0;
+  min-width: 140px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.acciones .menu li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.acciones .menu li:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+.estado-cuadro-full {
+  display: inline-block;
+  width: 100%;
+  padding: 6px 0;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+.titulo-ninos {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.nino-foto {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.paginacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.botones-navegacion {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paginacion button {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.paginacion button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.paginacion button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.ir-pagina {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ir-pagina input {
+  width: 60px;
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.ir-pagina label {
+  font-weight: 500;
+}
+.encabezado-ninos {
+  position: relative;
+  display: flex;
+  justify-content: flex-end; /* el botón a la derecha */
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-top: 2rem; 
+}
+
+
+.btn-crear-nino {
+  background-color: #16a34a; /* verde */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.btn-crear-nino:hover {
+  background-color: #15803d; /* verde más oscuro al pasar */
+}

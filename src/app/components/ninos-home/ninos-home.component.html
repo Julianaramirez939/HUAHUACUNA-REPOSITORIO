@@ -1,0 +1,101 @@
+<div class="ninos-home">
+  <div class="encabezado-ninos">
+    <h2 class="titulo-ninos">
+      <i class="fa-solid fa-child"></i> Niños
+    </h2>
+
+    <button class="btn-crear-nino" (click)="crearNino()">
+      <i class="fa-solid fa-plus"></i> Crear Niño
+    </button>
+  </div>
+
+  <table class="tabla-ninos" *ngIf="!cargando && ninos.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Fecha de nacimiento</th>
+        <th>Grado escolar</th>
+        <th>Gustos</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let n of ninos">
+        <td class="centrado">{{ n.name }}</td>
+        <td class="centrado">{{ n.last_name }}</td>
+        <td class="centrado">{{ n.birth_date | date: 'yyyy-MM-dd' }}</td>
+        <td class="centrado">{{ n.school_grade_name }}</td>
+        <td class="centrado">{{ n.likings }}</td>
+
+        <td class="centrado">
+          <span
+            class="estado-cuadro-full"
+            [style.background-color]="n.state.color"
+          >
+            {{ n.state.name }}
+          </span>
+        </td>
+
+        <td class="centrado acciones">
+          <div class="dropdown">
+            <i class="fas fa-ellipsis-v" (click)="n.showMenu = !n.showMenu"></i>
+            <ul class="menu" *ngIf="n.showMenu">
+              <li (click)="actualizarNino(n)">
+                <i class="fas fa-edit"></i> Actualizar 
+              </li>
+              <li (click)="eliminarNino(n)">
+                <i class="fas fa-trash-alt"></i> Eliminar   
+              </li>
+              <li (click)="verDetallesNino(n)">
+                <i class="fas fa-info-circle"></i> Ver Detalles
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && ninos.length === 0">No hay niños registrados.</p>
+  <p *ngIf="cargando">Cargando niños...</p>
+
+  <!-- PAGINACIÓN -->
+  <div class="paginacion" *ngIf="!cargando && ninos.length > 0">
+    <div class="botones-navegacion">
+      <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+        Anterior
+      </button>
+
+      <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
+
+      <button
+        (click)="paginaSiguiente()"
+        [disabled]="paginaActual === ultimaPagina"
+      >
+        Siguiente
+      </button>
+    </div>
+
+    <div class="ir-pagina">
+      <label for="irPagina">Ir a:</label>
+      <input
+        id="irPagina"
+        type="number"
+        [(ngModel)]="paginaIr"
+        min="1"
+        [max]="ultimaPagina"
+        (keyup.enter)="irAPagina()"
+        [disabled]="ultimaPagina <= 1"
+      />
+      <button
+        (click)="irAPagina()"
+        [disabled]="ultimaPagina <= 1 || !paginaIr"
+      >
+        Ir
+      </button>
+    </div>
+  </div>
+</div>

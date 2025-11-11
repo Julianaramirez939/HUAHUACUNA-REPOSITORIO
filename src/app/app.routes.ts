@@ -14,6 +14,7 @@ import { ApadrinamientoComponent } from './components/apadrinamiento/apadrinamie
 import { UsuariosHomeComponent } from './components/usuarios-home/usuarios-home.component';
 import { RolesHomeComponent } from './components/roles-home/roles-home.component';
 import { VoluntariosHomeComponent } from './components/voluntarios-home/voluntarios-home.component';
+import { NinosHomeComponent } from './components/ninos-home/ninos-home.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,7 @@ export const routes: Routes = [
       { path: 'usuarios', component: UsuariosHomeComponent },
       { path: 'roles', component: RolesHomeComponent },
       { path: 'voluntarios', component: VoluntariosHomeComponent },
+      { path: 'niños', component: NinosHomeComponent },
     ],
   },
 
