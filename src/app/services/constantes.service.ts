@@ -28,6 +28,23 @@ export class ConstantesService {
     );
   }
 
+    obtenerTiposActividad(): Observable<any[]> {
+    const url = `${this.endpoint}/program_type`;
+    return this.http.get<{ success: boolean; data: any[]; message: string }>(url).pipe(
+      map((res) => res.data),
+      tap((tipos) =>
+        console.log('[ConstantesService] Tipos de actividad obtenidos:', tipos)
+      ),
+      catchError((error) => {
+        console.error('[ConstantesService] Error al obtener tipos de actividad:', error);
+        const backendError = error?.error || {};
+        const mensaje =
+          backendError.message || 'No se pudieron obtener los tipos de actividad';
+        return throwError(() => ({ message: mensaje }));
+      })
+    );
+  }
+
   // Nuevo método para obtener grados escolares
   obtenerGradosEscolares(): Observable<GradoEscolar[]> {
     const url = `${this.endpoint}/school_grade`;

@@ -18,6 +18,7 @@ import { DashboardPadrinosHomeComponent } from './components/dashboard-padrinos-
 import { NavbarPadrinoHomeComponent } from './components/navbar-padrino-home/navbar-padrino-home.component';
 import { NinosBitacoraComponent } from './components/ninos-bitacora/ninos-bitacora.component';
 import { AdminContenidoComponent } from './components/admin-contenido/admin-contenido.component';
+import { ActividadesHomeComponent } from './components/actividades-home/actividades-home.component';
 
 export const routes: Routes = [
   {
@@ -49,6 +50,7 @@ export const routes: Routes = [
       { path: 'voluntarios', component: VoluntariosHomeComponent },
       { path: 'niños', component: NinosHomeComponent },
       { path: 'administracion-contenido', component: AdminContenidoComponent },
+      { path: 'actividades', component: ActividadesHomeComponent },
     ],
   },
   {
@@ -57,7 +59,7 @@ export const routes: Routes = [
     children: [
       { path: 'perfil', component: PerfilComponent },
       { path: 'dashboard', component: DashboardPadrinosHomeComponent },
-      { path: 'ninos-bitacora', component: NinosBitacoraComponent },
+      { path: 'ninos-bitacora', component: NinosBitacoraComponent }
     ],
   },
 

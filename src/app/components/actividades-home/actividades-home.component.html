@@ -1,0 +1,106 @@
+<div class="actividades-home">
+  <div class="encabezado-actividades">
+    <h2 class="titulo-actividades">
+      <i class="fa-solid fa-person-running"></i> Actividades
+    </h2>
+
+    <button class="btn-crear-actividad" (click)="crearActividad()">
+      <i class="fa-solid fa-plus"></i> Crear Actividad
+    </button>
+  </div>
+
+  <table class="tabla-actividades" *ngIf="!cargando && actividades.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let a of actividades">
+        <td class="centrado">{{ a.name }}</td>
+        <td class="centrado">{{ a.description }}</td>
+
+        <!-- FECHA -->
+        <td class="centrado">
+          {{ a.date || '-' }}
+        </td>
+
+        <!-- HORA en formato 24h; si no viene muestra 00:00 -->
+    <td class="centrado">
+  {{
+    a.hour && a.hour !== '00:00'
+      ? ('1970-01-01T' + a.hour | date: 'hh:mm a')
+      : '-'
+  }}
+</td>
+
+
+        <td class="centrado">
+          <span
+            class="estado-cuadro-full"
+            [style.background-color]="a.state.color"
+          >
+            {{ a.state.name }}
+          </span>
+        </td>
+
+        <td class="centrado acciones">
+          <div class="dropdown">
+            <i class="fas fa-ellipsis-v" (click)="a.showMenu = !a.showMenu"></i>
+            <ul class="menu" *ngIf="a.showMenu">
+              <li (click)="actualizarActividad(a)">
+                <i class="fas fa-edit"></i> Actualizar
+              </li>
+              <li (click)="eliminarActividad(a)">
+                <i class="fas fa-trash-alt"></i> Eliminar
+              </li>
+              <li (click)="verDetallesActividad(a)">
+                <i class="fas fa-info-circle"></i> Ver Detalles
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && actividades.length === 0">No hay actividades registradas.</p>
+  <p *ngIf="cargando">Cargando actividades...</p>
+
+  <!-- PAGINACIÓN -->
+  <div class="paginacion" *ngIf="!cargando && actividades.length > 0">
+    <div class="botones-navegacion">
+      <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+        Anterior
+      </button>
+
+      <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
+
+      <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+        Siguiente
+      </button>
+    </div>
+
+    <div class="ir-pagina">
+      <label for="irPagina">Ir a:</label>
+      <input
+        id="irPagina"
+        type="number"
+        [(ngModel)]="paginaIr"
+        min="1"
+        [max]="ultimaPagina"
+        (keyup.enter)="irAPagina()"
+        [disabled]="ultimaPagina <= 1"
+      />
+      <button (click)="irAPagina()" [disabled]="ultimaPagina <= 1 || !paginaIr">
+        Ir
+      </button>
+    </div>
+  </div>
+</div>
