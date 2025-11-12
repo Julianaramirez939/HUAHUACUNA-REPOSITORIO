@@ -1,30 +1,17 @@
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { LOGO } from '../../../global';
+import { CommonModule } from '@angular/common';
 
-/**
- * Componente de la barra de navegación al iniciar sesión en la app.
- * 
- * Este componente muestra:
- * - El logo de la Fundación Huahuacuna.
- * - Links de navegación internos al iniciar sesión (Admin).
- * - Botón/menú del usuario con opciones como cerrar sesión.
- * 
- * También gestiona:
- * - La apertura y cierre del menú desplegable del usuario.
- * - La navegación interna al hacer clic en enlaces del navbar.
- * - El cierre automático del menú si se hace clic fuera de él.
- */
 @Component({
-  selector: 'app-navbar-home',
-  standalone: true,
+  selector: 'app-navbar-padrino-home',
+ standalone: true,
   imports: [CommonModule, RouterOutlet],
-  templateUrl: './navbar-home.component.html',
-  styleUrls: ['./navbar-home.component.css']
+  templateUrl: './navbar-padrino-home.component.html',
+  styleUrl: './navbar-padrino-home.component.css'
 })
-export class NavbarHomeComponent {
-  /** Logo que se muestra en la barra de navegación */
+export class NavbarPadrinoHomeComponent {
+   /** Logo que se muestra en la barra de navegación */
   logo = LOGO;
 
   /** Controla si el menú desplegable del usuario está abierto */
@@ -64,4 +51,5 @@ export class NavbarHomeComponent {
       this.menuAbierto = false;
     }
   }
+
 }

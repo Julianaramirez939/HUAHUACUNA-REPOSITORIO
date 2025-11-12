@@ -1,0 +1,28 @@
+.padrino-welcome-container {
+  display: flex;
+  justify-content: center;  /* centra horizontalmente */
+  align-items: center;      /* centra verticalmente */
+  height: 100vh;            /* ocupa toda la altura de la ventana */
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;       /* para que el card quede sobre el fondo */
+  z-index: 1;
+   font-family: "Segoe UI", sans-serif;
+}
+
+.padrino-welcome {
+  max-width: 800px;
+  padding: 2rem 3rem;
+  background-color: rgba(255, 255, 255, 0.85); /* fondo semitransparente */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);  /* sombra más marcada */
+  border-radius: 12px;
+  backdrop-filter: blur(5px); /* opcional: difumina ligeramente el fondo detrás */
+}
+
+.padrino-welcome p {
+  font-size: 2rem;
+  line-height: 1.6;
+  color: #1f2937;
+  margin: 0;
+}

@@ -1,0 +1,33 @@
+<nav class="navbar">
+ 
+  <div class="navbar-logo">
+    <img [src]="logo" alt="Logo Fundación Huahuacuna" />
+  </div>
+
+ 
+  <ul class="navbar-links">
+ 
+   <li (click)="irA('/padrino/ninos-bitacora')">
+    <i class="fa-solid fa-heart"></i> Apadrinamiento
+  </li>
+  </ul>
+
+  
+  <div class="navbar-user" (click)="toggleMenu()" tabindex="0">
+    <i class="fa-solid fa-circle-user"></i>
+    <span>Mi perfil</span>
+
+    
+    <div class="user-menu" *ngIf="menuAbierto">
+      <button (click)="irA('/padrino/perfil')" class="menu-item">
+        <i class="fa-solid fa-id-card"></i> Ver perfil
+      </button>
+      <button (click)="cerrarSesion()" class="menu-item logout">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+<router-outlet></router-outlet>

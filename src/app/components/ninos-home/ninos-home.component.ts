@@ -333,16 +333,12 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
 
       this.constantesService.obtenerGradosEscolares().subscribe({
         next: (gradosRaw: any[]) => {
-          const grados = gradosRaw.map(g => ({
-            id: g.id,
-            name: g.name
-          }));
-
+          const grados = gradosRaw.map(g => ({ id: g.id, name: g.name }));
           const opcionesGradosHtml = grados.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
 
           Swal.fire({
             title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Actualizar niño</span>`,
-            html: `
+             html: `
               <style>
                 .swal-field {
                   width: 100%;
@@ -414,8 +410,17 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
                   <textarea id="additional_information" class="swal-field" rows="2">${nino.additional_information || ''}</textarea>
                 </div>
 
+                <!-- 🖼️ Sección de Foto -->
                 <div style="grid-column: span 2; display:flex; flex-direction:column; gap:8px;">
-                  <label>Foto del niño</label>
+                  <label><b>Foto actual</b></label>
+                  ${
+                    nino.media_file_url
+                      ? `<a href="${nino.media_file_url}" target="_blank" style="color:#0d6efd; text-decoration:underline; font-size:14px;">
+                          Ver foto actual
+                         </a>`
+                      : `<span style="font-size:13px; color:#6b7280;">No hay foto registrada</span>`
+                  }
+                  <label style="margin-top:10px;"><b>Foto nueva</b></label>
                   <input id="attachment" type="file" class="swal-field" accept=".jpg,.jpeg,.png">
                 </div>
 
@@ -442,15 +447,6 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
               if (gradoActual) gradeSelectEl.value = gradoActual.id.toString();
 
               if (nino.state?.id) stateSelectEl.value = nino.state.id.toString();
-
-              [gradeSelectEl, stateSelectEl].forEach(select => {
-                if (select) {
-                  select.style.textAlignLast = 'center';
-                  select.addEventListener('change', () => {
-                    select.style.textAlignLast = 'center';
-                  });
-                }
-              });
             },
             preConfirm: () => {
               const name = (document.getElementById('name') as HTMLInputElement).value.trim();
@@ -478,71 +474,58 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
                 mothers_name: mothers_name || '',
                 school_grade: school_grade_id,
                 likings,
-                additional_information: additional_information ||'',
-                attachment: attachment || '' ,
+                additional_information: additional_information || '',
+                attachment: attachment || '',
                 state_id
               } as NinoActualizar;
             }
           }).then(result => {
-  if (result.isConfirmed && result.value) {
-    const ninoActualizar = result.value as NinoActualizar;
+            if (result.isConfirmed && result.value) {
+              const ninoActualizar = result.value as NinoActualizar;
+              const formData = new FormData();
 
-    // 🔹 Crear FormData para enviar archivos y texto correctamente
-    const formData = new FormData();
-    formData.append('id', ninoActualizar.id.toString());
-    formData.append('name', ninoActualizar.name);
-    formData.append('last_name', ninoActualizar.last_name);
-    formData.append('birth_date', ninoActualizar.birth_date);
-    formData.append('school_grade', ninoActualizar.school_grade.toString());
-    formData.append('likings', ninoActualizar.likings);
-    formData.append('state_id', ninoActualizar.state_id.toString());
+              formData.append('id', ninoActualizar.id.toString());
+              formData.append('name', ninoActualizar.name);
+              formData.append('last_name', ninoActualizar.last_name);
+              formData.append('birth_date', ninoActualizar.birth_date);
+              formData.append('school_grade', ninoActualizar.school_grade.toString());
+              formData.append('likings', ninoActualizar.likings);
+              formData.append('state_id', ninoActualizar.state_id.toString());
 
-    if (ninoActualizar.fathers_name) formData.append('fathers_name', ninoActualizar.fathers_name);
-    if (ninoActualizar.mothers_name) formData.append('mothers_name', ninoActualizar.mothers_name);
-    if (ninoActualizar.additional_information) formData.append('additional_information', ninoActualizar.additional_information);
-    if (ninoActualizar.attachment) formData.append('attachment', ninoActualizar.attachment);
+              if (ninoActualizar.fathers_name) formData.append('fathers_name', ninoActualizar.fathers_name);
+              if (ninoActualizar.mothers_name) formData.append('mothers_name', ninoActualizar.mothers_name);
+              if (ninoActualizar.additional_information) formData.append('additional_information', ninoActualizar.additional_information);
+              if (ninoActualizar.attachment) formData.append('attachment', ninoActualizar.attachment);
 
-    // 🔹 Enviar el FormData correctamente al servicio
-    this.ninosService.actualizarNino(formData, ninoActualizar.id).subscribe({
-      next: () => {
-        // ✅ Actualiza solo el niño modificado sin recargar toda la tabla
-        const index = this.ninos.findIndex(n => n.id === ninoActualizar.id);
-        if (index !== -1) {
-          const estadoActualizado = estados.find(e => e.id === ninoActualizar.state_id);
-          const gradoActualizado = grados.find(g => g.id === ninoActualizar.school_grade);
+              Swal.fire({
+                title: 'Actualizando...',
+                text: 'Por favor espera un momento.',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+              });
 
-          this.ninos[index] = {
-            ...this.ninos[index],
-            ...ninoActualizar,
-            state: {
-              ...(estadoActualizado || this.ninos[index].state),
-              model_type: this.ninos[index].state.model_type,
-              slug: this.ninos[index].state.slug,
-              description: this.ninos[index].state.description
-            },
-            school_grade_name: gradoActualizado?.name || this.ninos[index].school_grade_name
-          };
-        }
+              this.ninosService.actualizarNino(formData, ninoActualizar.id).subscribe({
+                next: () => {
+                  this.obtenerNinos();
 
-        Swal.fire({
-          title: 'Niño actualizado',
-          text: `${ninoActualizar.name} ${ninoActualizar.last_name} actualizado correctamente.`,
-          icon: 'success',
-          confirmButtonColor: '#198754'
-        });
-      },
-      error: err => {
-        Swal.fire({
-          title: 'Error',
-          text: err.message || 'No se pudo actualizar el niño.',
-          icon: 'error',
-          confirmButtonColor: '#003366'
-        });
-      }
-    });
-  }
-});
-
+                  Swal.fire({
+                    title: 'Niño actualizado',
+                    text: `${ninoActualizar.name} ${ninoActualizar.last_name} actualizado correctamente.`,
+                    icon: 'success',
+                    confirmButtonColor: '#198754'
+                  });
+                },
+                error: err => {
+                  Swal.fire({
+                    title: 'Error',
+                    text: err.message || 'No se pudo actualizar el niño.',
+                    icon: 'error',
+                    confirmButtonColor: '#003366'
+                  });
+                }
+              });
+            }
+          });
         },
         error: err => {
           Swal.fire({
@@ -551,7 +534,6 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
             icon: 'error',
             confirmButtonColor: '#003366'
           });
-          console.error('Error obtenerGradosEscolares:', err);
         }
       });
     },
@@ -562,7 +544,6 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
         icon: 'error',
         confirmButtonColor: '#003366'
       });
-      console.error('Error getEstados:', err);
     }
   });
 }

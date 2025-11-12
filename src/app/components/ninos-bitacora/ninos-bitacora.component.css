@@ -1,0 +1,95 @@
+.bitacora-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+ font-family: "Segoe UI", sans-serif;
+}
+/
+
+.descripcion {
+  color: #444;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: stretch; /* 🔹 Asegura que todas las cards tengan igual altura */
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 🔹 Distribuye el contenido dejando el botón abajo */
+  align-items: center;
+  transition: transform 0.2s ease;
+  font-family: "Segoe UI", sans-serif;
+  height: 100%; /* 🔹 Todas las tarjetas con igual altura dentro del grid */
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 18px 20px;
+  text-align: left;
+  width: 100%;
+  flex-grow: 1; /* 🔹 Hace que el contenido ocupe el espacio disponible */
+  box-sizing: border-box;
+}
+
+.card-content h3 {
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.card-content p {
+  margin: 6px 0;
+  line-height: 1.5;
+  font-size: 14.5px;
+  color: #333;
+}
+
+/* 🔹 Botón siempre al mismo nivel */
+.btn-apadrinar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  width: 90%;
+  margin: 15px 0 20px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "Segoe UI", sans-serif;
+  align-self: center;
+}
+
+.btn-apadrinar:hover {
+  background-color: #0056b3;
+}
+
+.btn-apadrinar i {
+  margin-right: 6px;
+}
+
+.loading {
+  color: #555;
+  font-size: 16px;
+  margin-top: 20px;
+  font-family: "Segoe UI", sans-serif;
+}

@@ -154,8 +154,8 @@ export class LoginComponent {
   }
 
   /** Redirige al usuario a la página de registro */
-  irARegistro(): void {
-    this.enrutador.navigate(['/registro']);
+  irARegistroPadrino(): void {
+    this.enrutador.navigate(['/registro-padrino']);
   }
 
 

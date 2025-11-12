@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegistroComponent } from './registro.component';
+import { NinosBitacoraComponent } from './ninos-bitacora.component';
 
-describe('RegistroComponent', () => {
-  let component: RegistroComponent;
-  let fixture: ComponentFixture<RegistroComponent>;
+describe('NinosBitacoraComponent', () => {
+  let component: NinosBitacoraComponent;
+  let fixture: ComponentFixture<NinosBitacoraComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegistroComponent]
+      imports: [NinosBitacoraComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RegistroComponent);
+    fixture = TestBed.createComponent(NinosBitacoraComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

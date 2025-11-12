@@ -29,6 +29,18 @@ traerNinos(page: number = 1): Observable<{ data: { childrens: NinoListar[], pagi
     catchError((error) => this.manejarError(error))
   );
 }
+traerTodosLosNinos(): Observable<NinoListar[]> {
+  //const token = sessionStorage.getItem('token') || '';
+  const token = '58|PU6Y6EGhe0Jb7ZgGT1S5QRLSM4lmyASelGBadZ0V49403582'
+  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  const url = `${this.endpoint}`; // ✅ GET /api/childrens
+
+return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
+    map(response => response.data[0]), // 👈 el backend devuelve un array dentro de otro
+    tap(ninos => console.log(`[NinosService] Lista completa de niños obtenida. Total: ${ninos?.length}`)),
+    catchError(error => this.manejarError(error))
+  );
+}
 
 
   /**
@@ -68,9 +80,11 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
 
   let body: FormData;
 
+  // Si ya viene como FormData, lo usamos directamente
   if (nino instanceof FormData) {
     body = nino;
   } else {
+    // Si viene como objeto, lo convertimos en FormData
     body = new FormData();
     body.append('name', nino.name);
     body.append('last_name', nino.last_name);
@@ -85,16 +99,18 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
     if (nino.attachment) body.append('attachment', nino.attachment);
   }
 
-  // ⚙️ Aquí usamos la ruta correcta
+  // ⚙️ Agregamos la simulación del PUT para Laravel
+  body.append('_method', 'PUT');
+
+  // Ruta del update
   const url = `${this.endpoint}/${id}`;
 
-  return this.http.put<any>(url, body, { headers }).pipe(
+  // 👇 Importante: usamos POST (no PUT)
+  return this.http.post<any>(url, body, { headers }).pipe(
     tap(() => console.log(`[NinosService] Niño ${id} actualizado correctamente.`)),
     catchError((error) => this.manejarError(error))
   );
 }
-
-
 
 
   /**

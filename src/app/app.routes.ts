@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 import { RestablecerContrasenaComponent } from './components/restablecer-contrasena/restablecer-contrasena.component';
-import { RegistroComponent } from './components/registro/registro.component';
 import { NavbarHomeComponent } from './components/navbar-home/navbar-home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardHomeComponent } from './components/dashboard-home/dashboard-home.component';
@@ -15,6 +14,9 @@ import { UsuariosHomeComponent } from './components/usuarios-home/usuarios-home.
 import { RolesHomeComponent } from './components/roles-home/roles-home.component';
 import { VoluntariosHomeComponent } from './components/voluntarios-home/voluntarios-home.component';
 import { NinosHomeComponent } from './components/ninos-home/ninos-home.component';
+import { DashboardPadrinosHomeComponent } from './components/dashboard-padrinos-home/dashboard-padrinos-home.component';
+import { NavbarPadrinoHomeComponent } from './components/navbar-padrino-home/navbar-padrino-home.component';
+import { NinosBitacoraComponent } from './components/ninos-bitacora/ninos-bitacora.component';
 
 export const routes: Routes = [
   {
@@ -32,7 +34,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'recuperar', component: RecuperarContrasenaComponent },
   { path: 'restablecer', component: RestablecerContrasenaComponent },
-  { path: 'registro', component: RegistroComponent },
+ 
 
   // 🏠 Privadas
   {
@@ -45,6 +47,15 @@ export const routes: Routes = [
       { path: 'roles', component: RolesHomeComponent },
       { path: 'voluntarios', component: VoluntariosHomeComponent },
       { path: 'niños', component: NinosHomeComponent },
+    ],
+  },
+  {
+    path: 'padrino',
+    component: NavbarPadrinoHomeComponent,
+    children: [
+      { path: 'perfil', component: PerfilComponent },
+      { path: 'dashboard', component: DashboardPadrinosHomeComponent },
+      { path: 'ninos-bitacora', component: NinosBitacoraComponent },
     ],
   },
 
