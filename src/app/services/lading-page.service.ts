@@ -29,19 +29,27 @@ export class LandingPageService {
 }
 
  actualizarLandingContent(id: number, contenido: LandingPageContent): Observable<LandingPageContent> {
-    const url = `${this.endpoint}/${id}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  const url = `${this.endpoint}/${id}`;
 
-    return this.http.put<{ success: boolean; data: LandingPageContent; message: string }>(
-      url,
-      contenido,
-      { headers }
-    ).pipe(
-      map(response => response.data),
-      tap(() => console.log(`[LandingPageService] Contenido de landing page con ID ${id} actualizado.`)),
-      catchError((error) => this.manejarError(error))
-    );
-  }
+  // Obtener token del sessionStorage
+  const token = sessionStorage.getItem('token');
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  });
+
+  return this.http.put<{ success: boolean; data: LandingPageContent; message: string }>(
+    url,
+    contenido,
+    { headers }
+  ).pipe(
+    map(response => response.data),
+    tap(() => console.log(`[LandingPageService] Contenido de landing page con ID ${id} actualizado.`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
+
   /**
    * ⚠️ Manejo de errores
    */
