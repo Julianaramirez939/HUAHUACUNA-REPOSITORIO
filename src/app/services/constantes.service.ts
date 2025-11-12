@@ -27,7 +27,21 @@ export class ConstantesService {
       })
     );
   }
-
+obtenerTiposMetodoDonacion(): Observable<any[]> {
+  const url = `${this.endpoint}/donation_method`;
+  return this.http.get<{ success: boolean; data: any[]; message: string }>(url).pipe(
+    map((res) => res.data), // obtenemos solo el array
+    tap((tipos) =>
+      console.log('[ConstantesService] Tipos de método de donación obtenidos:', tipos)
+    ),
+    catchError((error) => {
+      console.error('[ConstantesService] Error al obtener tipos de método de donación:', error);
+      const backendError = error?.error || {};
+      const mensaje = backendError.message || 'No se pudieron obtener los tipos de método de donación';
+      return throwError(() => ({ message: mensaje }));
+    })
+  );
+}
     obtenerTiposActividad(): Observable<any[]> {
     const url = `${this.endpoint}/program_type`;
     return this.http.get<{ success: boolean; data: any[]; message: string }>(url).pipe(
