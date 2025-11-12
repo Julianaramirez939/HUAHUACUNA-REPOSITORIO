@@ -1,36 +1,52 @@
 .inicio-banner {
-  width: 100%;
-  background-size: cover;
+  width: 100vw; /* ocupar todo el ancho de la pantalla */
+  height: auto; /* opcional si quieres que sea dinámico según altura */
+  background-size: cover; /* cubre toda el área del div */
   background-position: center;
   background-repeat: no-repeat;
-  position: relative; /* relativo para el texto encima */
+  position: relative; /* para que el texto quede encima */
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* evita que algo sobresalga */
 }
 
 .banner-text {
   text-align: center;
   color: white;
   z-index: 1;
+  padding: 0 20px; /* opcional para que el texto no toque los bordes en móvil */
 }
 
 .banner-text h1 {
   font-size: 4.5rem;
-  color: rgba(255, 255, 255, 1); /* color del texto */
-  -webkit-text-stroke: 0.4px black; /* contorno negro */
-  text-shadow: 0px 8px 2px rgba(0, 0, 0, 0.6); /* opcional: sombra para mayor legibilidad */
+  color: rgba(255, 255, 255, 1);
+  -webkit-text-stroke: 0.4px black;
+  text-shadow: 0px 8px 2px rgba(0, 0, 0, 0.6);
+  margin: 0;
 }
+
+/* Descripción debajo del banner */
 .descripcion-fundacion {
   text-align: center;
-  margin-top: 120px; /* separación del banner */
+  margin-top: 60px; /* separación del banner */
   font-family: "Segoe UI", sans-serif;
-  font-size: 2.1rem; /* tamaño opcional */
-  color: #000000ff; /* color del texto */
-  max-width: 1000px; /* opcional para limitar ancho */
+  font-size: 2.1rem;
+  color: #000000ff;
+  max-width: 1000px; /* opcional para limitar ancho del texto */
   margin-left: auto;
   margin-right: auto;
+  padding: 0 20px; /* espacio lateral en móviles */
 }
 
+/* Responsivo */
+@media (max-width: 768px) {
+  .banner-text h1 {
+    font-size: 3rem; /* ajusta tamaño del texto en móvil */
+  }
 
-
+  .descripcion-fundacion {
+    font-size: 1.6rem;
+    margin-top: 40px;
+  }
+}

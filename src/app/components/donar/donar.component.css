@@ -59,21 +59,39 @@
 .overlay {
   position: absolute;
   bottom: 0;
+  left: 0; /* ✅ asegura que empiece bien alineado */
   width: 100%;
-  background: rgba(0, 0, 0, 0.35); /* semitransparente solo abajo */
-  padding: 1rem;
+  background: rgba(0, 0, 0, 0.45); /* un poco más oscuro para mejor contraste */
+  padding: 1.5rem; /* 🔹 más espacio interior */
+  box-sizing: border-box; /* 🔹 respeta el padding sin desbordarse */
   text-align: center;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .overlay-content {
   color: #fff;
+  max-width: 90%; /* 🔹 evita que el texto toque los bordes */
+  margin: 0 auto; /* 🔹 centra el texto */
+  text-align: center;
+  word-wrap: break-word; /* 🔹 evita que palabras largas rompan el diseño */
 }
 
 .overlay-content h2 {
   font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
 }
 
 .overlay-content p {
   font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.overlay-content h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffcc00;
+  margin-top: 0.5rem;
 }

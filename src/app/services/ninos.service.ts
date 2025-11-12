@@ -30,8 +30,8 @@ traerNinos(page: number = 1): Observable<{ data: { childrens: NinoListar[], pagi
   );
 }
 traerTodosLosNinos(): Observable<NinoListar[]> {
-  //const token = sessionStorage.getItem('token') || '';
-  const token = '58|PU6Y6EGhe0Jb7ZgGT1S5QRLSM4lmyASelGBadZ0V49403582'
+  const token = sessionStorage.getItem('token') || '';
+  
   const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
   const url = `${this.endpoint}`; // ✅ GET /api/childrens
 

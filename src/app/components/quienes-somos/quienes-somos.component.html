@@ -7,27 +7,35 @@
   <div class="texto-lado">
     <h2>Nuestra Historia</h2>
     <p>Un Viaje de Solidaridad y Crecimiento</p>
-    <p>La fundación Huahuacuna inició su labor social en Junio de 2003 como "Sonrisa Italiana", apadrinando a 17 niños. Gracias a la visión y liderazgo de Mayra Alejandra López Osorio y Lina María Guapacha, con el apoyo del Padre Agostino Abate, esta iniciativa floreció.</p>
-    <p>El 31 de Mayo de 2004, se constituyó legalmente como Fundación Huahuacuna. Con la adhesión de Ángela Patricia Menza Astudillo y Maria Clarena Castaño Bedoya, nuestro alcance se expandió, beneficiando a más de 140 niños apadrinados por Cáritas de Acqui Terme, Italia, y dos padrinos de Armenia.</p>
-    <p>Nuestro programa se centra en el apadrinamiento de niños en edad escolar: brindándoles apoyo integral en educación, salud, vestido, calzado, complementos alimenticios, actividades de esparcimiento y educación no formal.</p>
+    <p>
+      La fundación Huahuacuna inició su labor social en Junio de 2003 como "Sonrisa Italiana", apadrinando a 17 niños. 
+      Gracias a la visión y liderazgo de Mayra Alejandra López Osorio y Lina María Guapacha, con el apoyo del Padre Agostino Abate, esta iniciativa floreció.
+    </p>
+    <p>
+      El 31 de Mayo de 2004, se constituyó legalmente como Fundación Huahuacuna. Con la adhesión de Ángela Patricia Menza Astudillo y 
+      Maria Clarena Castaño Bedoya, nuestro alcance se expandió, beneficiando a más de 140 niños apadrinados por Cáritas de Acqui Terme, Italia, y dos padrinos de Armenia.
+    </p>
+    <p>
+      Nuestro programa se centra en el apadrinamiento de niños en edad escolar: brindándoles apoyo integral en educación, salud, vestido, calzado, complementos alimenticios, actividades de esparcimiento y educación no formal.
+    </p>
   </div>
 </div>
 
 <!-- Fila 2: Misión y Visión -->
-<div class="quienes-somos-container">
+<div class="quienes-somos-container" *ngIf="!cargando && !error; else cargandoTemplate">
   <div class="texto-lado amarillo">
     <h2>Misión</h2>
-    <p>
-      Apoyar a la niñez vulnerable mediante apadrinamientos y ayudas ocasionales para mejorar su calidad de vida a través de procesos educativos
-      que incluyan a la familia. Esto es posible gracias a la colaboración económica y de voluntariado de personas y entidades nacionales y extranjeras.
-    </p>
+    <p>{{ mision }}</p>
   </div>
   <div class="texto-lado amarillo">
     <h2>Visión</h2>
-    <p>
-      Ser una institución que gestione permanentemente recursos para aumentar el número de niños
-      beneficiados y programas que respondan a necesidades concretas. Contaremos con un grupo interdisciplinario 
-      para lograr familias cohesionadas, pacíficas y autogestionadoras, formando ciudadanos responsables y propositivos.
-    </p>
+    <p>{{ vision }}</p>
   </div>
 </div>
+
+<ng-template #cargandoTemplate>
+  <div class="quienes-somos-container">
+    <p *ngIf="cargando">Cargando contenido...</p>
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </div>
+</ng-template>

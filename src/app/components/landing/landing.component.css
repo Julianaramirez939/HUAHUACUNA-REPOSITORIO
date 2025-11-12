@@ -1,32 +1,45 @@
+/* Scroll suave para la landing */
 html {
   scroll-behavior: smooth;
 }
 
-.landing-container #quienes-somos {
-  margin-top: 50px;
-  padding: 70px 20px;
+/* Contenedor principal */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.landing-container #que-hacemos {
-  margin-top: 50px;
-  padding: 70px 20px;
-}
-
-.landing-container #que-hacemos{
-  margin-top: 50px;
-  padding: 70px 20px;
-}
-
-.landing-container #unete {
-  margin-top: 50px;
-  padding: 70px 20px;
-}
-
-.landing-container #contacto {
-  margin-top: 50px;
-  padding: 70px 20px;
-}
+/* Cada sección */
 section {
+  width: 100%;
+  padding: 0; /* el padding interno se maneja en cada componente */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* arriba por defecto */
+  align-items: stretch; /* ocupa todo el ancho */
+}
+
+/* Sección de inicio ocupa pantalla completa */
+#inicio {
   min-height: 100vh;
-  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Las demás secciones se ajustan al contenido */
+section:not(#inicio) {
+  min-height: auto;
+}
+
+/* Ajuste responsivo: en móviles, que las secciones no queden muy pequeñas */
+@media (max-width: 768px) {
+  #inicio {
+    min-height: 80vh;
+  }
+  section:not(#inicio) {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
 }

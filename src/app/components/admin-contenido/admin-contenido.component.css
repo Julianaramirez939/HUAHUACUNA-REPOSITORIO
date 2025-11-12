@@ -1,0 +1,140 @@
+/* admin-landing.component.css */
+.admin-landing {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  font-family: "Segoe UI", sans-serif; /* Fuente unificada */
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+
+.admin-landing h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #162663;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: inherit; /* Asegura que todos los elementos del form hereden la misma fuente */
+}
+
+fieldset {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f9f9f9;
+}
+
+fieldset legend {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #162663;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #111827;
+  font-family: inherit;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"], /* Mejora input correo */
+textarea {
+  padding: 0.8rem 1rem; /* más cómodo */
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #ffffff;
+  font-family: inherit; /* unifica la fuente */
+  box-sizing: border-box;
+}
+
+input[type="email"] {
+  width: 100%; /* ocupa todo el ancho disponible */
+  min-width: 250px;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px; /* un poco más alto */
+  font-family: inherit; /* unifica la fuente */
+}
+
+.impacto-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.impacto-grupo h4 {
+  color: #162663;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+}
+
+button[type="submit"] {
+  background-color: #162663;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+  font-family: inherit;
+}
+
+button[type="submit"]:hover {
+  background-color: #1e3a8a;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .admin-landing {
+    padding: 1rem;
+  }
+
+  .impacto-grupo {
+    width: 100%;
+  }
+}
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+  display: block;
+}

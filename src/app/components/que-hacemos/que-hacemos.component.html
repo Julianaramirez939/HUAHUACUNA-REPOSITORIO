@@ -1,1 +1,40 @@
-<p>que-hacemos works!</p>
+<div class="que-hacemos-container" *ngIf="impacto; else cargandoTpl">
+  <!-- Banner azul -->
+  <div class="banner-azul">
+    <h2>NUESTRO IMPACTO</h2>
+  </div>
+
+  <!-- Círculos de impacto -->
+  <div class="impacto-circulos">
+    <!-- Niño apadrinados -->
+    <div class="impacto-item">
+      <div class="circulo azul">
+        <div class="numero">{{ impacto["sponsored children"].amount }}</div>
+      </div>
+      <div class="titulo">{{ impacto["sponsored children"].title }}</div>
+      <div class="subtitulo">{{ impacto["sponsored children"].subtitle }}</div>
+    </div>
+
+    <!-- Años de experiencia -->
+    <div class="impacto-item">
+      <div class="circulo amarillo">
+        <div class="numero">{{ impacto["years_of_experience"].amount }}</div>
+      </div>
+      <div class="titulo">{{ impacto["years_of_experience"].title }}</div>
+      <div class="subtitulo">{{ impacto["years_of_experience"].subtitle }}</div>
+    </div>
+
+    <!-- Municipios impactados -->
+    <div class="impacto-item">
+      <div class="circulo azul">
+        <div class="numero">{{ impacto["municipalities_influenced"].amount }}</div>
+      </div>
+      <div class="titulo">{{ impacto["municipalities_influenced"].title }}</div>
+      <div class="subtitulo">{{ impacto["municipalities_influenced"].subtitle }}</div>
+    </div>
+  </div>
+</div>
+
+<ng-template #cargandoTpl>
+  <p style="text-align: center;">Cargando información...</p>
+</ng-template>

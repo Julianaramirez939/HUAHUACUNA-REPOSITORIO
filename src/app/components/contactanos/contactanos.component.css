@@ -1,0 +1,83 @@
+.footer-amarillo {
+  width: 98%; /* ocupa el ancho del contenedor */
+  max-width: 98%; /* evita que se desborde */
+  background-color: #ffcc00;
+  color: #020202ff;
+  font-family: "Segoe UI", sans-serif;
+  text-align: center;
+  padding: 70px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+
+  position: relative; /* ya no necesitas left/right ni márgenes negativos */
+}
+
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+.descripcion {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+}
+
+.contacto-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.contacto-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.contacto-item:hover {
+  transform: scale(1.08);
+}
+
+.contacto-item i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #020202ff;
+}
+
+.contacto-item a,
+.contacto-item span {
+  color: #020202ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contacto-item a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 2rem;
+  }
+
+  .descripcion {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .contacto-info {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

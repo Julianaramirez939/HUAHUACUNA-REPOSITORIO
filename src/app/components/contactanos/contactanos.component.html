@@ -1,1 +1,38 @@
-<p>contactanos works!</p>
+<footer class="footer-amarillo" *ngIf="!cargando && !error; else estado">
+  <h2 class="titulo">Contáctanos</h2>
+  <p class="descripcion">
+    Si deseas contactarnos o saber más de nosotros, por favor comunícate a las líneas o por las redes sociales,
+    y muy pronto te responderemos.
+  </p>
+
+  <div class="contacto-info">
+    <div class="contacto-item">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>{{ phone }}</span>
+    </div>
+    <div class="contacto-item">
+      <i class="fa-brands fa-facebook"></i>
+      <a [href]="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+    <div class="contacto-item">
+      <i class="fa-brands fa-instagram"></i>
+      <a [href]="instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+    <div class="contacto-item">
+      <i class="fa-solid fa-location-dot"></i>
+      <span>{{ address }}</span>
+    </div>
+    <div class="contacto-item">
+      <i class="fa-solid fa-envelope"></i>
+      <span>{{ email }}</span>
+    </div>
+  </div>
+</footer>
+
+<ng-template #estado>
+  <div class="footer-amarillo">
+    <p *ngIf="cargando">Cargando información de contacto...</p>
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </div>
+</ng-template>
+

@@ -17,6 +17,7 @@ import { NinosHomeComponent } from './components/ninos-home/ninos-home.component
 import { DashboardPadrinosHomeComponent } from './components/dashboard-padrinos-home/dashboard-padrinos-home.component';
 import { NavbarPadrinoHomeComponent } from './components/navbar-padrino-home/navbar-padrino-home.component';
 import { NinosBitacoraComponent } from './components/ninos-bitacora/ninos-bitacora.component';
+import { AdminContenidoComponent } from './components/admin-contenido/admin-contenido.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,7 @@ export const routes: Routes = [
       { path: 'roles', component: RolesHomeComponent },
       { path: 'voluntarios', component: VoluntariosHomeComponent },
       { path: 'niños', component: NinosHomeComponent },
+      { path: 'administracion-contenido', component: AdminContenidoComponent },
     ],
   },
   {

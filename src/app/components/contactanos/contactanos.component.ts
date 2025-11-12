@@ -1,11 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LandingPageService } from '../../services/lading-page.service';
+import { LandingPageContent } from '../../interfaces/landing-page';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contactanos',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './contactanos.component.html',
-  styleUrl: './contactanos.component.css'
+  styleUrls: ['./contactanos.component.css']
 })
-export class ContactanosComponent {
+export class ContactanosComponent implements OnInit {
+  email: string = '';
+  phone: string = '';
+  address: string = '';
+  facebook: string = '';
+  instagram: string = '';
+  cargando = true;
+  error: string | null = null;
 
+  constructor(private landingService: LandingPageService) {}
+
+  ngOnInit(): void {
+    this.obtenerDatosContacto();
+  }
+
+  private obtenerDatosContacto(): void {
+    this.landingService.getLandingPageContents().subscribe({
+      next: (data: LandingPageContent[]) => {
+        if (data.length > 0) {
+          const content = data[0].content;
+          this.email = content.email;
+          this.phone = content.phone_number;
+          this.address = content.address;
+          this.facebook = content.social_media_links.facebook;
+          this.instagram = content.social_media_links.instagram;
+        }
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('[ContactanosComponent] Error cargando contacto:', err);
+        this.error = err.message || 'No se pudo cargar la información de contacto.';
+        this.cargando = false;
+      }
+    });
+  }
 }
