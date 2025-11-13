@@ -49,6 +49,16 @@ export class DonantesService {
       catchError((error) => this.manejarError(error))
     );
   }
+  obtenerInforme(idDonante: number, year: number): Observable<Blob> {
+  const url = `${this.endpoint}/${idDonante}/donation-certificate?year=${year}`;
+  return this.http.get(url, {
+    headers: this.getHeaders(),
+    responseType: 'blob' // ⚠️ importante: le dices que espere un archivo
+  }).pipe(
+    tap(() => console.log(`[DonantesService] Informe PDF obtenido para el donante ${idDonante}, año ${year}.`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
 
   // Obtener lista de donantes (paginada opcionalmente)
   getDonantes(page: number = 1): Observable<any> {

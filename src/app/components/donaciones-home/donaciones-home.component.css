@@ -163,3 +163,40 @@
 .ir-pagina label {
   font-weight: 500;
 }
+.btn-generar-reporte,
+.btn-crear-donacion {
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Estilo específico de cada botón */
+.btn-generar-reporte {
+  background-color: #003366; /* azul oscuro */
+  color: #fff;
+}
+
+.btn-generar-reporte:hover {
+  background-color: #002244;
+}
+
+.btn-crear-donacion {
+  background-color: #198754; /* verde similar al crearDonacion */
+  color: #fff;
+}
+
+.btn-crear-donacion:hover {
+  background-color: #146c43;
+}
+
+/* Iconos dentro de los botones */
+.btn-generar-reporte i,
+.btn-crear-donacion i {
+  font-size: 14px;
+}

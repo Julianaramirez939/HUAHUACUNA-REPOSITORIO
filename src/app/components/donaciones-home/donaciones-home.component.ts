@@ -96,6 +96,119 @@ cargarDonantes(): void {
     this.paginaActual = destino;
     this.obtenerDonaciones(this.paginaActual);
   }
+generarReporte(): void {
+  if (!Array.isArray(this.donantes) || this.donantes.length === 0) {
+    Swal.fire('Atención', 'No se han cargado los donantes todavía', 'warning');
+    return;
+  }
+
+  const donantesOptions = this.donantes
+    .map(d => `<option value="${d.id}">${d.name} ${d.last_name || ''}</option>`)
+    .join('');
+
+  Swal.fire({
+    title: `<span style="font-family:'Segoe UI'; font-weight:600; color:#003366;">Generar reporte de donaciones</span>`,
+    html: `
+      <style>
+        .swal-field {
+          width: 100%;
+          box-sizing: border-box;
+          border: 1px solid #d1d5db;
+          border-radius: 4px;
+          padding: 8px 12px;
+          font-size: 14px;
+          background-color: #fff;
+          display: block;
+          font-family: 'Segoe UI', sans-serif;
+          margin-bottom: 10px;
+        }
+        .swal-field:focus { outline: none; border-color: #3b82f6; }
+        select.swal-field {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23666" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+          background-repeat: no-repeat;
+          background-position: right 10px center;
+          background-size: 16px;
+          text-align-last: center;
+          height: 38px;
+        }
+        form label {
+          font-family: 'Segoe UI', sans-serif;
+        }
+      </style>
+      <form style="display:grid; grid-template-columns:1fr 1fr; gap:16px 24px; width:90%; max-width:500px; margin:0 auto;">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <label><b>Donante *</b></label>
+          <select id="donanteSelect" class="swal-field">
+            <option value="" disabled selected>Seleccione un donante</option>
+            ${donantesOptions}
+          </select>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <label><b>Año *</b></label>
+          <input id="anioInput" type="number" class="swal-field" placeholder="Ej. 2025">
+        </div>
+      </form>
+    `,
+    width: '520px',
+    showCancelButton: true,
+    confirmButtonText: 'Generar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#003366',
+    cancelButtonColor: '#dc2626',
+    preConfirm: () => {
+      const donorStr = (document.getElementById('donanteSelect') as HTMLSelectElement).value;
+      const anioStr = (document.getElementById('anioInput') as HTMLInputElement).value.trim();
+
+      if (!donorStr || !anioStr) {
+        Swal.showValidationMessage('Completa todos los campos obligatorios (*)');
+        return false;
+      }
+
+      const donor_id = Number(donorStr);
+      const year = Number(anioStr);
+
+      if (isNaN(donor_id) || isNaN(year)) {
+        Swal.showValidationMessage('Valores inválidos, intenta nuevamente');
+        return false;
+      }
+
+      return { donor_id, year };
+    }
+  }).then(result => {
+    if (result.isConfirmed && result.value) {
+      this.donantesService.obtenerInforme(result.value.donor_id, result.value.year).subscribe({
+        next: (pdfBlob) => {
+          if (!pdfBlob || pdfBlob.size === 0) {
+            Swal.fire('Atención', 'El cliente o el año de la donación no tienen registros', 'info');
+            return;
+          }
+
+          // Abrir PDF en nueva ventana
+          const url = window.URL.createObjectURL(pdfBlob);
+          window.open(url, '_blank');
+
+          Swal.fire({
+            title: 'Éxito',
+            text: 'Reporte generado correctamente',
+            icon: 'success',
+            confirmButtonColor: '#003366', // azul oscuro
+          });
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            Swal.fire('Atención', 'El cliente o el año de la donación no tienen registros', 'info');
+          } else {
+            Swal.fire('Error', err.message || 'No se pudo generar el reporte', 'error');
+          }
+        }
+      });
+    }
+  });
+}
+
 
 crearDonacion(): void {
   if (!Array.isArray(this.donantes) || this.donantes.length === 0) {
