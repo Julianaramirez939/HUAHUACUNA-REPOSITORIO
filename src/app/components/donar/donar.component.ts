@@ -41,7 +41,6 @@ export class DonarComponent {
       correo: ['', [Validators.required, Validators.email]],
       tipoIdentificacion: ['', Validators.required],
       identificacion: ['', [Validators.required, Validators.pattern(/^[0-9]{5,15}$/)]],
-      fecha: ['', Validators.required],
       monto: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     });
   }
