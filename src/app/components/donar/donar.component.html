@@ -1,14 +1,15 @@
-<!-- donar.component.html -->
 <div class="donar-wrapper">
   <div class="donar-header">
     <h1>¿Cómo deseas apoyarnos?</h1>
   </div>
+
   <p class="donar-intro">
     Tu aporte nos acerca cada vez más a cumplir el sueño de una Colombia en la que las niñas
     y los niños sean amados, protegidos y respetados.
   </p>
 
   <div class="donar-container" [style.height.px]="altura">
+
     <!-- PSE -->
     <div
       class="donar-card"
@@ -22,9 +23,10 @@
             Contribuye mediante pagos electrónicos, seguros y cómodos, para apoyar
             nuestras iniciativas.
           </p>
-           <h3>
-           ¡DONA AHORA!
-          </h3>
+
+          <button class="btn-donar" (click)="abrirModal()">
+            ¡DONA AHORA!
+          </button>
         </div>
       </div>
     </div>
@@ -48,3 +50,65 @@
     </div>
   </div>
 </div>
+
+<!-- ⭐ MODAL DE DONACIÓN ⭐ -->
+
+<div class="modal-backdrop" *ngIf="modalAbierta">
+  <div class="modal-form">
+
+    <h2>Formulario de Donación</h2>
+
+    <form [formGroup]="formularioDonacion" (ngSubmit)="enviarFormulario()" class="form-grid">
+
+      <!-- Nombre completo -->
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" formControlName="nombreCompleto" />
+      </div>
+
+      <!-- Correo -->
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" formControlName="correo" />
+      </div>
+
+      <!-- Tipo identificación -->
+      <div class="form-group">
+        <label>Tipo de identificación</label>
+        <ng-select
+          [items]="tiposIdentificacion"
+          bindLabel="name"
+          bindValue="id"
+          placeholder="Selecciona una opción"
+          formControlName="tipoIdentificacion"
+          [clearable]="true"
+        ></ng-select>
+      </div>
+
+      <!-- Identificación -->
+      <div class="form-group">
+        <label>Número de identificación</label>
+        <input type="text" formControlName="identificacion" />
+      </div>
+
+      <!-- Fecha -->
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" formControlName="fecha" />
+      </div>
+
+      <!-- Monto -->
+      <div class="form-group">
+        <label>Monto</label>
+        <input type="text" formControlName="monto" />
+      </div>
+    </form>
+
+    <div class="modal-buttons">
+      <button class="btn-submit" (click)="enviarFormulario()">Enviar</button>
+      <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+    </div>
+
+  </div>
+</div>
+

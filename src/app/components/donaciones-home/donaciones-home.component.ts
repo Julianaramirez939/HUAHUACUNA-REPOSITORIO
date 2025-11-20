@@ -16,6 +16,8 @@ import { DonacionesCrear } from '../../interfaces/donaciones-crear';
   templateUrl: './donaciones-home.component.html',
   styleUrls: ['./donaciones-home.component.css']
 })
+
+//Componente que maneja la visualización y gestión de donaciones desde el panel de administración
 export class DonacionesHomeComponent implements OnInit {
   donaciones: Donaciones[] = [];
   donantes: Donante[] = [];
@@ -36,7 +38,7 @@ export class DonacionesHomeComponent implements OnInit {
     this.cargarDonantes();
     this.cargarMetodosDonacion();
   }
-
+//Metodo para obtener las donaciones con paginación
   obtenerDonaciones(page: number = 1): void {
     this.cargando = true;
     this.donacionesService.getDonaciones(page).subscribe({
@@ -54,7 +56,7 @@ export class DonacionesHomeComponent implements OnInit {
       }
     });
   }
-
+//Metodo para cargar los donantes activos
 cargarDonantes(): void {
   this.donantesService.getDonantes().subscribe({
     next: (res) => {
@@ -64,8 +66,7 @@ cargarDonantes(): void {
   });
 }
 
-
-
+//Metodo para cargar los métodos de donación
   cargarMetodosDonacion(): void {
     this.constantesService.obtenerTiposMetodoDonacion().subscribe({
       next: (res) => this.metodosDonacion = res || [],
@@ -73,6 +74,7 @@ cargarDonantes(): void {
     });
   }
 
+//Metodo para ir a la página siguiente
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
@@ -80,13 +82,14 @@ cargarDonantes(): void {
     }
   }
 
+//Metodo para ir a la página anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
       this.obtenerDonaciones(this.paginaActual);
     }
   }
-
+//Metodo para ir a una página específica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
     if (!Number.isInteger(destino) || destino < 1 || destino > this.ultimaPagina) {
@@ -96,6 +99,8 @@ cargarDonantes(): void {
     this.paginaActual = destino;
     this.obtenerDonaciones(this.paginaActual);
   }
+
+//Metodo para generar un reporte de donaciones de un donante en un año especifico 
 generarReporte(): void {
   if (!Array.isArray(this.donantes) || this.donantes.length === 0) {
     Swal.fire('Atención', 'No se han cargado los donantes todavía', 'warning');
@@ -194,7 +199,7 @@ generarReporte(): void {
             title: 'Éxito',
             text: 'Reporte generado correctamente',
             icon: 'success',
-            confirmButtonColor: '#003366', // azul oscuro
+            confirmButtonColor: '#003366',
           });
         },
         error: (err) => {
@@ -210,6 +215,7 @@ generarReporte(): void {
 }
 
 
+//Metodo para crear una nueva donación
 crearDonacion(): void {
   if (!Array.isArray(this.donantes) || this.donantes.length === 0) {
     Swal.fire('Atención', 'No se han cargado los donantes todavía', 'warning');
@@ -352,6 +358,7 @@ crearDonacion(): void {
   });
 }
 
+//Metodo para actualizar una donación
 actualizarDonacion(donacion: Donaciones & { showMenu?: boolean }): void {
   if (donacion.showMenu) donacion.showMenu = false;
 
@@ -454,7 +461,7 @@ actualizarDonacion(donacion: Donaciones & { showMenu?: boolean }): void {
   });
 }
 
-
+//Metodo para eliminar una donación
  eliminarDonacion(id: number): void {
   Swal.fire({
     title: '¿Eliminar donación?',
@@ -473,7 +480,7 @@ actualizarDonacion(donacion: Donaciones & { showMenu?: boolean }): void {
             title: 'Éxito',
             text: 'Donación eliminada correctamente',
             icon: 'success',
-            confirmButtonColor: '#003366' // ✅ botón azul solo aquí
+            confirmButtonColor: '#003366' 
           });
           this.obtenerDonaciones(this.paginaActual);
         },
@@ -485,7 +492,7 @@ actualizarDonacion(donacion: Donaciones & { showMenu?: boolean }): void {
   });
 }
 
-
+  //Metodo para ver los detalles de una donación
   verDetallesDonacion(donacion: Donaciones): void {
   Swal.fire({
     title: `<span style="font-family:'Segoe UI'; font-weight:600;">Detalles de la donación</span>`,

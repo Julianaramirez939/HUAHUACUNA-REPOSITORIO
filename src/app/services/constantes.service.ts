@@ -8,12 +8,14 @@ import { GradoEscolar } from '../interfaces/grados-escolares';
 @Injectable({
   providedIn: 'root',
 })
+
+//Servicio para obtener constantes como tipos de identificación, tipos de método de donación, etc
 export class ConstantesService {
   private readonly endpoint = `${API_URL}/constant`;
 
   constructor(private http: HttpClient) {}
 
-  // Método existente
+  //Metodo para obtener tipos de identificación
   obtenerTiposIdentificacion(): Observable<any> {
     const url = `${this.endpoint}/identification_type`;
     return this.http.get<any>(url).pipe(
@@ -27,10 +29,12 @@ export class ConstantesService {
       })
     );
   }
+
+  //Metodo para obtener tipos de método de donación
 obtenerTiposMetodoDonacion(): Observable<any[]> {
   const url = `${this.endpoint}/donation_method`;
   return this.http.get<{ success: boolean; data: any[]; message: string }>(url).pipe(
-    map((res) => res.data), // obtenemos solo el array
+    map((res) => res.data), 
     tap((tipos) =>
       console.log('[ConstantesService] Tipos de método de donación obtenidos:', tipos)
     ),
@@ -42,6 +46,7 @@ obtenerTiposMetodoDonacion(): Observable<any[]> {
     })
   );
 }
+//Metodo para obtener tipos de actividades
     obtenerTiposActividad(): Observable<any[]> {
     const url = `${this.endpoint}/program_type`;
     return this.http.get<{ success: boolean; data: any[]; message: string }>(url).pipe(
@@ -59,11 +64,11 @@ obtenerTiposMetodoDonacion(): Observable<any[]> {
     );
   }
 
-  // Nuevo método para obtener grados escolares
+  // método para obtener grados escolares
   obtenerGradosEscolares(): Observable<GradoEscolar[]> {
     const url = `${this.endpoint}/school_grade`;
     return this.http.get<{ success: boolean; data: GradoEscolar[]; message: string }>(url).pipe(
-      map(res => res.data), // obtenemos solo el array de grados
+      map(res => res.data), 
       tap((grados) => console.log('[ConstantesService] Grados escolares obtenidos:', grados)),
       catchError((error) => {
         console.error('[ConstantesService] Error al obtener grados escolares:', error);

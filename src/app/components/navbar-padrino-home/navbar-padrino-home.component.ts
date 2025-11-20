@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar-padrino-home.component.html',
   styleUrl: './navbar-padrino-home.component.css'
 })
+//Componente de navbar para la vista del padrino
 export class NavbarPadrinoHomeComponent {
    /** Logo que se muestra en la barra de navegación */
   logo = LOGO;

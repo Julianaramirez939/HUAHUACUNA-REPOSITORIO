@@ -11,13 +11,14 @@ import { EstadoNino } from '../interfaces/estado-nino';
 @Injectable({
   providedIn: 'root',
 })
+//Servicio para manejar niños
 export class NinosService {
   private readonly endpoint = `${API_URL}/childrens`;
 
   constructor(private http: HttpClient) {}
 
   /**
-   * 📄 Obtener lista de niños (paginado)
+   * Obtener lista de niños (paginado)
    */
 traerNinos(page: number = 1): Observable<{ data: { childrens: NinoListar[], pagination: any } }> {
   const token = sessionStorage.getItem('token') || '';
@@ -33,7 +34,7 @@ traerTodosLosNinos(): Observable<NinoListar[]> {
   const token = sessionStorage.getItem('token') || '';
   
   const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-  const url = `${this.endpoint}`; // ✅ GET /api/childrens
+  const url = `${this.endpoint}`; 
 
 return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
     map(response => response.data[0]), // 👈 el backend devuelve un array dentro de otro
@@ -44,7 +45,7 @@ return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
 
 
   /**
-   * ➕ Crear niño (usa FormData porque incluye archivo)
+   * Crear niño (usa FormData porque incluye archivo)
    */
   crearNino(nino: Nino): Observable<any> {
     const formData = new FormData();
@@ -72,7 +73,7 @@ return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
   }
 
   /**
-   * ✏️ Actualizar niño existente
+   * Actualizar niño existente
    */
 actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
   const token = sessionStorage.getItem('token') || '';
@@ -99,13 +100,12 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
     if (nino.attachment) body.append('attachment', nino.attachment);
   }
 
-  // ⚙️ Agregamos la simulación del PUT para Laravel
+  // Agregamos la simulación del PUT para Laravel
   body.append('_method', 'PUT');
 
   // Ruta del update
   const url = `${this.endpoint}/${id}`;
 
-  // 👇 Importante: usamos POST (no PUT)
   return this.http.post<any>(url, body, { headers }).pipe(
     tap(() => console.log(`[NinosService] Niño ${id} actualizado correctamente.`)),
     catchError((error) => this.manejarError(error))
@@ -114,7 +114,7 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
 
 
   /**
-   * ❌ Eliminar niño
+   * Eliminar niño
    */
   eliminarNino(id: number): Observable<any> {
     const token = sessionStorage.getItem('token') || '';
@@ -128,7 +128,7 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
   }
 
   /**
-   * 🟩 Obtener lista de estados
+   *  Obtener lista de estados
    */
   getEstados(): Observable<EstadoNino[]> {
     const token = sessionStorage.getItem('token') || '';
@@ -143,7 +143,7 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
   }
 
   /**
-   * ⚠️ Manejo de errores
+   *  Manejo de errores
    */
   private manejarError(error: any) {
     console.error('[NinosService] Error:', error);

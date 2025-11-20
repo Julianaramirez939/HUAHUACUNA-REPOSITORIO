@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './quienes-somos.component.html',
   styleUrls: ['./quienes-somos.component.css']
 })
+//Componente que muestra la sección de "Quienes somos" en la landing page
 export class QuienesSomosComponent implements OnInit {
   @Input() imagenUrl: string = 'https://images.pexels.com/photos/8613059/pexels-photo-8613059.jpeg';
   @Input() altura: number = 550;
@@ -24,7 +25,7 @@ export class QuienesSomosComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerContenidoLanding();
   }
-
+//Metodo para obtener el contenido de la landing page
   private obtenerContenidoLanding(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {

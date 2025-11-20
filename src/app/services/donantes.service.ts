@@ -11,6 +11,7 @@ import { Estado } from '../interfaces/estados';
 @Injectable({
   providedIn: 'root',
 })
+//Servicio para manejar donantes
 export class DonantesService {
   private readonly endpoint = `${API_URL}/donors`;
 
@@ -49,11 +50,13 @@ export class DonantesService {
       catchError((error) => this.manejarError(error))
     );
   }
+
+  //Metodo para obtener informe PDF de donaciones de un donante en un año especifico 
   obtenerInforme(idDonante: number, year: number): Observable<Blob> {
   const url = `${this.endpoint}/${idDonante}/donation-certificate?year=${year}`;
   return this.http.get(url, {
     headers: this.getHeaders(),
-    responseType: 'blob' // ⚠️ importante: le dices que espere un archivo
+    responseType: 'blob' 
   }).pipe(
     tap(() => console.log(`[DonantesService] Informe PDF obtenido para el donante ${idDonante}, año ${year}.`)),
     catchError((error) => this.manejarError(error))

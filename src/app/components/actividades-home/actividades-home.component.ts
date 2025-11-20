@@ -14,25 +14,28 @@ import { ConstantesService } from '../../services/constantes.service';
   templateUrl: './actividades-home.component.html',
   styleUrls: ['./actividades-home.component.css'],
 })
+
+// Componente para gestionar actividades (proyectos/eventos) desde el panel de administración (CRUD)
 export class ActividadesHomeComponent implements OnInit {
   actividades: (Actividad & { showMenu: boolean })[] = [];
-  cargando = false;
+  cargando = false; 
   paginaActual = 1;
   ultimaPagina = 1;
   paginaIr = 1;
 
+  //Variable para almacenar los tipos de actividad (actividad regular/evento)
   tiposActividad: any[] = [];
 
   constructor(
-    private actividadesService: ActividadesService,
-    private constantesService: ConstantesService
+    private actividadesService: ActividadesService, //Servicio para manejar actividades
+    private constantesService: ConstantesService //Servicio para manejar constantes (tipos de actividad)
   ) {}
 
   ngOnInit(): void {
     this.obtenerActividades();
     this.obtenerTiposActividad();
   }
-
+//Metodo para listar las actividades en la tabla principal
   obtenerActividades(): void {
     this.cargando = true;
     this.actividadesService.traerActividades(this.paginaActual).subscribe({
@@ -60,7 +63,7 @@ export class ActividadesHomeComponent implements OnInit {
       },
     });
   }
-
+//Metodo para obtener los tipos de actividades
   obtenerTiposActividad(): void {
     this.constantesService.obtenerTiposActividad().subscribe({
       next: (data) => {
@@ -76,7 +79,7 @@ export class ActividadesHomeComponent implements OnInit {
       },
     });
   }
-
+//Metodo para ir a una pagina especifica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
     if (!Number.isInteger(destino) || isNaN(destino)) {
@@ -101,14 +104,14 @@ export class ActividadesHomeComponent implements OnInit {
       });
     }
   }
-
+//Metodo para ir a la siguiente pagina
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
       this.obtenerActividades();
     }
   }
-
+//Metodo para ir a la pagina anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
@@ -116,7 +119,7 @@ export class ActividadesHomeComponent implements OnInit {
     }
   }
 
-  /** ✅ Crear nueva actividad */
+//Metodo para crear una actividad
 crearActividad(): void {
   this.actividadesService.getEstados().subscribe({
     next: (estados: Estado[]) => {
@@ -253,7 +256,6 @@ crearActividad(): void {
           const fechaFinal = date || '';
           const horaFinal = hour || '';
 
-          // Concatenamos para enviarlo igual que antes
           const datetime = `${fechaFinal} ${horaFinal}`;
 
           return {
@@ -296,7 +298,7 @@ crearActividad(): void {
   });
 }
 
-  /** ✅ Actualizar actividad */
+  //Metodo para actualizar una actividad
 actualizarActividad(actividad: Actividad): void {
   actividad.showMenu = false;
   this.actividadesService.getEstados().subscribe({
@@ -309,7 +311,7 @@ actualizarActividad(actividad: Actividad): void {
         .map((t) => `<option value="${t.id}" ${actividad.program_type?.id === t.id ? 'selected' : ''}>${t.name}</option>`)
         .join('');
 
-      // 🗓️ Separar fecha y hora si vienen juntas
+      //Para separar fecha y hora si vienen juntas
       let fechaExistente = actividad.date || '';
       const horaExistente = actividad.hour || '';
       if (fechaExistente && fechaExistente.includes('/')) {
@@ -481,7 +483,7 @@ actualizarActividad(actividad: Actividad): void {
     },
   });
 }
-
+//Metodo para ver los detalles de una actividad
 verDetallesActividad(actividad: Actividad): void {
   actividad.showMenu = false;
 
@@ -546,7 +548,7 @@ verDetallesActividad(actividad: Actividad): void {
           }
         </div>
 
-        <!-- ✅ Estado igual que en verDetallesNino -->
+        
         <div style="grid-column: span 2; margin-top: 16px;">
           <strong style="display:block; text-align: left;">Estado</strong>
           <div style="
@@ -571,7 +573,7 @@ verDetallesActividad(actividad: Actividad): void {
     confirmButtonColor: '#003366',
   });
 }
-
+//Metodo para eliminar una actividad
   eliminarActividad(actividad: Actividad): void {
     actividad.showMenu = false;
     Swal.fire({

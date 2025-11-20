@@ -17,7 +17,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 20px;
-  align-items: stretch; /* 🔹 Asegura que todas las cards tengan igual altura */
+  align-items: stretch; 
 }
 
 .card {
@@ -26,11 +26,11 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 🔹 Distribuye el contenido dejando el botón abajo */
+  justify-content: space-between; 
   align-items: center;
   transition: transform 0.2s ease;
   font-family: "Segoe UI", sans-serif;
-  height: 100%; /* 🔹 Todas las tarjetas con igual altura dentro del grid */
+  height: 100%; 
 }
 
 .card:hover {
@@ -47,7 +47,7 @@
   padding: 18px 20px;
   text-align: left;
   width: 100%;
-  flex-grow: 1; /* 🔹 Hace que el contenido ocupe el espacio disponible */
+  flex-grow: 1; 
   box-sizing: border-box;
 }
 
@@ -63,7 +63,7 @@
   color: #333;
 }
 
-/* 🔹 Botón siempre al mismo nivel */
+
 .btn-apadrinar {
   background-color: #007bff;
   color: white;

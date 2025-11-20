@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./que-hacemos.component.css'],
   imports: [CommonModule],
 })
+//Componente que muestra la sección de "Que hacemos" en la landing page
 export class QueHacemosComponent implements OnInit {
   impacto: any = null;
   actividadesRegulares: Actividad[] = [];
@@ -27,7 +28,7 @@ export class QueHacemosComponent implements OnInit {
     this.obtenerContenidoLanding();
     this.obtenerActividades();
   }
-
+//Metodo para obtener el contenido de la landing page
   private obtenerContenidoLanding(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
@@ -43,14 +44,14 @@ export class QueHacemosComponent implements OnInit {
       },
     });
   }
-
+//Metodo para obtener las actividades activas
   private obtenerActividades(): void {
     this.actividadesService.traerTodasLasActividades().subscribe({
       next: (actividades) => {
-        // 🔹 Filtramos solo las activas
+       
         const activas = actividades.filter(a => a.state?.name === 'Activo');
 
-        // 🔹 Clasificamos
+       
         this.actividadesRegulares = activas.filter(a => a.program_type_name === 'Actividad regular');
         this.eventos = activas.filter(a => a.program_type_name === 'Evento');
 

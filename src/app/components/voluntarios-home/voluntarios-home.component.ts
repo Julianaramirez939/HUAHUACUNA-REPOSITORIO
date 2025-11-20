@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 
-// Tipos para el componente
+// Interface para incluir el showMenu de las acciones de la tabla
 interface VoluntarioUI extends VoluntarioListado {
   showMenu: boolean;
 }
@@ -17,6 +17,7 @@ interface VoluntarioUI extends VoluntarioListado {
   templateUrl: './voluntarios-home.component.html',
   styleUrls: ['./voluntarios-home.component.css'],
 })
+//Componente que muestra la visualización y gestión de voluntarios en el home de administración
 export class VoluntariosHomeComponent implements OnInit {
   voluntarios: VoluntarioUI[] = [];
   cargando = false;
@@ -28,7 +29,7 @@ export class VoluntariosHomeComponent implements OnInit {
   }
 paginaActual = 1;
 ultimaPagina = 1;
-
+//Metodo para obtener la lista de voluntarios desde el servicio 
 obtenerVoluntarios(): void {
   this.cargando = true;
 
@@ -45,7 +46,7 @@ obtenerVoluntarios(): void {
         identification_type: v.identification_type,
         identification: v.identification,
         profession: v.profession,
-        state: v.state, // objeto completo
+        state: v.state,
         identification_type_name: v.identification_type_name,
         media_file_url: v.media_file_url,
         showMenu: false,
@@ -80,7 +81,7 @@ paginaIr: number = 1;
 
 // Llama cuando quieras ir a la página ingresada
 irAPagina(): void {
-  // forzamos a entero y comprobamos que sea número válido
+  
   const destino = Number(this.paginaIr);
   if (!Number.isInteger(destino) || isNaN(destino)) {
     Swal.fire({
@@ -115,14 +116,14 @@ paginaSiguiente(): void {
     this.obtenerVoluntarios();
   }
 }
-
+// ir a pagina anterior
 paginaAnterior(): void {
   if (this.paginaActual > 1) {
     this.paginaActual--;
     this.obtenerVoluntarios();
   }
 }
-
+// Metodo para actualizar el estado de un voluntario
 actualizarVoluntario(voluntario: VoluntarioUI) {
   voluntario.showMenu = false;
   this.voluntarioService.getEstados().subscribe({
@@ -130,7 +131,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
       const estados = estadosRaw.map(e => ({
         id: e.id,
         name: e.name,
-        color: e.color // traemos también el color
+        color: e.color
       }));
 
       const opcionesHtml = estados.map(e => `<option value="${e.id}">${e.name}</option>`).join('');
@@ -167,7 +168,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
         didOpen: () => {
           const selectEl = document.getElementById('estadoSelect') as HTMLSelectElement;
 
-          // Preseleccionar el estado actual
+          
           selectEl.value = voluntario.state.id.toString();
           selectEl.style.textAlign = 'center';
         },
@@ -189,7 +190,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
             next: (resp) => {
               console.log('Voluntario actualizado:', resp);
 
-              // Actualizamos localmente el estado del voluntario para que refleje el nombre y color
+            
               voluntario.state.id = estadoId;
               if (nuevoEstado) {
                 voluntario.state.name = nuevoEstado.name;
@@ -227,9 +228,9 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
     }
   });
 }
-
+// Metodo para eliminar un voluntario
  eliminarVoluntario(voluntario: VoluntarioUI) {
-  // Cerrar el menú de acciones
+
   voluntario.showMenu = false;
 
   Swal.fire({
@@ -239,13 +240,13 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
     showCancelButton: true,
     confirmButtonText: 'Sí, eliminar',
     cancelButtonText: 'Cancelar',
-    confirmButtonColor: '#003366', // azul
-    cancelButtonColor: '#dc2626'   // rojo
+    confirmButtonColor: '#003366',
+    cancelButtonColor: '#dc2626' 
   }).then((result) => {
     if (result.isConfirmed) {
       this.voluntarioService.eliminarVoluntario(voluntario.id).subscribe({
         next: () => {
-          // Actualizar la lista local eliminando el voluntario
+          
           this.voluntarios = this.voluntarios.filter(v => v.id !== voluntario.id);
 
           Swal.fire({
@@ -268,7 +269,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
     }
   });
 }
-
+// Metodo para ver detalles de un voluntario
 verDetallesVoluntario(voluntario: VoluntarioUI) {
    voluntario.showMenu = false;
   Swal.fire({

@@ -139,7 +139,7 @@
 .encabezado-ninos {
   position: relative;
   display: flex;
-  justify-content: flex-end; /* el botón a la derecha */
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 1rem;
   margin-top: 2rem; 
@@ -147,7 +147,7 @@
 
 
 .btn-crear-nino {
-  background-color: #16a34a; /* verde */
+  background-color: #16a34a; 
   color: white;
   border: none;
   border-radius: 6px;
@@ -162,5 +162,5 @@
 }
 
 .btn-crear-nino:hover {
-  background-color: #15803d; /* verde más oscuro al pasar */
+  background-color: #15803d; 
 }

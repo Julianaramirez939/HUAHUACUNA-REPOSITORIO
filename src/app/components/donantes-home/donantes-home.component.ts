@@ -15,6 +15,7 @@ import { Estado } from "../../interfaces/estados";
   templateUrl: "./donantes-home.component.html",
   styleUrls: ["./donantes-home.component.css"],
 })
+//Componente que maneja la visualización y gestión de donantes desde el panel de administración
 export class DonantesHomeComponent implements OnInit {
   donantes: (Donante & { id: number; showMenu: boolean })[] = [];
   cargando = false;
@@ -30,13 +31,13 @@ export class DonantesHomeComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerDonantes();
   }
-
+//Metodo para obtener la lista de donantes con paginación
 obtenerDonantes(): void {
   this.cargando = true;
 
   this.donantesService.getDonantes(this.paginaActual).subscribe({
     next: (response) => {
-      const data: Donante[] = response?.data?.donors || []; // ⚡ aquí cambió 'donors'
+      const data: Donante[] = response?.data?.donors || []; 
 
       this.donantes = data.map((d: Donante) => ({
         id: d.id!,
@@ -47,7 +48,7 @@ obtenerDonantes(): void {
         identification: d.identification,
         identification_type_name: d.identification_type_name,
         state_id: d.state_id,
-        state: d.state, // si quieres usarlo directamente
+        state: d.state, 
         showMenu: false,
       }));
 
@@ -71,7 +72,7 @@ obtenerDonantes(): void {
     },
   });
 }
-
+//Metodo para ir a una página específica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
     if (!Number.isInteger(destino) || isNaN(destino)) {
@@ -98,21 +99,21 @@ obtenerDonantes(): void {
       });
     }
   }
-
+//Metodo para ir a la siguiente página
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
       this.obtenerDonantes();
     }
   }
-
+//Metodo para ir a la página anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
       this.obtenerDonantes();
     }
   }
-
+//Metodo para crear un nuevo donante
 crearDonante(): void {
   this.constantesService.obtenerTiposIdentificacion().subscribe({
     next: (res: any) => {
@@ -211,10 +212,9 @@ crearDonante(): void {
   const correoElectronico = (document.getElementById("correoElectronico") as HTMLInputElement).value.trim();
   const tipoIdentificacion = Number((document.getElementById("tipoIdentificacion") as HTMLSelectElement).value);
   const identificacionInput = (document.getElementById("identificacion") as HTMLInputElement).value.trim();
-  const identificacion = identificacionInput; // mantener como string para la interfaz
+  const identificacion = identificacionInput; 
   const state_id = Number((document.getElementById("estadoSelect") as HTMLSelectElement).value);
 
-  // Validaciones
   if (!nombre || !apellidos || !correoElectronico || !tipoIdentificacion || !identificacionInput || !state_id) {
     Swal.showValidationMessage("Completa todos los campos obligatorios (*)");
     return false;
@@ -230,13 +230,13 @@ crearDonante(): void {
     return false;
   }
 
-  // Devuelve el objeto con la propiedad correcta según la interfaz
+  
   return {
     name: nombre,
     last_name: apellidos,
     email: correoElectronico,
     identification_type: tipoIdentificacion,
-    identification: identificacion, // ✅ esto coincide con la interfaz
+    identification: identificacion, 
     state_id,
   } as Donante;
 }
@@ -271,7 +271,7 @@ crearDonante(): void {
     error: () => Swal.fire("Error", "No se pudieron cargar los tipos de identificación", "error"),
   });
 }
-
+//Metodo para actualizar la información de un donante
  actualizarDonante(donante: DonanteActualizar & { showMenu?: boolean }): void {
   if (donante.showMenu) donante.showMenu = false;
 
@@ -370,20 +370,20 @@ crearDonante(): void {
   const identification_type = Number((document.getElementById("tipoIdentificacion") as HTMLSelectElement).value);
   const state_id = Number((document.getElementById("estadoSelect") as HTMLSelectElement).value);
 
-  // Validaciones
+  
   if (!name || !last_name || !email || !identification || !identification_type || !state_id) {
     Swal.showValidationMessage("Completa todos los campos obligatorios (*)");
     return false;
   }
 
-  // Validación de correo
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     Swal.showValidationMessage("Ingresa un correo electrónico válido");
     return false;
   }
 
-  // Validación de identificación numérica
+  
   if (!/^\d+$/.test(identification)) {
     Swal.showValidationMessage("La identificación debe ser un número válido");
     return false;
@@ -408,7 +408,7 @@ crearDonante(): void {
       title: "Éxito",
       text: "Donante actualizado correctamente",
       icon: "success",
-      confirmButtonColor: "#003366", // ✅ azul oscuro
+      confirmButtonColor: "#003366", 
     });
     this.obtenerDonantes();
   },
@@ -417,7 +417,7 @@ crearDonante(): void {
       title: "Error",
       text: err.message || "No se pudo actualizar el donante",
       icon: "error",
-      confirmButtonColor: "#003366", // opcional para errores también
+      confirmButtonColor: "#003366", 
     }),
 });
 
@@ -430,8 +430,7 @@ crearDonante(): void {
     error: () => Swal.fire("Error", "No se pudieron cargar los tipos de identificación", "error"),
   });
 }
-
-
+//Metodo para eliminar un donante
   eliminarDonante(donante: Donante & { id: number; showMenu: boolean }): void {
     donante.showMenu = false;
 
@@ -465,7 +464,7 @@ crearDonante(): void {
       }
     });
   }
-
+//Metodo para ver los detalles de un donante
 verDetallesDonante(donante: Donante & { id: number; showMenu?: boolean; state?: Estado; identification_type_name?: string }): void {
   if (donante.showMenu) donante.showMenu = false;
 
@@ -519,9 +518,8 @@ verDetallesDonante(donante: Donante & { id: number; showMenu?: boolean; state?: 
     width: '620px',
     icon: 'info',
     confirmButtonText: 'Cerrar',
-    confirmButtonColor: '#003366' // azul oscuro, consistente con otros Swal
+    confirmButtonColor: '#003366' 
   });
 }
-
 
 }

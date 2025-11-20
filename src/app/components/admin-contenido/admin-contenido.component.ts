@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './admin-contenido.component.html',
   styleUrls: ['./admin-contenido.component.css']
 })
+
+//Componente que maneja la edición del contenido de la landing page desde el panel de administración
 export class AdminContenidoComponent implements OnInit {
   formularioLanding: FormGroup;
   cargando = true;
@@ -41,7 +43,7 @@ export class AdminContenidoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarLanding();
   }
-
+// Metodo para cargar el contenido de la landing page y rellenar el formulario
   cargarLanding(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
@@ -76,7 +78,7 @@ export class AdminContenidoComponent implements OnInit {
       }
     });
   }
-
+// Metodo para obtener el mensaje de error correspondiente a cada campo del formulario
   obtenerMensajeError(campo: string): string {
     const control = this.formularioLanding.get(campo);
     if (!control || !control.errors) return '';
@@ -103,14 +105,13 @@ export class AdminContenidoComponent implements OnInit {
     const errorKey = Object.keys(control.errors)[0];
     return mensajes[campo]?.[errorKey] || 'Campo inválido';
   }
-
+// Metodo para actualizar el contenido de la landing page
   actualizarLanding(): void {
     if (!this.landingId) return;
 
     if (this.formularioLanding.invalid) {
       this.formularioLanding.markAllAsTouched();
 
-      // Mostrar alerta con campos obligatorios
       const errores: string[] = [];
       Object.keys(this.formularioLanding.controls).forEach((campo) => {
         const msg = this.obtenerMensajeError(campo);

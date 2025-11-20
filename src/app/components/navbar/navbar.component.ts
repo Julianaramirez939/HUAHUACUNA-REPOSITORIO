@@ -11,33 +11,30 @@ import { LOGO } from '../../../global';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
+//Componente del navbar que permite la navegación y el scroll suave en la landing page
 export class NavbarComponent {
   logo = LOGO;
     activeLink: string = 'inicio';
 
   constructor(private router: Router) {}
 
-  /** Manejador de clics en los links del navbar */
+ //Metodo para manejar los clics en los enlaces de navegación
   onNavClick(sectionId: string) {
       this.activeLink = sectionId; 
     if (sectionId === 'donar') {
-      // Caso especial: Donar es una ruta separada
       this.router.navigate(['/donar']);
       return;
     }
-
     if (this.router.url !== '/') {
-      // Si NO estamos en el landing, primero navegamos al inicio
       this.router.navigate(['/']).then(() => {
         setTimeout(() => this.scrollToSection(sectionId), 400);
       });
     } else {
-      // Si ya estamos en el landing, solo hacemos scroll
       this.scrollToSection(sectionId);
     }
   }
 
-  /** Desplaza suavemente a una sección del landing */
+  //Metodo para desplazar suavemente a una sección del landing
   private scrollToSection(sectionId: string) {
     const el = document.getElementById(sectionId);
     if (el) {
@@ -45,7 +42,7 @@ export class NavbarComponent {
     }
   }
 
-  /** Navegación normal (por ejemplo, login) */
+  //Metodo para navegación normal
   irA(ruta: string) {
     this.router.navigate([ruta]);
   }

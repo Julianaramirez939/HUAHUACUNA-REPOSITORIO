@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './unete.component.html',
   styleUrls: ['./unete.component.css'],
 })
+//Componente que muestra la sección de "Únete" en la landing page
 export class UneteComponent {
   @Input() imagenVoluntariado: string =
     'https://images.pexels.com/photos/8435759/pexels-photo-8435759.jpeg';
@@ -16,7 +17,7 @@ export class UneteComponent {
   @Input() altura: number = 550;
 
   constructor(private router: Router) {}
-
+//Metodo para navegar a una ruta especifica
   irA(ruta: string) {
     this.router.navigate([ruta]);
   }

@@ -1,6 +1,6 @@
 .footer-amarillo {
-  width: 98%; /* ocupa el ancho del contenedor */
-  max-width: 98%; /* evita que se desborde */
+  width: 98%; 
+  max-width: 98%; 
   background-color: #ffcc00;
   color: #020202ff;
   font-family: "Segoe UI", sans-serif;
@@ -12,7 +12,7 @@
   align-items: center;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
 
-  position: relative; /* ya no necesitas left/right ni márgenes negativos */
+  position: relative; 
 }
 
 

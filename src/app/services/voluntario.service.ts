@@ -12,8 +12,9 @@ import { VoluntarioActualizar } from '../interfaces/voluntario-actualizar';
 @Injectable({
   providedIn: 'root',
 })
+//Servicio para manejar voluntarios
 export class VoluntarioService {
-  /** Endpoint base para voluntarios */
+ 
   private readonly endpoint = `${API_URL}/volunteers`;
 
   constructor(private http: HttpClient) {}
@@ -31,7 +32,7 @@ export class VoluntarioService {
     formData.append('identification_type', voluntario.identification_type.toString());
     formData.append('identification', voluntario.identification);
     formData.append('profession', voluntario.profession);
-    formData.append('attachment', voluntario.attachment); // File directamente
+    formData.append('attachment', voluntario.attachment); 
 
     return this.http.post<any>(this.endpoint, formData).pipe(
       tap(() => console.log('[VoluntarioService] Postulación enviada correctamente.')),
@@ -68,7 +69,7 @@ eliminarVoluntario(id: number): Observable<any> {
 }
 
   /**
-   * Obtiene la lista de voluntarios (requiere token en sessionStorage)
+   * Obtiene la lista de voluntarios 
    */
 getVoluntarios(page: number = 1): Observable<any> {
   const token = sessionStorage.getItem('token') || '';

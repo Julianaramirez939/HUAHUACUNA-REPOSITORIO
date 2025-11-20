@@ -10,6 +10,8 @@ import { DonacionesActualizar } from '../interfaces/donaciones-actualizar';
 @Injectable({
   providedIn: 'root',
 })
+
+//Servicio para manejar donaciones
 export class DonacionesService {
   private readonly endpoint = `${API_URL}/donation-records`;
 

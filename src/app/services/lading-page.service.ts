@@ -8,13 +8,14 @@ import { LandingPageContent } from '../interfaces/landing-page';
 @Injectable({
   providedIn: 'root',
 })
+//Servicio para manejar el contenido de la landing page
 export class LandingPageService {
   private readonly endpoint = `${API_URL}/landing-page-contents`;
 
   constructor(private http: HttpClient) {}
 
   /**
-   * 🌐 Obtener el contenido de la landing page
+   * Obtener el contenido de la landing page
    */
  getLandingPageContents(): Observable<LandingPageContent[]> {
   return this.http
@@ -27,11 +28,10 @@ export class LandingPageService {
       catchError((error) => this.manejarError(error))
     );
 }
-
+// Actualizar contenido de la landing page
  actualizarLandingContent(id: number, contenido: LandingPageContent): Observable<LandingPageContent> {
   const url = `${this.endpoint}/${id}`;
 
-  // Obtener token del sessionStorage
   const token = sessionStorage.getItem('token');
 
   const headers = new HttpHeaders({
@@ -51,7 +51,7 @@ export class LandingPageService {
 }
 
   /**
-   * ⚠️ Manejo de errores
+   * Manejo de errores
    */
   private manejarError(error: any) {
     console.error('[LandingPageService] Error:', error);

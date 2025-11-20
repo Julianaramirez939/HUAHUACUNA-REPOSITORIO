@@ -16,6 +16,7 @@ import { ConstantesService } from "../../services/constantes.service";
   templateUrl: "./ninos-home.component.html",
   styleUrls: ["./ninos-home.component.css"],
 })
+//Componente que muestra la visualización y gestión de niños en el panel de administración
 export class NinosHomeComponent implements OnInit {
   ninos: (NinoListar & { showMenu: boolean })[] = [];
   cargando = false;
@@ -28,7 +29,7 @@ export class NinosHomeComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerNinos();
   }
-
+//Metodo para obtener la lista de niños con paginación
 obtenerNinos(): void {
   this.cargando = true;
 
@@ -36,7 +37,7 @@ obtenerNinos(): void {
     next: (response) => {
 
       console.log("response", response)
-      // 👈 usar 'children' según tu servicio
+      
     const data = response?.data?.childrens || [];
 this.ninos = data.map((n: NinoListar) => ({
   id: n.id,
@@ -75,7 +76,7 @@ this.ninos = data.map((n: NinoListar) => ({
     },
   });
 }
-
+//Metodo para ir a una página específica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
     if (!Number.isInteger(destino) || isNaN(destino)) {
@@ -102,20 +103,21 @@ this.ninos = data.map((n: NinoListar) => ({
       });
     }
   }
-
+//Metodo para ir a la siguiente página
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
       this.obtenerNinos();
     }
   }
-
+//Método para ir a la página anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
       this.obtenerNinos();
     }
   }
+  //Metodo para crear un nuevo niño
 crearNino(): void {
   this.ninosService.getEstados().subscribe({
     next: (estadosRaw: any[]) => {
@@ -323,7 +325,7 @@ crearNino(): void {
     }
   });
 }
-
+//Metodo para actualizar un niño
 actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
   nino.showMenu = false;
 
@@ -548,7 +550,7 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
   });
 }
 
-
+//Metodo para eliminar un niño
   eliminarNino(nino: NinoListar & { showMenu: boolean }): void {
     nino.showMenu = false;
     Swal.fire({
@@ -576,6 +578,7 @@ actualizarNino(nino: NinoListar & { showMenu: boolean }): void {
       }
     });
   }
+//Metodo para ver los detalles de un niño
 verDetallesNino(nino: NinoListar): void {
   nino.showMenu = false;
   Swal.fire({

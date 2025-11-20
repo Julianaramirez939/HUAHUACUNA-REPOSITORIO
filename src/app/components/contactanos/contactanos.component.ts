@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './contactanos.component.html',
   styleUrls: ['./contactanos.component.css']
 })
+
+//Componente que muestra la sección de "Contáctanos" en la landing page
 export class ContactanosComponent implements OnInit {
   email: string = '';
   phone: string = '';
@@ -23,7 +25,7 @@ export class ContactanosComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerDatosContacto();
   }
-
+// Metodo para obtener la información de contacto desde el servicio de landing page
   private obtenerDatosContacto(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {

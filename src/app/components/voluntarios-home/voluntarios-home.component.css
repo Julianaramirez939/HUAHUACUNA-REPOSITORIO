@@ -8,7 +8,7 @@
 .tabla-voluntarios td {
   border: 1px solid #d1d5db;
   padding: 0.5rem 1rem;
-  text-align: center; /* centramos todo */
+  text-align: center; 
   vertical-align: middle;
 }
 
@@ -45,7 +45,7 @@
   transition: background 0.2s;
   display: flex;
   align-items: center;
-  gap: 6px; /* espacio entre icono y texto */
+  gap: 6px;
 }
 
 .acciones .menu li:hover {
@@ -62,7 +62,7 @@
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-  box-sizing: border-box; /* asegura que ocupe toda la celda */
+  box-sizing: border-box; 
 }
 
 .titulo-voluntarios {
@@ -71,7 +71,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px; /* espacio entre icono y texto */
+  gap: 8px; 
   margin-bottom: 1rem;
 }
 .paginacion {

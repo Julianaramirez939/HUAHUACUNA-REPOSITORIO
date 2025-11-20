@@ -20,6 +20,8 @@ import { Voluntario } from '../../interfaces/voluntario';
   templateUrl: './voluntariado.component.html',
   styleUrls: ['./voluntariado.component.css'],
 })
+
+//Componente que maneja la sección de voluntario en la landing page (registro de voluntarios)
 export class VoluntariadoComponent implements OnInit {
   formularioVoluntariado: FormGroup;
   tiposIdentificacion: { id: number; name: string }[] = [];
@@ -27,7 +29,6 @@ export class VoluntariadoComponent implements OnInit {
   documentoFile: File | null = null;
   enviando = false;
 
-  // Referencia al input file para poder limpiarlo
   @ViewChild('inputDocumento') inputDocumento!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -69,7 +70,7 @@ export class VoluntariadoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarTiposIdentificacion();
   }
-
+//Metodo para cargar los tipos de identificación desde el servicio de constantes
   cargarTiposIdentificacion(): void {
     this.cargandoTipos = true;
     this.constantesService.obtenerTiposIdentificacion().subscribe({
@@ -88,7 +89,7 @@ export class VoluntariadoComponent implements OnInit {
       },
     });
   }
-
+// Metodo para manejar la selección de archivo 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -96,7 +97,7 @@ export class VoluntariadoComponent implements OnInit {
       this.formularioVoluntariado.patchValue({ documento: file });
     }
   }
-
+//Metodo para enviar el formulario de postulación de voluntario
   enviarFormulario(): void {
     if (this.formularioVoluntariado.invalid) {
       this.formularioVoluntariado.markAllAsTouched();
@@ -158,7 +159,7 @@ export class VoluntariadoComponent implements OnInit {
       },
     });
   }
-
+//Metodo para obtener el mensaje de error correspondiente a cada campo del formulario
   obtenerMensajeError(campo: string): string {
     const control = this.formularioVoluntariado.get(campo);
     if (!control || !control.errors) return '';

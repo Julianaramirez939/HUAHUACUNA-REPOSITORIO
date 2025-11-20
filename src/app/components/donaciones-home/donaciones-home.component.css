@@ -176,9 +176,9 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-/* Estilo específico de cada botón */
+
 .btn-generar-reporte {
-  background-color: #003366; /* azul oscuro */
+  background-color: #003366;
   color: #fff;
 }
 
@@ -187,7 +187,7 @@
 }
 
 .btn-crear-donacion {
-  background-color: #198754; /* verde similar al crearDonacion */
+  background-color: #198754; 
   color: #fff;
 }
 
@@ -195,7 +195,7 @@
   background-color: #146c43;
 }
 
-/* Iconos dentro de los botones */
+
 .btn-generar-reporte i,
 .btn-crear-donacion i {
   font-size: 14px;

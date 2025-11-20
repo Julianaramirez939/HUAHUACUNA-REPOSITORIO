@@ -1,4 +1,4 @@
-// inicio.component.ts
+
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css'],
 })
+//Componente que muestra la sección de inicio en la landing page
 export class InicioComponent {
   @Input() imagenUrl: string =
     'https://images.pexels.com/photos/207756/pexels-photo-207756.jpeg';
