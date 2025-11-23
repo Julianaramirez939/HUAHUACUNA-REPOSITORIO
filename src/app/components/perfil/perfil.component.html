@@ -1,42 +1,48 @@
 <div class="perfil-container">
 
-
   <h1 class="perfil-title">Mi perfil</h1>
-  <h2 class="perfil-subtitle">{{ user?.full_name }}</h2>
 
-  <form class="perfil-info" (ngSubmit)="guardarCambios()">
-   
-    <label><strong>Nombre:</strong></label>
+
+
+  <!-- Formulario solo se renderiza si userDisplay existe -->
+  <form class="perfil-info" *ngIf="userDisplay" (ngSubmit)="guardarCambios()">
+
+    <label><strong>Nombre*</strong></label>
     <input
       type="text"
-      [(ngModel)]="user.name"
+      [(ngModel)]="userDisplay.name"
       name="name"
       class="perfil-input"
+      required
     />
 
-  
-    <label><strong>Apellido:</strong></label>
+    <label><strong>Apellido*</strong></label>
     <input
       type="text"
-      [(ngModel)]="user.last_name"
+      [(ngModel)]="userDisplay.last_name"
       name="last_name"
       class="perfil-input"
+      required
     />
 
-  
-    <p><strong>Correo:</strong> {{ user?.email }}</p>
+    <label><strong>Correo electrónico*</strong></label>
+    <input
+      type="email"
+      [(ngModel)]="userDisplay.email"
+      name="email"
+      class="perfil-input"
+      required
+    />
 
- 
     <p>
       <strong>Estado:</strong>
-      <span [style.color]="user?.state?.color || 'black'">
-        {{ user?.state?.name }}
+      <span [style.color]="userDisplay.state?.color || 'black'">
+        {{ userDisplay.state?.name }}
       </span>
     </p>
 
-    <p><strong>Registrado el:</strong> {{ user?.created_at | date:'longDate' }}</p>
 
- 
+    <!-- Sección para cambiar contraseña -->
     <div class="password-section">
       <button type="button" class="btn-password" (click)="togglePassword()">
         <i class="fa fa-key"></i> {{ mostrarPassword ? 'Cancelar' : 'Deseo cambiar contraseña' }}
@@ -45,7 +51,7 @@
       <div *ngIf="mostrarPassword" class="password-fields">
         <label><strong>Nueva contraseña:</strong></label>
         <input
-          type="password"
+          [type]="mostrarPasswordInput ? 'text' : 'password'"
           [(ngModel)]="password"
           name="password"
           class="perfil-input"
@@ -53,17 +59,23 @@
 
         <label><strong>Confirmar contraseña:</strong></label>
         <input
-          type="password"
+          [type]="mostrarPasswordInput ? 'text' : 'password'"
           [(ngModel)]="confirmPassword"
           name="confirmPassword"
           class="perfil-input"
         />
 
-        <p *ngIf="passwordError" class="error-message">{{ passwordError }}</p>
+        <!-- Checkbox debajo de los inputs -->
+        <label class="show-password-checkbox">
+          <input type="checkbox" (change)="toggleMostrarPasswordInput()" />
+          Mostrar contraseña
+        </label>
+
+        <p *ngIf="camposError" class="error-message">{{ camposError }}</p>
       </div>
     </div>
-
-   
+  <!-- Mensaje de error de campos obligatorios -->
+  <p *ngIf="camposError" class="error-message">{{ camposError }}</p>
     <button type="submit" class="btn-save">Guardar cambios</button>
   </form>
 

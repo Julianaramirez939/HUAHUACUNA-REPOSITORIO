@@ -1,21 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LOGO } from '../../../global';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { LOGO } from '../../../global';
+import { UsuariosService } from '../../services/usuarios.service';
+import { Usuario } from '../../interfaces/usuario';
+import { ActualizarUsuario } from '../../interfaces/actualizar-usuario';
 
-/**
- * Componente de perfil de usuario.
- * 
- * Permite visualizar y editar información básica del usuario almacenada
- * en `sessionStorage`. También ofrece la posibilidad de cambiar la contraseña.
- * 
- * Funcionalidades principales:
- * - Mostrar datos del usuario actual.
- * - Editar contraseña con validación de coincidencia.
- * - Guardar cambios localmente en sessionStorage.
- * - Redirigir al login si no hay usuario en sessionStorage.
- */
 @Component({
   selector: 'app-perfil',
   standalone: true,
@@ -24,73 +16,138 @@ import { Router } from '@angular/router';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
-  /** Objeto con información del usuario actual */
-  user: any = null;
-
-  /** URL del logo de la app */
+  userDisplay: Usuario | null = null;
   logo = LOGO;
 
-  /** Controla la visibilidad del formulario de cambio de contraseña */
+  // Campos para errores y contraseña
+  camposError = '';
   mostrarPassword = false;
-
-  /** Campo para la nueva contraseña */
   password = '';
-
-  /** Campo para confirmar la nueva contraseña */
   confirmPassword = '';
-
-  /** Mensaje de error si la contraseña no cumple requisitos */
   passwordError = '';
+  mostrarPasswordInput = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private usuariosService: UsuariosService) {}
 
-  /**
-   * Inicializa el componente.
-   * - Recupera el usuario almacenado en sessionStorage.
-   * - Redirige al login si no hay usuario.
-   */
   ngOnInit(): void {
-    const storedUser = sessionStorage.getItem('user');
-    if (storedUser) {
-      this.user = JSON.parse(storedUser);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.traerUsuario();
   }
 
-  /** Redirige al usuario a la página de inicio */
+  private traerUsuario(): void {
+    const storedUser = sessionStorage.getItem('user');
+    if (!storedUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const userData = JSON.parse(storedUser) as { id: number };
+    const userId = userData.id;
+
+    this.usuariosService.getUsuarioPorId(userId).subscribe({
+      next: (user: Usuario) => {
+        this.userDisplay = user;
+      },
+      error: err => {
+        Swal.fire('Error', err.message || 'No se pudo obtener los datos del usuario.', 'error');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
   irAlInicio(): void {
     this.router.navigate(['/']);
   }
 
-  /** Alterna la visibilidad del formulario de cambio de contraseña y reinicia los campos */
   togglePassword(): void {
     this.mostrarPassword = !this.mostrarPassword;
     this.password = '';
     this.confirmPassword = '';
     this.passwordError = '';
+    this.mostrarPasswordInput = false;
+  }
+guardarCambios(): void {
+  if (!this.userDisplay) return;
+
+  this.camposError = '';
+
+  // Validar campos obligatorios
+  if (!this.userDisplay.name?.trim() || !this.userDisplay.last_name?.trim() || !this.userDisplay.email?.trim()) {
+    this.camposError = 'Por favor completa todos los campos obligatorios (*)';
+    return;
   }
 
-  /**
-   * Guarda los cambios realizados en el perfil.
-   * - Valida coincidencia de contraseñas si se está cambiando.
-   * - Actualiza la información del usuario en sessionStorage.
-   * - Muestra una alerta de confirmación al usuario.
-   */
-  guardarCambios(): void {
-    if (this.mostrarPassword) {
-      if (this.password.trim() === '' || this.confirmPassword.trim() === '') {
-        this.passwordError = 'Debe completar ambos campos.';
-        return;
-      }
-      if (this.password !== this.confirmPassword) {
-        this.passwordError = 'Las contraseñas no coinciden.';
-        return;
-      }
+  // Validar email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(this.userDisplay.email)) {
+    this.camposError = 'Ingresa un correo electrónico válido';
+    return;
+  }
+
+  let passwordToSend: string | undefined = undefined;
+  if (this.mostrarPassword) {
+    if (!this.password.trim() || !this.confirmPassword.trim()) {
+      this.camposError = 'Debe completar ambos campos de contraseña';
+      return;
     }
 
-    this.passwordError = '';
-    sessionStorage.setItem('user', JSON.stringify(this.user));
-    alert('✅ Cambios guardados correctamente');
+    if (this.password !== this.confirmPassword) {
+      this.camposError = 'Las contraseñas no coinciden';
+      return;
+    }
+
+    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+    if (!passRegex.test(this.password)) {
+      this.camposError = 'La contraseña debe tener mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 caracter especial';
+      return;
+    }
+
+    passwordToSend = this.password;
   }
+
+  const payload: ActualizarUsuario = {
+    id: this.userDisplay.id,
+    name: this.userDisplay.name,
+    last_name: this.userDisplay.last_name,
+    email: this.userDisplay.email,
+    state_id: this.userDisplay.state_id,
+    roles: this.userDisplay.roles.map(r => r.id),
+    password: passwordToSend
+  };
+
+  this.usuariosService.actualizarUsuario(payload).subscribe({
+    next: updatedUser => {
+      this.userDisplay = { ...this.userDisplay!, ...updatedUser };
+      sessionStorage.setItem('user', JSON.stringify(this.userDisplay));
+
+      Swal.fire({
+        title: 'Perfil actualizado',
+        text: 'Tus datos se han actualizado correctamente.',
+        icon: 'success',
+        confirmButtonColor: '#003366'
+      });
+
+      // Limpiar campos de contraseña
+      if (this.mostrarPassword) {
+        this.password = '';
+        this.confirmPassword = '';
+        this.mostrarPassword = false;
+        this.mostrarPasswordInput = false;
+      }
+    },
+    error: err => {
+      Swal.fire({
+        title: 'Error',
+        text: err.message || 'No se pudo actualizar el perfil.',
+        icon: 'error',
+        confirmButtonColor: '#003366'
+      });
+    }
+  });
+}
+
+  toggleMostrarPasswordInput(): void {
+    this.mostrarPasswordInput = !this.mostrarPasswordInput;
+  }
+
+
 }

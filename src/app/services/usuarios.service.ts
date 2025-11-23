@@ -7,6 +7,7 @@ import { CrearUsuario } from '../interfaces/crear-usuario';
 import { ActualizarUsuario } from '../interfaces/actualizar-usuario';
 import { Estado } from '../interfaces/estados';
 import { Rol } from '../interfaces/rol';
+import { Usuario } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -114,6 +115,16 @@ getRoles(): Observable<Rol[]> {
   );
 }
 
+getUsuarioPorId(id: number): Observable<Usuario> {
+  const headers = this.getHeadersTokenOnly();
+  const url = `${this.endpoint}/${id}`;
+
+  return this.http.get<any>(url, { headers }).pipe(
+    tap(() => console.log(`[UsersService] Usuario ${id} obtenido.`)),
+    map(resp => resp.data as Usuario), // usamos el tipo completo
+    catchError((error) => this.manejarError(error))
+  );
+}
 
   // -----------------------------------------------
   // HEADERS
