@@ -11,9 +11,10 @@
     novalidate
   >
     <div class="form-grid">
+
       <!-- Nombre -->
       <div class="form-group">
-        <label for="nombre">Nombre</label>
+        <label for="nombre">Nombre *</label>
         <input id="nombre" type="text" formControlName="nombre" />
         <p *ngIf="formularioVoluntariado.get('nombre')?.invalid && (formularioVoluntariado.get('nombre')?.touched || formularioVoluntariado.get('nombre')?.dirty)"
            class="error-message">{{ obtenerMensajeError('nombre') }}</p>
@@ -21,7 +22,7 @@
 
       <!-- Apellidos -->
       <div class="form-group">
-        <label for="apellidos">Apellidos</label>
+        <label for="apellidos">Apellidos *</label>
         <input id="apellidos" type="text" formControlName="apellidos" />
         <p *ngIf="formularioVoluntariado.get('apellidos')?.invalid && (formularioVoluntariado.get('apellidos')?.touched || formularioVoluntariado.get('apellidos')?.dirty)"
            class="error-message">{{ obtenerMensajeError('apellidos') }}</p>
@@ -29,7 +30,7 @@
 
       <!-- Teléfono -->
       <div class="form-group">
-        <label for="telefono">Teléfono</label>
+        <label for="telefono">Teléfono *</label>
         <input id="telefono" type="text" formControlName="telefono" />
         <p *ngIf="formularioVoluntariado.get('telefono')?.invalid && (formularioVoluntariado.get('telefono')?.touched || formularioVoluntariado.get('telefono')?.dirty)"
            class="error-message">{{ obtenerMensajeError('telefono') }}</p>
@@ -37,7 +38,7 @@
 
       <!-- Email -->
       <div class="form-group">
-        <label for="email">Correo electrónico</label>
+        <label for="email">Correo electrónico *</label>
         <input id="email" type="email" formControlName="email" />
         <p *ngIf="formularioVoluntariado.get('email')?.invalid && (formularioVoluntariado.get('email')?.touched || formularioVoluntariado.get('email')?.dirty)"
            class="error-message">{{ obtenerMensajeError('email') }}</p>
@@ -45,7 +46,7 @@
 
       <!-- Tipo de identificación -->
       <div class="form-group">
-        <label for="tipoIdentificacion">Tipo de identificación</label>
+        <label for="tipoIdentificacion">Tipo de identificación *</label>
         <ng-select
           [items]="tiposIdentificacion"
           bindLabel="name"
@@ -63,7 +64,7 @@
 
       <!-- Número de identificación -->
       <div class="form-group">
-        <label for="identificacion">Número de identificación</label>
+        <label for="identificacion">Número de identificación *</label>
         <input id="identificacion" type="text" formControlName="identificacion" />
         <p *ngIf="formularioVoluntariado.get('identificacion')?.invalid && (formularioVoluntariado.get('identificacion')?.touched || formularioVoluntariado.get('identificacion')?.dirty)"
            class="error-message">{{ obtenerMensajeError('identificacion') }}</p>
@@ -71,7 +72,7 @@
 
       <!-- Profesión -->
       <div class="form-group">
-        <label for="profesion">Profesión</label>
+        <label for="profesion">Profesión *</label>
         <input id="profesion" type="text" formControlName="profesion" />
         <p *ngIf="formularioVoluntariado.get('profesion')?.invalid && (formularioVoluntariado.get('profesion')?.touched || formularioVoluntariado.get('profesion')?.dirty)"
            class="error-message">{{ obtenerMensajeError('profesion') }}</p>
@@ -79,14 +80,14 @@
 
       <!-- Documento -->
       <div class="form-group file-group">
-        <label for="documento">Adjunta tu documento de identificación</label>
+        <label for="documento">Adjunta tu documento de identificación *</label>
         <input #inputDocumento id="documento" type="file" (change)="onFileSelected($event)" />
         <p *ngIf="formularioVoluntariado.get('documento')?.invalid && (formularioVoluntariado.get('documento')?.touched || formularioVoluntariado.get('documento')?.dirty)"
            class="error-message">{{ obtenerMensajeError('documento') }}</p>
       </div>
+
     </div>
 
     <button type="submit" class="btn-voluntariado-submit">Postularme</button>
   </form>
 </div>
-    

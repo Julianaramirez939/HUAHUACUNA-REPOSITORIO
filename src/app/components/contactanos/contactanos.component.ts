@@ -2,21 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { LandingPageService } from '../../services/lading-page.service';
 import { LandingPageContent } from '../../interfaces/landing-page';
 import { CommonModule } from '@angular/common';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 
 @Component({
   selector: 'app-contactanos',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, SafeUrlPipe],
   templateUrl: './contactanos.component.html',
   styleUrls: ['./contactanos.component.css']
 })
-
-//Componente que muestra la sección de "Contáctanos" en la landing page
 export class ContactanosComponent implements OnInit {
+
   email: string = '';
   phone: string = '';
   address: string = '';
   facebook: string = '';
   instagram: string = '';
+  mapUrl: string = '';
+
   cargando = true;
   error: string | null = null;
 
@@ -25,17 +28,25 @@ export class ContactanosComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerDatosContacto();
   }
-// Metodo para obtener la información de contacto desde el servicio de landing page
+
   private obtenerDatosContacto(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
         if (data.length > 0) {
           const content = data[0].content;
+
           this.email = content.email;
           this.phone = content.phone_number;
           this.address = content.address;
           this.facebook = content.social_media_links.facebook;
           this.instagram = content.social_media_links.instagram;
+
+         this.address = content.address;
+
+
+const direccionLimpia = this.limpiarDireccion(this.address);
+
+this.mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(direccionLimpia)}&output=embed`;
         }
         this.cargando = false;
       },
@@ -46,4 +57,11 @@ export class ContactanosComponent implements OnInit {
       }
     });
   }
+private limpiarDireccion(direccion: string): string {
+  const regex = /(Calle|Cra|Carrera|Transversal|Diagonal)\s*\d+\s*#\s*\d+\s*[-–]\s*\d+/i;
+  const match = direccion.match(regex);
+
+  return match ? match[0].trim() : direccion;
+}
+
 }

@@ -1,1 +1,92 @@
-<p>usuarios-home works!</p>
+<div class="usuarios-home">
+<div class="encabezado-usuarios">
+  <h2 class="titulo-usuarios">
+    <i class="fa-solid fa-user-group"></i> Usuarios
+  </h2>
+
+  <button class="btn-crear-usuario" (click)="crearUsuario()">
+    <i class="fa-solid fa-plus"></i> Crear Usuario
+  </button>
+</div>
+
+  <table class="tabla-usuarios" *ngIf="!cargando && usuarios.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Correo electrónico</th>
+        <th>Estado</th>
+        <th>Roles</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td class="centrado">{{ u.name }} {{ u.last_name }}</td>
+        <td class="centrado">{{ u.email }}</td>
+
+        <td class="centrado">
+          <span class="estado-cuadro-full" [style.background-color]="u.state?.color">
+            {{ u.state?.name }}
+          </span>
+        </td>
+
+        <td class="centrado">
+          <span *ngFor="let r of u.roles" class="rol-badge">
+            {{ r.name }}
+          </span>
+        </td>
+
+        <td class="centrado acciones">
+          <div class="dropdown">
+            <i class="fas fa-ellipsis-v" (click)="u.showMenu = !u.showMenu"></i>
+
+            <ul class="menu" *ngIf="u.showMenu">
+              <li (click)="actualizarUsuario(u)">
+                <i class="fas fa-edit"></i> Actualizar
+              </li>
+
+              <li (click)="eliminarUsuario(u)">
+                <i class="fas fa-trash-alt"></i> Eliminar
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && usuarios.length === 0">No hay usuarios registrados.</p>
+  <p *ngIf="cargando">Cargando usuarios...</p>
+
+  <!-- PAGINACIÓN -->
+  <div class="paginacion" *ngIf="!cargando && usuarios.length > 0">
+    <div class="botones-navegacion">
+      <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+        Anterior
+      </button>
+
+      <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
+
+      <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+        Siguiente
+      </button>
+    </div>
+
+    <div class="ir-pagina">
+      <label for="irPagina">Ir a:</label>
+      <input
+        id="irPagina"
+        type="number"
+        [(ngModel)]="paginaIr"
+        min="1"
+        [max]="ultimaPagina"
+        (keyup.enter)="irAPagina()"
+        [disabled]="ultimaPagina <= 1"
+      />
+      <button (click)="irAPagina()" [disabled]="ultimaPagina <= 1 || !paginaIr">
+        Ir
+      </button>
+    </div>
+  </div>
+</div>

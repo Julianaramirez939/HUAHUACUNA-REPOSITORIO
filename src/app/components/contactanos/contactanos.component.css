@@ -81,3 +81,27 @@
     gap: 20px;
   }
 }
+/* Contenedor del mapa */
+.map-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto 0 auto;
+  border-radius: 15px;
+  overflow: hidden; /* asegura esquinas redondeadas también dentro del iframe */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover suave como los otros elementos */
+.map-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.30);
+}
+
+/* Iframe interno del mapa */
+.map-container iframe {
+  width: 100%;
+  height: 350px;
+  border: none;
+  display: block;
+}
