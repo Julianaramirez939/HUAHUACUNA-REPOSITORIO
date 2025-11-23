@@ -1,11 +1,9 @@
-export interface Donaciones {
-  id?: number;
+export interface Reporte {
   name: string;
-  email: string;
   identification_type: number;
   identification_type_name?: string;
+  donation_method: number;
   identification: string;
-  date: string;
   money_amount: number;
-  showMenu?: boolean;
+  year: number;
 }

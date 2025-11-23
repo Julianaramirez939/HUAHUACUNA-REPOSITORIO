@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DonacionesService } from '../../services/donaciones.service';
+import { CrearDonaciones } from '../../interfaces/donaciones-crear';
 import { LandingPageService } from '../../services/lading-page.service';
+import { ConstantesService } from '../../services/constantes.service';
 import { LandingPageContent } from '../../interfaces/landing-page';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-donar',
@@ -18,38 +17,29 @@ import { LandingPageContent } from '../../interfaces/landing-page';
   styleUrls: ['./donar.component.css'],
 })
 export class DonarComponent implements OnInit {
-
-  // 👇 Nuevo
   phone: string = '';
   cargando = true;
+  modalAbierta = false;
 
-  imagenPSE: string =
-    'https://images.pexels.com/photos/3943723/pexels-photo-3943723.jpeg';
-  imagenEspecie: string =
-    'https://images.pexels.com/photos/5693888/pexels-photo-5693888.jpeg';
+  formularioDonacion: FormGroup;
+  tiposIdentificacion: { id: number; name: string }[] = [];
+
+  imagenPSE: string = 'https://images.pexels.com/photos/3943723/pexels-photo-3943723.jpeg';
+  imagenEspecie: string = 'https://images.pexels.com/photos/5693888/pexels-photo-5693888.jpeg';
 
   brillo: number = 1.0;
   altura: number = 450;
 
-  modalAbierta = false;
-
-  formularioDonacion: FormGroup;
-
-  tiposIdentificacion = [
-    { id: 1, name: 'Cédula de ciudadanía' },
-    { id: 2, name: 'Tarjeta de identidad' },
-    { id: 3, name: 'Cédula de extranjería' },
-    { id: 4, name: 'Pasaporte' },
-  ];
-
   constructor(
     private fb: FormBuilder,
-    private landingService: LandingPageService   // 👈 Agregado
+    private landingService: LandingPageService,
+    private constantesService: ConstantesService,
+    private donacionesService: DonacionesService
   ) {
     this.formularioDonacion = this.fb.group({
       nombreCompleto: ['', [Validators.required, Validators.minLength(3)]],
       correo: ['', [Validators.required, Validators.email]],
-      tipoIdentificacion: ['', Validators.required],
+      tipoIdentificacion: [null, Validators.required], // null inicial para ng-select
       identificacion: ['', [Validators.required, Validators.pattern(/^[0-9]{5,15}$/)]],
       monto: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     });
@@ -57,22 +47,37 @@ export class DonarComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerDatosContacto();
+    this.cargarTiposIdentificacion();
   }
 
-  // 👇 Igual que en ContactanosComponent
   private obtenerDatosContacto(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
         if (data.length > 0) {
           const content = data[0].content;
-          this.phone = content.phone_number; // 👈 ya lo tienes aquí
+          this.phone = content.phone_number;
         }
         this.cargando = false;
       },
       error: (err) => {
         console.error('[DonarComponent] Error cargando contacto:', err);
         this.cargando = false;
-      }
+      },
+    });
+  }
+
+  private cargarTiposIdentificacion(): void {
+    this.constantesService.obtenerTiposIdentificacion().subscribe({
+      next: (res: any) => {
+        this.tiposIdentificacion = res.data.map((tipo: any) => ({
+          id: tipo.id,
+          name: tipo.name
+        }));
+      },
+      error: (err) => {
+        console.error('[DonarComponent] Error obteniendo tipos de identificación:', err);
+        this.tiposIdentificacion = [];
+      },
     });
   }
 
@@ -84,14 +89,49 @@ export class DonarComponent implements OnInit {
     this.modalAbierta = false;
     this.formularioDonacion.reset();
   }
-
-  enviarFormulario(): void {
-    if (this.formularioDonacion.invalid) {
-      this.formularioDonacion.markAllAsTouched();
-      return;
-    }
-
-    console.log('Datos del formulario:', this.formularioDonacion.value);
-    this.cerrarModal();
+enviarFormulario(): void {
+  if (this.formularioDonacion.invalid) {
+    this.formularioDonacion.markAllAsTouched();
+    return;
   }
+
+  const datosFormulario = this.formularioDonacion.value;
+
+  const nuevaDonacion: CrearDonaciones = {
+    name: datosFormulario.nombreCompleto,
+    email: datosFormulario.correo,
+    identification_type: datosFormulario.tipoIdentificacion, // ya es number
+    identification: datosFormulario.identificacion,
+    money_amount: Number(datosFormulario.monto),
+  };
+
+  console.log('Enviando donación:', nuevaDonacion);
+
+  // Primero cerramos modal para que SweetAlert esté visible
+  this.cerrarModal();
+
+  this.donacionesService.crearDonacion(nuevaDonacion).subscribe({
+    next: () => {
+      Swal.fire({
+        title: '¡Donación exitosa!',
+        text: 'Gracias por tu aporte. ❤️',
+        icon: 'success',
+        confirmButtonColor: '#003366',
+        confirmButtonText: 'Aceptar'
+      });
+    },
+    error: (err) => {
+      console.error('[DonarComponent] Error al enviar donación:', err);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo procesar tu donación. Intenta nuevamente.',
+        icon: 'error',
+        confirmButtonColor: '#003366',
+        confirmButtonText: 'Aceptar'
+      });
+    },
+  });
+}
+
+
 }

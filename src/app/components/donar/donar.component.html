@@ -4,12 +4,11 @@
   </div>
 
   <p class="donar-intro">
-    Tu aporte nos acerca cada vez más a cumplir el sueño de una Colombia en la que las niñas
-    y los niños sean amados, protegidos y respetados.
+    Tu aporte nos acerca cada vez más a cumplir el sueño de una Colombia en la
+    que las niñas y los niños sean amados, protegidos y respetados.
   </p>
 
   <div class="donar-container" [style.height.px]="altura">
-
     <!-- PSE -->
     <div
       class="donar-card"
@@ -20,13 +19,11 @@
         <div class="overlay-content">
           <h2>PSE</h2>
           <p>
-            Contribuye mediante pagos electrónicos, seguros y cómodos, para apoyar
-            nuestras iniciativas.
+            Contribuye mediante pagos electrónicos, seguros y cómodos, para
+            apoyar nuestras iniciativas.
           </p>
 
-          <button class="btn-donar" (click)="abrirModal()">
-            ¡DONA AHORA!
-          </button>
+          <button class="btn-donar" (click)="abrirModal()">¡DONA AHORA!</button>
         </div>
       </div>
     </div>
@@ -53,28 +50,61 @@
 
 <!-- ⭐ MODAL DE DONACIÓN ⭐ -->
 
+<!-- ⭐ MODAL DE DONACIÓN ⭐ -->
 <div class="modal-backdrop" *ngIf="modalAbierta">
   <div class="modal-form">
-
     <h2>Formulario de Donación</h2>
 
-    <form [formGroup]="formularioDonacion" (ngSubmit)="enviarFormulario()" class="form-grid">
-
+    <form
+      [formGroup]="formularioDonacion"
+      (ngSubmit)="enviarFormulario()"
+      class="form-grid"
+    >
       <!-- Nombre completo -->
       <div class="form-group">
-        <label>Nombre completo</label>
+        <label>Nombre completo*</label>
         <input type="text" formControlName="nombreCompleto" />
+        <small
+          class="error"
+          *ngIf="
+            formularioDonacion.get('nombreCompleto')?.touched &&
+            formularioDonacion.get('nombreCompleto')?.invalid
+          "
+        >
+          <span
+            *ngIf="formularioDonacion.get('nombreCompleto')?.errors?.['required']"
+            >El nombre es obligatorio.</span
+          >
+          <span
+            *ngIf="formularioDonacion.get('nombreCompleto')?.errors?.['minlength']"
+            >Mínimo 3 caracteres.</span
+          >
+        </small>
       </div>
 
       <!-- Correo -->
       <div class="form-group">
-        <label>Correo electrónico</label>
+        <label>Correo electrónico*</label>
         <input type="email" formControlName="correo" />
+        <small
+          class="error"
+          *ngIf="
+            formularioDonacion.get('correo')?.touched &&
+            formularioDonacion.get('correo')?.invalid
+          "
+        >
+          <span *ngIf="formularioDonacion.get('correo')?.errors?.['required']"
+            >El correo es obligatorio.</span
+          >
+          <span *ngIf="formularioDonacion.get('correo')?.errors?.['email']"
+            >Correo no válido.</span
+          >
+        </small>
       </div>
 
-      <!-- Tipo identificación -->
+      <!-- Tipo de identificación -->
       <div class="form-group">
-        <label>Tipo de identificación</label>
+        <label>Tipo de identificación*</label>
         <ng-select
           [items]="tiposIdentificacion"
           bindLabel="name"
@@ -82,27 +112,71 @@
           placeholder="Selecciona una opción"
           formControlName="tipoIdentificacion"
           [clearable]="true"
-        ></ng-select>
+        >
+        </ng-select>
+        <small
+          class="error"
+          *ngIf="
+            formularioDonacion.get('tipoIdentificacion')?.touched &&
+            formularioDonacion.get('tipoIdentificacion')?.invalid
+          "
+        >
+          Debes seleccionar un tipo de identificación.
+        </small>
       </div>
 
-      <!-- Identificación -->
+      <!-- Número de identificación -->
       <div class="form-group">
-        <label>Número de identificación</label>
+        <label>Número de identificación*</label>
         <input type="text" formControlName="identificacion" />
+        <small
+          class="error"
+          *ngIf="
+            formularioDonacion.get('identificacion')?.touched &&
+            formularioDonacion.get('identificacion')?.invalid
+          "
+        >
+          <span
+            *ngIf="formularioDonacion.get('identificacion')?.errors?.['required']"
+            >La identificación es obligatoria.</span
+          >
+          <span
+            *ngIf="formularioDonacion.get('identificacion')?.errors?.['pattern']"
+            >Debe ser solo números (5-15 dígitos).</span
+          >
+        </small>
       </div>
 
       <!-- Monto -->
-      <div class="form-group">
-        <label>Monto</label>
+      <div class="form-group monto-half">
+        <label>Monto*</label>
         <input type="text" formControlName="monto" />
+        <small
+          class="error"
+          *ngIf="
+            formularioDonacion.get('monto')?.touched &&
+            formularioDonacion.get('monto')?.invalid
+          "
+        >
+          <span *ngIf="formularioDonacion.get('monto')?.errors?.['required']"
+            >El monto es obligatorio.</span
+          >
+          <span *ngIf="formularioDonacion.get('monto')?.errors?.['pattern']"
+            >Solo se permiten números.</span
+          >
+        </small>
       </div>
+
+      <!-- Contenedor de botones unificado -->
     </form>
 
     <div class="modal-buttons">
-      <button class="btn-submit" (click)="enviarFormulario()">Enviar</button>
-      <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+      <button class="btn-submit" type="submit" (click)="enviarFormulario()">
+        Enviar
+      </button>
+      <button class="btn-cancelar" type="button" (click)="cerrarModal()">
+        Cancelar
+      </button>
     </div>
-
   </div>
 </div>
-

@@ -2,69 +2,85 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { API_URL } from '../../global';
 import { Donaciones } from '../interfaces/donaciones';
+import { CrearDonaciones } from '../interfaces/donaciones-crear';
 import { DonacionesActualizar } from '../interfaces/donaciones-actualizar';
+import { Reporte } from '../interfaces/reporte'; // importa la interfaz
 
 @Injectable({
   providedIn: 'root',
 })
-
-//Servicio para manejar donaciones
 export class DonacionesService {
   private readonly endpoint = `${API_URL}/donation-records`;
 
   constructor(private http: HttpClient) {}
 
-private getHeaders(): HttpHeaders {
-  const token = sessionStorage.getItem('token') || '';
-  return new HttpHeaders({
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  });
-}
-
+  private getHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('token') || '';
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    });
+  }
 
   // Crear donación
-  crearDonacion(donacion: Donaciones): Observable<any> {
-    return this.http.post<any>(this.endpoint, donacion, { headers: this.getHeaders() }).pipe(
+  crearDonacion(donacion: CrearDonaciones): Observable<Donaciones> {
+    return this.http.post<Donaciones>(this.endpoint, donacion, { headers: this.getHeaders() }).pipe(
       tap(() => console.log('[DonacionesService] Donación creada correctamente.')),
       catchError((error) => this.manejarError(error))
     );
   }
 
   // Actualizar donación
-  actualizarDonacion(donacion: DonacionesActualizar): Observable<any> {
+  actualizarDonacion(donacion: DonacionesActualizar): Observable<Donaciones> {
     const url = `${this.endpoint}/${donacion.id}`;
-    return this.http.put<any>(url, donacion, { headers: this.getHeaders() }).pipe(
+    return this.http.put<Donaciones>(url, donacion, { headers: this.getHeaders() }).pipe(
       tap(() => console.log(`[DonacionesService] Donación ${donacion.id} actualizada correctamente.`)),
       catchError((error) => this.manejarError(error))
     );
   }
 
   // Eliminar donación
-  eliminarDonacion(id: number): Observable<any> {
+  eliminarDonacion(id: number): Observable<void> {
     const url = `${this.endpoint}/${id}`;
-    return this.http.delete<any>(url, { headers: this.getHeaders() }).pipe(
+    return this.http.delete<void>(url, { headers: this.getHeaders() }).pipe(
       tap(() => console.log(`[DonacionesService] Donación ${id} eliminada correctamente.`)),
       catchError((error) => this.manejarError(error))
     );
   }
 
- getDonaciones(page: number = 1): Observable<any> {
-  const url = `${this.endpoint}?page=${page}`;
+
+// DonacionesService
+getDonaciones(page: number = 1): Observable<any> {
   const headers = this.getHeaders();
-  
-  console.log('GET Donaciones URL:', url);
-  console.log('Headers enviados:', headers.keys().map(k => `${k}: ${headers.get(k)}`));
+  const url = `${this.endpoint}?page=${page}`;
 
   return this.http.get<any>(url, { headers }).pipe(
-    tap(() => console.log(`[DonacionesService] Lista de donaciones obtenida. Página ${page}`)),
+    tap(() => console.log(`[DonacionesService] Donaciones obtenidas. Página ${page}`)),
+    map(resp => {
+      return {
+        donaciones: resp?.data?.donationRecords || [],
+        pagination: resp?.data?.pagination || null,
+        links: resp?.data?.links || null
+      };
+    }),
+    catchError(error => this.manejarError(error))
+  );
+}
+generarReporte(reporte: Reporte): Observable<Blob> {
+  const url = `${this.endpoint}/donation-certificate`;
+  return this.http.post(url, reporte, { 
+    headers: this.getHeaders(),
+    responseType: 'blob' // <-- importante para PDF
+  }).pipe(
+    tap(() => console.log('[DonacionesService] Reporte PDF generado correctamente.')),
     catchError((error) => this.manejarError(error))
   );
 }
+
 
 
   // Manejo unificado de errores

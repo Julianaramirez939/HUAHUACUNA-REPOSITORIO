@@ -1,7 +1,8 @@
-export interface DonacionesCrear {
+
+export interface CrearDonaciones {
+  name: string;
+  email: string;
+  identification_type: number;
+  identification: string;          
   money_amount: number;
-  date: string;
-  donor_id: number;
-  donation_method: number;
-  observation?: string;
 }

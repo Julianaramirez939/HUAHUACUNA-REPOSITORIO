@@ -18,7 +18,6 @@ import { NavbarPadrinoHomeComponent } from './components/navbar-padrino-home/nav
 import { NinosBitacoraComponent } from './components/ninos-bitacora/ninos-bitacora.component';
 import { AdminContenidoComponent } from './components/admin-contenido/admin-contenido.component';
 import { ActividadesHomeComponent } from './components/actividades-home/actividades-home.component';
-import { DonantesHomeComponent } from './components/donantes-home/donantes-home.component';
 import { DonacionesHomeComponent } from './components/donaciones-home/donaciones-home.component';
 
 export const routes: Routes = [
@@ -51,7 +50,6 @@ export const routes: Routes = [
       { path: 'niños', component: NinosHomeComponent },
       { path: 'administracion-contenido', component: AdminContenidoComponent },
       { path: 'actividades', component: ActividadesHomeComponent },
-      { path: 'donantes', component: DonantesHomeComponent },
       { path: 'donaciones', component: DonacionesHomeComponent },
     ],
   },

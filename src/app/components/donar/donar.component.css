@@ -307,6 +307,15 @@ label {
   margin-bottom: 0.4rem;
   font-size: 1rem;
 }
+.form-group.monto-half {
+  grid-column: 1 / -1; /* ocupa toda la fila */
+  max-width: 260px;
+  margin: 0 auto;       /* centrado horizontal */
+  align-items: center;   /* centra label e input */
+  text-align: center;    /* centra texto del label */
+}
+
+
 
 /* ---------- INPUTS COMPACTOS ---------- */
 .modal-form input {
@@ -326,7 +335,7 @@ label {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-/* ---------- NG-SELECT AJUSTADO ---------- */
+
 
 ::ng-deep .ng-select {
   width: 100%;
@@ -334,13 +343,13 @@ label {
 }
 
 ::ng-deep .ng-select .ng-select-container {
-  min-height: 36px; /* igual a inputs */
-  padding: 0 0.35rem;
+  min-height: 42px;
   border-radius: 6px;
   border: 1px solid #d1d5db;
   background-color: #ffffff;
   display: flex;
   align-items: center;
+  justify-content: center; 
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -349,59 +358,101 @@ label {
 }
 
 ::ng-deep .ng-select .ng-select-container:focus-within {
-  border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  border-color: #2563eb;
 }
+
 
 ::ng-deep .ng-select .ng-placeholder {
   color: #6b7280;
-  width: 100%;
   text-align: center;
+  width: 100%;
+  font-style: italic;
 }
 
-::ng-deep .ng-select .ng-dropdown-panel {
+
+::ng-deep .ng-select .ng-value {
+  text-align: left;
+  color: #111827;
+}
+
+
+::ng-deep .ng-dropdown-panel {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 ::ng-deep .ng-dropdown-panel .ng-option {
   padding: 0.7rem 1rem;
   color: #111827;
+  background-color: #ffffff;
   transition: background-color 0.2s, color 0.2s;
 }
+
 
 ::ng-deep .ng-dropdown-panel .ng-option:hover {
   background-color: #2563eb;
   color: #ffffff;
 }
 
+
 ::ng-deep .ng-dropdown-panel .ng-option-selected {
   background-color: #1e3a8a;
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
 }
+
+::ng-deep .ng-select.ng-select-single .ng-has-value .ng-placeholder {
+  display: none !important;
+}
+
+::ng-deep .ng-select .ng-value-container {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+
+::ng-deep .ng-select .ng-arrow-wrapper {
+  position: absolute;
+  right: 10px;
+}
+
+
+::ng-deep .ng-select.ng-select-single .ng-value {
+  width: 100%;
+  text-align: center !important;
+  justify-content: center !important;
+  display: flex;
+  color: #111827;
+}
+
 
 /* ---------- BOTONES ---------- */
 
 .modal-buttons {
   display: flex;
-  justify-content: center;
-  gap: 1.2rem;
+  justify-content: center; /* centra horizontalmente */
+  gap: 0.5rem;             /* espacio pequeño entre botones */
   margin-top: 1.5rem;
+}
+
+.modal-buttons .btn-submit,
+.modal-buttons .btn-cancelar {
+  width: 120px;            /* mismo ancho fijo */
+  padding: 0.6rem 0;       /* altura uniforme */
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .btn-submit {
   background-color: #162663;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0.9rem 2rem;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .btn-submit:hover {
@@ -410,18 +461,23 @@ label {
 
 .btn-cancelar {
   background-color: #fb0000ff;
-  color: #ffffff;
+  color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0.9rem 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
 }
 
 .btn-cancelar:hover {
   background-color: #c4c4c4;
 }
+
+
+/* Mensajes de error en rojo */
+.error {
+  color: #ff0000; /* rojo intenso */
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+
 
 /* ---------- BOTÓN DONAR ---------- */
 
