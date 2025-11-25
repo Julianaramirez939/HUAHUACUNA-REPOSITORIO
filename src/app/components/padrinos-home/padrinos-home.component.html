@@ -1,0 +1,46 @@
+<div class="voluntarios-home">
+  <h2 class="titulo-voluntarios">
+    <i class="fa-solid fa-user-group"></i> Padrinos
+  </h2>
+
+  <table class="tabla-voluntarios" *ngIf="!cargando && padrinos.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Identificación</th>
+        <th>Teléfono</th>
+        <th>Correo electrónico</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of padrinos">
+        <td class="centrado">{{ p.name }}</td>
+        <td class="centrado">{{ p.last_name }}</td>
+        <td class="centrado">{{ p.identification }}</td>
+        <td class="centrado">{{ p.phone_number }}</td>
+        <td class="centrado">{{ p.email }}</td>
+        <td class="centrado">
+          <span class="estado-cuadro-full" [style.background-color]="p.state?.color || '#6b7280'">
+            {{ p.state?.name || '—' }}
+          </span>
+        </td>
+        <td class="centrado acciones">
+          <div class="dropdown">
+            <i class="fas fa-ellipsis-v" (click)="p.showMenu = !p.showMenu"></i>
+            <ul class="menu" *ngIf="p.showMenu">
+              <li (click)="actualizarPadrino(p)"><i class="fas fa-edit"></i> Actualizar Estado</li>
+              <li (click)="eliminarPadrino(p)"><i class="fas fa-trash-alt"></i> Eliminar</li>
+              <li (click)="verDetallesPadrino(p)"><i class="fas fa-info-circle"></i> Ver Detalles</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && padrinos.length === 0">No hay padrinos registrados.</p>
+  <p *ngIf="cargando">Cargando padrinos...</p>
+</div>

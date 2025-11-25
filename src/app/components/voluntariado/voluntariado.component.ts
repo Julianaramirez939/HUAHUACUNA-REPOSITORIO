@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ConstantesService } from '../../services/constantes.service';
 import { VoluntarioService } from '../../services/voluntario.service';

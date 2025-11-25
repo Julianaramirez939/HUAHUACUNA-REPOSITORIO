@@ -19,24 +19,24 @@ import { NinosBitacoraComponent } from './components/ninos-bitacora/ninos-bitaco
 import { AdminContenidoComponent } from './components/admin-contenido/admin-contenido.component';
 import { ActividadesHomeComponent } from './components/actividades-home/actividades-home.component';
 import { DonacionesHomeComponent } from './components/donaciones-home/donaciones-home.component';
+import { PadrinosHomeComponent } from './components/padrinos-home/padrinos-home.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: NavbarComponent, // Navbar siempre cargado
     children: [
-      { path: '', component: LandingComponent },  // Landing debajo del navbar
+      { path: '', component: LandingComponent }, // Landing debajo del navbar
       { path: 'donar', component: DonarComponent },
       { path: 'voluntariado', component: VoluntariadoComponent },
       { path: 'apadrinamiento', component: ApadrinamientoComponent },
-    ]
+    ],
   },
 
   // 🔐 Otras rutas públicas (sin navbar)
   { path: 'login', component: LoginComponent },
   { path: 'recuperar', component: RecuperarContrasenaComponent },
   { path: 'restablecer', component: RestablecerContrasenaComponent },
- 
 
   // 🏠 Privadas
   {
@@ -46,6 +46,7 @@ export const routes: Routes = [
       { path: 'perfil', component: PerfilComponent },
       { path: 'dashboard', component: DashboardHomeComponent },
       { path: 'usuarios', component: UsuariosHomeComponent },
+      { path: 'padrinos', component: PadrinosHomeComponent },
       { path: 'voluntarios', component: VoluntariosHomeComponent },
       { path: 'niños', component: NinosHomeComponent },
       { path: 'administracion-contenido', component: AdminContenidoComponent },
@@ -59,7 +60,7 @@ export const routes: Routes = [
     children: [
       { path: 'perfil', component: PerfilComponent },
       { path: 'dashboard', component: DashboardPadrinosHomeComponent },
-      { path: 'ninos-bitacora', component: NinosBitacoraComponent }
+      { path: 'ninos-bitacora', component: NinosBitacoraComponent },
     ],
   },
 

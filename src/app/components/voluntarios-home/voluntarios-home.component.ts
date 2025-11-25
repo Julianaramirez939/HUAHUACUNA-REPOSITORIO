@@ -126,6 +126,7 @@ paginaAnterior(): void {
 // Metodo para actualizar el estado de un voluntario
 actualizarVoluntario(voluntario: VoluntarioUI) {
   voluntario.showMenu = false;
+
   this.voluntarioService.getEstados().subscribe({
     next: (estadosRaw: any[]) => {
       const estados = estadosRaw.map(e => ({
@@ -137,7 +138,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
       const opcionesHtml = estados.map(e => `<option value="${e.id}">${e.name}</option>`).join('');
 
       Swal.fire({
-        title: `<span style="font-family: 'Segoe UI', sans-serif;'>Actualizar voluntario</span>`,
+        title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Actualizar voluntario</span>`,
         html: `
           <div style="font-family: 'Segoe UI', sans-serif; display:grid; grid-template-columns:1fr; row-gap:16px;">
             <div>
@@ -158,17 +159,13 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
           </div>
         `,
         width: '500px',
-        icon: 'info',
         showCancelButton: true,
         confirmButtonText: 'Actualizar',
         cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#003366',
-         cancelButtonColor: '#dc2626',
-       
+        confirmButtonColor: '#003366', // azul oscuro
+        cancelButtonColor: '#dc2626',
         didOpen: () => {
           const selectEl = document.getElementById('estadoSelect') as HTMLSelectElement;
-
-          
           selectEl.value = voluntario.state.id.toString();
           selectEl.style.textAlign = 'center';
         },
@@ -190,7 +187,6 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
             next: (resp) => {
               console.log('Voluntario actualizado:', resp);
 
-            
               voluntario.state.id = estadoId;
               if (nuevoEstado) {
                 voluntario.state.name = nuevoEstado.name;
@@ -200,8 +196,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
               Swal.fire({
                 title: 'Actualizado',
                 text: `Estado cambiado a ${nuevoEstado?.name}`,
-                icon: 'success',
-                confirmButtonColor: '#003366'
+                confirmButtonColor: '#003366' // azul oscuro
               });
             },
             error: (err) => {
@@ -209,8 +204,7 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
               Swal.fire({
                 title: 'Error',
                 text: 'No se pudo actualizar el voluntario',
-                icon: 'error',
-                confirmButtonColor: '#003366'
+                confirmButtonColor: '#003366' // azul oscuro
               });
             }
           });
@@ -221,13 +215,13 @@ actualizarVoluntario(voluntario: VoluntarioUI) {
       Swal.fire({
         title: 'Error',
         text: 'No se pudieron cargar los estados',
-        icon: 'error',
-        confirmButtonColor: '#003366'
+        confirmButtonColor: '#003366' // azul oscuro
       });
       console.error('Error getEstados:', err);
     }
   });
 }
+
 // Metodo para eliminar un voluntario
  eliminarVoluntario(voluntario: VoluntarioUI) {
 

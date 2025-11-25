@@ -1,0 +1,214 @@
+/* CONTENEDOR PRINCIPAL */
+.padrino-fullpage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem 4%;
+  overflow: hidden;
+}
+
+/* HEADER */
+.header-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header-logo h1 {
+  color: #162663;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+
+/* FORMULARIO */
+.formulario-padrino {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem 3rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* FORM GROUP */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+input {
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #ffffff;
+}
+
+input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+::ng-deep .ng-select {
+  width: 100%;
+  font-size: 1rem;
+}
+
+::ng-deep .ng-select .ng-select-container {
+  min-height: 42px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+::ng-deep .ng-select .ng-select-container:hover {
+  border-color: #2563eb;
+}
+
+::ng-deep .ng-select .ng-select-container:focus-within {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  border-color: #2563eb;
+}
+
+
+::ng-deep .ng-select .ng-placeholder {
+  color: #6b7280;
+  text-align: center;
+  width: 100%;
+  font-style: italic;
+}
+
+
+::ng-deep .ng-select .ng-value {
+  text-align: left;
+  color: #111827;
+}
+
+
+::ng-deep .ng-dropdown-panel {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .ng-dropdown-panel .ng-option {
+  padding: 0.7rem 1rem;
+  color: #111827;
+  background-color: #ffffff;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+
+::ng-deep .ng-dropdown-panel .ng-option:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+
+::ng-deep .ng-dropdown-panel .ng-option-selected {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-has-value .ng-placeholder {
+  display: none !important;
+}
+
+::ng-deep .ng-select .ng-value-container {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+
+::ng-deep .ng-select .ng-arrow-wrapper {
+  position: absolute;
+  right: 10px;
+}
+
+
+::ng-deep .ng-select.ng-select-single .ng-value {
+  width: 100%;
+  text-align: center !important;
+  justify-content: center !important;
+  display: flex;
+  color: #111827;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+/* INPUT FILE */
+.file-group input[type="file"] {
+  border: none;
+  padding: 0.5rem 0;
+}
+
+/* CHECKBOX (mostrar contraseña) */
+.checkbox-password {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.checkbox-password input[type="checkbox"] {
+  accent-color: #2563eb; /* Azul */
+  width: 18px;
+  height: 18px;
+}
+
+/* BOTÓN */
+.btn-padrino-submit {
+  background-color: #162663;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-padrino-submit:hover {
+  background-color: #1e3a8a;
+}

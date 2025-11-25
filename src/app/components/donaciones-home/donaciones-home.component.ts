@@ -91,23 +91,23 @@ export class DonacionesHomeComponent implements OnInit {
   }
 
   actualizarDonacion(donacion: Donaciones & { showMenu?: boolean }): void {
-  if (!donacion.id) {
-    Swal.fire('Error', 'La donación no tiene ID válido', 'error');
-    return;
-  }
+    if (!donacion.id) {
+      Swal.fire('Error', 'La donación no tiene ID válido', 'error');
+      return;
+    }
 
-  donacion.showMenu = false;
+    donacion.showMenu = false;
 
-  this.constantesService.obtenerTiposIdentificacion().subscribe({
-    next: (res: any) => {
-      const tipos = res.data || [];
-      const opcionesIdentificacionHtml = tipos
-        .map((t: any) => `<option value="${t.id}">${t.name}</option>`)
-        .join('');
+    this.constantesService.obtenerTiposIdentificacion().subscribe({
+      next: (res: any) => {
+        const tipos = res.data || [];
+        const opcionesIdentificacionHtml = tipos
+          .map((t: any) => `<option value="${t.id}">${t.name}</option>`)
+          .join('');
 
-      Swal.fire({
-        title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Actualizar donación</span>`,
-        html: `
+        Swal.fire({
+          title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Actualizar donación</span>`,
+          html: `
           <style>
             .swal-field {
               width: 100%;
@@ -160,81 +160,113 @@ export class DonacionesHomeComponent implements OnInit {
             </div>
           </form>
         `,
-        width: '650px',
-        showCancelButton: true,
-        confirmButtonText: 'Actualizar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#003366', // azul oscuro
-        cancelButtonColor: '#dc2626',
-        didOpen: () => {
-          const selectEl = document.getElementById('identification_type') as HTMLSelectElement;
-          if (donacion.identification_type) selectEl.value = donacion.identification_type.toString();
+          width: '650px',
+          showCancelButton: true,
+          confirmButtonText: 'Actualizar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#003366', // azul oscuro
+          cancelButtonColor: '#dc2626',
+          didOpen: () => {
+            const selectEl = document.getElementById(
+              'identification_type'
+            ) as HTMLSelectElement;
+            if (donacion.identification_type)
+              selectEl.value = donacion.identification_type.toString();
 
-          const dateInput = document.getElementById('date') as HTMLInputElement;
-          if (donacion.date) {
-            const [dd, mm, yyyy] = donacion.date.split('/');
-            dateInput.value = `${yyyy}-${mm}-${dd}`;
-          }
-        },
-        preConfirm: () => {
-          const name = (document.getElementById('name') as HTMLInputElement).value.trim();
-          const email = (document.getElementById('email') as HTMLInputElement).value.trim();
-          const dateStr = (document.getElementById('date') as HTMLInputElement).value;
-          const identification_type = Number((document.getElementById('identification_type') as HTMLSelectElement).value);
-          const identification = (document.getElementById('identification') as HTMLInputElement).value.trim();
-          const money_amount = Number((document.getElementById('money_amount') as HTMLInputElement).value);
+            const dateInput = document.getElementById(
+              'date'
+            ) as HTMLInputElement;
+            if (donacion.date) {
+              const [dd, mm, yyyy] = donacion.date.split('/');
+              dateInput.value = `${yyyy}-${mm}-${dd}`;
+            }
+          },
+          preConfirm: () => {
+            const name = (
+              document.getElementById('name') as HTMLInputElement
+            ).value.trim();
+            const email = (
+              document.getElementById('email') as HTMLInputElement
+            ).value.trim();
+            const dateStr = (
+              document.getElementById('date') as HTMLInputElement
+            ).value;
+            const identification_type = Number(
+              (
+                document.getElementById(
+                  'identification_type'
+                ) as HTMLSelectElement
+              ).value
+            );
+            const identification = (
+              document.getElementById('identification') as HTMLInputElement
+            ).value.trim();
+            const money_amount = Number(
+              (document.getElementById('money_amount') as HTMLInputElement)
+                .value
+            );
 
-          if (!name || !email || !dateStr || !identification_type || !identification || !money_amount) {
-            Swal.showValidationMessage('Por favor completa todos los campos obligatorios (*)');
-            return false;
-          }
+            if (
+              !name ||
+              !email ||
+              !dateStr ||
+              !identification_type ||
+              !identification ||
+              !money_amount
+            ) {
+              Swal.showValidationMessage(
+                'Por favor completa todos los campos obligatorios (*)'
+              );
+              return false;
+            }
 
-          return {
-            id: donacion.id!,
-            name,
-            email,
-            date: dateStr,
-            identification_type,
-            identification,
-            money_amount,
-          } as DonacionesActualizar;
-        },
-      }).then((result) => {
-        if (result.isConfirmed && result.value) {
-          const donacionActualizar = result.value;
-          this.donacionesService.actualizarDonacion(donacionActualizar).subscribe({
-            next: () => {
-              this.obtenerDonaciones(this.paginaActual);
-              Swal.fire({
-                title: 'Donación actualizada',
-                text: `${donacionActualizar.name} actualizada correctamente.`,
-                icon: 'success',
-                confirmButtonColor: '#003366', // azul oscuro
+            return {
+              id: donacion.id!,
+              name,
+              email,
+              date: dateStr,
+              identification_type,
+              identification,
+              money_amount,
+            } as DonacionesActualizar;
+          },
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            const donacionActualizar = result.value;
+            this.donacionesService
+              .actualizarDonacion(donacionActualizar)
+              .subscribe({
+                next: () => {
+                  this.obtenerDonaciones(this.paginaActual);
+                  Swal.fire({
+                    title: 'Donación actualizada',
+                    text: `${donacionActualizar.name} actualizada correctamente.`,
+                    icon: 'success',
+                    confirmButtonColor: '#003366', // azul oscuro
+                  });
+                },
+                error: (err) => {
+                  Swal.fire({
+                    title: 'Error',
+                    text: err.message || 'No se pudo actualizar la donación.',
+                    icon: 'error',
+                    confirmButtonColor: '#003366', // azul oscuro
+                  });
+                },
               });
-            },
-            error: (err) => {
-              Swal.fire({
-                title: 'Error',
-                text: err.message || 'No se pudo actualizar la donación.',
-                icon: 'error',
-                confirmButtonColor: '#003366', // azul oscuro
-              });
-            },
-          });
-        }
-      });
-    },
-    error: () => {
-      Swal.fire({
-        title: 'Error',
-        text: 'No se pudieron cargar los tipos de identificación.',
-        icon: 'error',
-        confirmButtonColor: '#003366', // azul oscuro
-      });
-    },
-  });
-}
-
+          }
+        });
+      },
+      error: () => {
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudieron cargar los tipos de identificación.',
+          icon: 'error',
+          confirmButtonColor: '#003366', // azul oscuro
+        });
+      },
+    });
+  }
 
   //Metodo para eliminar una donación
   eliminarDonacion(id: number, nombre: string): void {
@@ -270,26 +302,28 @@ export class DonacionesHomeComponent implements OnInit {
       }
     });
   }
-generarReporteModal(): void {
-  forkJoin({
-    metodos: this.constantesService.obtenerTiposMetodoDonacion(), // array ya mapeado
-    tiposIdentificacion: this.constantesService.obtenerTiposIdentificacion() // objeto con data
-  }).subscribe({
-    next: ({ metodos, tiposIdentificacion }) => {
-      const metodosArray = Array.isArray(metodos) ? metodos : [];
-      const tiposArray = Array.isArray(tiposIdentificacion.data) ? tiposIdentificacion.data : [];
+  generarReporteDonacion(): void {
+    forkJoin({
+      metodos: this.constantesService.obtenerTiposMetodoDonacion(), // array ya mapeado
+      tiposIdentificacion: this.constantesService.obtenerTiposIdentificacion(), // objeto con data
+    }).subscribe({
+      next: ({ metodos, tiposIdentificacion }) => {
+        const metodosArray = Array.isArray(metodos) ? metodos : [];
+        const tiposArray = Array.isArray(tiposIdentificacion.data)
+          ? tiposIdentificacion.data
+          : [];
 
-      const opcionesMetodoHtml = metodosArray
-        .map((m: any) => `<option value="${m.id}">${m.name}</option>`)
-        .join('');
+        const opcionesMetodoHtml = metodosArray
+          .map((m: any) => `<option value="${m.id}">${m.name}</option>`)
+          .join('');
 
-      const opcionesIdentificacionHtml = tiposArray
-        .map((t: any) => `<option value="${t.id}">${t.name}</option>`)
-        .join('');
+        const opcionesIdentificacionHtml = tiposArray
+          .map((t: any) => `<option value="${t.id}">${t.name}</option>`)
+          .join('');
 
-      Swal.fire({
-        title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Generar reporte</span>`,
-        html: `
+        Swal.fire({
+          title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Generar reporte</span>`,
+          html: `
           <style>
             .swal-field { width:100%; box-sizing:border-box; border:1px solid #d1d5db; border-radius:4px; padding:8px 12px; font-size:14px; background-color:#fff; display:block; }
             .swal-field:focus { outline:none; border-color:#3b82f6; }
@@ -325,55 +359,88 @@ generarReporteModal(): void {
             </div>
           </form>
         `,
-        width: '650px',
-        showCancelButton: true,
-        confirmButtonText: 'Generar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#003366', // azul oscuro
-        cancelButtonColor: '#dc2626',
-        preConfirm: () => {
-          const name = (document.getElementById('name') as HTMLInputElement).value.trim();
-          const identification = (document.getElementById('identification') as HTMLInputElement).value.trim();
-          const identification_type = Number((document.getElementById('identification_type') as HTMLSelectElement).value);
-          const donation_method = Number((document.getElementById('donation_method') as HTMLSelectElement).value);
-          const money_amount = Number((document.getElementById('money_amount') as HTMLInputElement).value);
-          const year = Number((document.getElementById('year') as HTMLInputElement).value);
+          width: '650px',
+          showCancelButton: true,
+          confirmButtonText: 'Generar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#003366', // azul oscuro
+          cancelButtonColor: '#dc2626',
+          preConfirm: () => {
+            const name = (
+              document.getElementById('name') as HTMLInputElement
+            ).value.trim();
+            const identification = (
+              document.getElementById('identification') as HTMLInputElement
+            ).value.trim();
+            const identification_type = Number(
+              (
+                document.getElementById(
+                  'identification_type'
+                ) as HTMLSelectElement
+              ).value
+            );
+            const donation_method = Number(
+              (document.getElementById('donation_method') as HTMLSelectElement)
+                .value
+            );
+            const money_amount = Number(
+              (document.getElementById('money_amount') as HTMLInputElement)
+                .value
+            );
+            const year = Number(
+              (document.getElementById('year') as HTMLInputElement).value
+            );
 
-          if (!name || !identification || !identification_type || !donation_method || !money_amount || !year) {
-            Swal.showValidationMessage('Por favor completa todos los campos obligatorios (*)');
-            return false;
+            if (
+              !name ||
+              !identification ||
+              !identification_type ||
+              !donation_method ||
+              !money_amount ||
+              !year
+            ) {
+              Swal.showValidationMessage(
+                'Por favor completa todos los campos obligatorios (*)'
+              );
+              return false;
+            }
+
+            return {
+              name,
+              identification,
+              identification_type,
+              donation_method,
+              money_amount,
+              year,
+            } as Reporte;
+          },
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            // Abrir PDF en otra ventana
+            this.donacionesService.generarReporte(result.value).subscribe({
+              next: (pdfBlob: Blob) => {
+                const url = window.URL.createObjectURL(pdfBlob);
+                window.open(url);
+              },
+              error: (err) =>
+                Swal.fire({
+                  title: 'Error',
+                  text: err.message || 'No se pudo generar el reporte.',
+                  icon: 'error',
+                  confirmButtonColor: '#003366',
+                }),
+            });
           }
-
-          return { name, identification, identification_type, donation_method, money_amount, year } as Reporte;
-        }
-      }).then(result => {
-        if (result.isConfirmed && result.value) {
-          // Abrir PDF en otra ventana
-          this.donacionesService.generarReporte(result.value).subscribe({
-            next: (pdfBlob: Blob) => {
-              const url = window.URL.createObjectURL(pdfBlob);
-              window.open(url);
-            },
-            error: (err) => Swal.fire({
-              title: 'Error',
-              text: err.message || 'No se pudo generar el reporte.',
-              icon: 'error',
-              confirmButtonColor: '#003366'
-            })
-          });
-        }
-      });
-    },
-    error: () => {
-      Swal.fire({ title: 'Error', text: 'No se pudieron cargar los métodos de donación o tipos de identificación.', icon: 'error', confirmButtonColor: '#003366' });
-    }
-  });
-}
-
-
-
-
-
-
-
+        });
+      },
+      error: () => {
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudieron cargar los métodos de donación o tipos de identificación.',
+          icon: 'error',
+          confirmButtonColor: '#003366',
+        });
+      },
+    });
+  }
 }

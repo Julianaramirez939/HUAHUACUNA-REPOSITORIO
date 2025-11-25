@@ -54,9 +54,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  irAlInicio(): void {
-    this.router.navigate(['/']);
-  }
+ 
 
   togglePassword(): void {
     this.mostrarPassword = !this.mostrarPassword;
