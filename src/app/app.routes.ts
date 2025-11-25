@@ -20,6 +20,7 @@ import { AdminContenidoComponent } from './components/admin-contenido/admin-cont
 import { ActividadesHomeComponent } from './components/actividades-home/actividades-home.component';
 import { DonacionesHomeComponent } from './components/donaciones-home/donaciones-home.component';
 import { PadrinosHomeComponent } from './components/padrinos-home/padrinos-home.component';
+import { NinosApadrinadosComponent } from './components/ninos-apadrinados/ninos-apadrinados.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,7 @@ export const routes: Routes = [
       { path: 'perfil', component: PerfilComponent },
       { path: 'dashboard', component: DashboardPadrinosHomeComponent },
       { path: 'ninos-bitacora', component: NinosBitacoraComponent },
+      { path: 'ninos-apadrinados', component: NinosApadrinadosComponent },
     ],
   },
 

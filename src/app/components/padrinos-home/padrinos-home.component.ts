@@ -256,9 +256,8 @@ verDetallesPadrino(padrino: PadrinoUI) {
 
   this.padrinoService.getPadrinoPorId(padrino.id).subscribe({
     next: (response: any) => {
-      const detalles = response?.data;
+      const detalles = response;
 
-      // Aseguramos que children siempre sea un array
       padrino.children = detalles?.children ?? [];
 
       let html = `
@@ -292,6 +291,7 @@ verDetallesPadrino(padrino: PadrinoUI) {
       // Niños debajo de País (segunda columna)
       html += `<div style="margin-top: 12px;">`;  // sin grid-column: span 2, así queda en la segunda columna
       // Lista de niños
+
 if ((padrino.children ?? []).length > 0) {
   html += `
     <div style="grid-column: 2 / 3; margin-top: 12px;">

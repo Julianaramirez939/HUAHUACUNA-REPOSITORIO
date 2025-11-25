@@ -13,4 +13,6 @@ export interface LoginResponse {
 
   /** Datos del usuario que inició sesión */
   user: User;
+
+  godparent_id: string;
 }

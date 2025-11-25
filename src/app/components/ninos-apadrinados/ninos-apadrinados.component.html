@@ -1,0 +1,24 @@
+<div class="bitacora-container">
+  <h2>Niños Apadrinados</h2>
+  <p class="descripcion">
+    Aquí puedes ver todos los niños que ya están bajo tu patrocinio 💙.
+  </p>
+
+  <div *ngIf="cargando" class="loading">Cargando niños...</div>
+
+  <div class="cards-grid" *ngIf="!cargando">
+    <div class="card" *ngFor="let nino of ninos">
+      <img
+        [src]="nino.media_file_url || 'assets/img/default-nino.jpg'"
+        alt="Foto de {{ nino.name }}"
+        class="card-img"
+      />
+
+      <div class="card-content">
+        <h3>{{ nino.name }} {{ nino.last_name }}</h3>
+        <p><b>Gustos:</b> {{ nino.likings || 'No aplica' }}</p>
+        <p><b>Información adicional:</b> {{ nino.additional_information || 'No aplica' }}</p>
+      </div>
+    </div>
+  </div>
+</div>

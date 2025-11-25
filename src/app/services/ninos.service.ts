@@ -42,6 +42,35 @@ return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
     catchError(error => this.manejarError(error))
   );
 }
+/**
+ * Obtener niños apadrinados por un padrino específico
+ */
+traerNinosApadrinados(godparent_id: number): Observable<NinoListar[]> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  const url = `${this.endpoint}?godparent_id=${godparent_id}`;
+
+  return this.http.get<{ data: NinoListar[] }>(url, { headers }).pipe(
+    map(response => response.data),
+    tap(ninos => console.log(`[NinosService] Niños apadrinados por padrino ${godparent_id}: ${ninos.length}`)),
+    catchError(error => this.manejarError(error))
+  );
+}
+
+/**
+ * Obtener niños que no tienen padrino (excluyendo el padrino dado)
+ */
+traerNinosSinPadrino(exclude_godparent_id: number): Observable<NinoListar[]> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  const url = `${this.endpoint}?exclude_godparent_id=${exclude_godparent_id}`;
+
+  return this.http.get<{ data: NinoListar[] }>(url, { headers }).pipe(
+    map(response => response.data),
+    tap(ninos => console.log(`[NinosService] Niños sin padrino (excluyendo ${exclude_godparent_id}): ${ninos.length}`)),
+    catchError(error => this.manejarError(error))
+  );
+}
 
 
   /**

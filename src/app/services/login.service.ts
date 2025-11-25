@@ -33,6 +33,7 @@ export class LoginService {
         if (respuesta?.token) {
           sessionStorage.setItem('token', respuesta.token);
           sessionStorage.setItem('user', JSON.stringify(respuesta.user));
+          sessionStorage.setItem('padrino', JSON.stringify(respuesta.godparent_id));
         }
       }),
       // Manejo de errores provenientes del backend

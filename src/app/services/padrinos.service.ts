@@ -161,6 +161,22 @@ getPadrinoPorId(id: number): Observable<Padrino> {
     map(response => response.data as Padrino)
   );
 }
+apadrinarNino(padrinoId: number, childrenIds: number[]): Observable<any> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  const url = `${this.endpoint}/${padrinoId}/sponsor-children`;
+
+  const body = { children: childrenIds };
+
+  return this.http.put<any>(url, body, { headers }).pipe(
+    tap(() => console.log(`[PadrinoService] Padrino ${padrinoId} apadrinó niños: [${childrenIds.join(', ')}]`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
   // ============================================================
   //  Manejo de errores
   // ============================================================
