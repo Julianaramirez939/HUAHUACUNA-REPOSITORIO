@@ -22,6 +22,7 @@ import { DonacionesHomeComponent } from './components/donaciones-home/donaciones
 import { PadrinosHomeComponent } from './components/padrinos-home/padrinos-home.component';
 import { NinosApadrinadosComponent } from './components/ninos-apadrinados/ninos-apadrinados.component';
 import { NavbarAdminPadrinoComponent } from './components/navbar-admin-padrino/navbar-admin-padrino.component';
+import { NoticiasNinosHomeComponent } from './components/noticias-ninos-home/noticias-ninos-home.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,7 @@ export const routes: Routes = [
       { path: 'administracion-contenido', component: AdminContenidoComponent },
       { path: 'actividades', component: ActividadesHomeComponent },
       { path: 'donaciones', component: DonacionesHomeComponent },
+      { path: 'noticias-crud', component: NoticiasNinosHomeComponent },
     ],
   },
   {
@@ -96,7 +98,8 @@ export const routes: Routes = [
           { path: 'administracion-contenido', component: AdminContenidoComponent },
           { path: 'actividades', component: ActividadesHomeComponent },
           { path: 'donaciones', component: DonacionesHomeComponent },
-          { path: 'perfil', component: PerfilComponent }
+          { path: 'perfil', component: PerfilComponent },
+          { path: 'noticias-crud', component: NoticiasNinosHomeComponent }
         ]
       }
     ]
