@@ -161,21 +161,33 @@ export class LoginComponent {
 
 /** Redirige al dashboard según el rol del usuario */
 irADashboard(): void {
-  // Obtén el usuario del sessionStorage
   const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+  const roles = user.roles?.map((r: any) => r.name) || [];
 
-  // Busca el rol del usuario
-  const rol = user.roles?.[0]?.name; // asumimos que siempre hay al menos un rol
-
-  if (rol === 'Administrador') {
-    this.enrutador.navigate(['home/dashboard']);
-  } else if (rol === 'Padrino') {
-    this.enrutador.navigate(['padrino/dashboard']);
-  } else {
-    // Si no tiene rol conocido, se puede redirigir a home o mostrar error
-    this.enrutador.navigate(['']);
+  // 🔥 Caso 3: Tiene ambos roles
+  if (roles.includes('Administrador') && roles.includes('Padrino')) {
+    // Redirige al navbar combinado
+    this.enrutador.navigate(['admin-padrino', 'admin']); // O 'padrino' si quieres iniciar en esa vista
+    return;
   }
+
+  // 🔹 Caso 1: Solo administrador
+  if (roles.includes('Administrador')) {
+    this.enrutador.navigate(['home', 'dashboard']);
+    return;
+  }
+
+  // 🔹 Caso 2: Solo padrino
+  if (roles.includes('Padrino')) {
+    this.enrutador.navigate(['padrino', 'dashboard']);
+    return;
+  }
+
+  // ⚠️ Caso sin rol válido
+  this.enrutador.navigate(['']);
 }
+
+
 
   /** Redirige al inicio (por ahora al navbar principal) */
   volverInicio(): void {

@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LOGO } from '../../../global';
 
@@ -30,16 +30,16 @@ export class NavbarHomeComponent {
   /** Controla si el menú desplegable del usuario está abierto */
   menuAbierto = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,  private route: ActivatedRoute) {}
 
   /**
    * Navega a la ruta indicada y cierra el menú desplegable
    * @param ruta Ruta del router a la que se desea ir
    */
-  irA(ruta: string): void {
-    this.router.navigate([ruta]);
-    this.menuAbierto = false; // Cierra el menú al navegar
-  }
+ irA(ruta: string): void {
+  this.router.navigate([ruta], { relativeTo: this.route }); // navegación relativa
+  this.menuAbierto = false; // cierra el menú al navegar
+}
 
   /** Alterna el estado del menú desplegable (abre/cierra) */
   toggleMenu(): void {

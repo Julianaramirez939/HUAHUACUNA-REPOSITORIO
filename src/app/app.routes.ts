@@ -21,25 +21,25 @@ import { ActividadesHomeComponent } from './components/actividades-home/activida
 import { DonacionesHomeComponent } from './components/donaciones-home/donaciones-home.component';
 import { PadrinosHomeComponent } from './components/padrinos-home/padrinos-home.component';
 import { NinosApadrinadosComponent } from './components/ninos-apadrinados/ninos-apadrinados.component';
+import { NavbarAdminPadrinoComponent } from './components/navbar-admin-padrino/navbar-admin-padrino.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: NavbarComponent, // Navbar siempre cargado
+    component: NavbarComponent, // Navbar público
     children: [
-      { path: '', component: LandingComponent }, // Landing debajo del navbar
+      { path: '', component: LandingComponent },
       { path: 'donar', component: DonarComponent },
       { path: 'voluntariado', component: VoluntariadoComponent },
       { path: 'apadrinamiento', component: ApadrinamientoComponent },
     ],
   },
 
-  // 🔐 Otras rutas públicas (sin navbar)
   { path: 'login', component: LoginComponent },
   { path: 'recuperar', component: RecuperarContrasenaComponent },
   { path: 'restablecer', component: RestablecerContrasenaComponent },
 
-  // 🏠 Privadas
+  // Rutas privadas individuales
   {
     path: 'home',
     component: NavbarHomeComponent,
@@ -66,6 +66,42 @@ export const routes: Routes = [
     ],
   },
 
-  // 🚨 Comodín
-  { path: '**', redirectTo: '' },
+  // Ruta combinada: solo usuarios con ambos roles la verán
+  {
+    path: 'admin-padrino',
+    component: NavbarAdminPadrinoComponent, // Navbar combinado siempre visible
+    children: [
+      // Padrino dentro del combinado
+      {
+        path: 'padrino',
+        component: NavbarPadrinoHomeComponent,
+        children: [
+          { path: 'dashboard', component: DashboardPadrinosHomeComponent },
+          { path: 'ninos-bitacora', component: NinosBitacoraComponent },
+          { path: 'ninos-apadrinados', component: NinosApadrinadosComponent },
+          { path: 'perfil', component: PerfilComponent }
+
+        ]
+      },
+      // Admin dentro del combinado
+      {
+        path: 'admin',
+        component: NavbarHomeComponent,
+        children: [
+          { path: 'dashboard', component: DashboardHomeComponent },
+          { path: 'usuarios', component: UsuariosHomeComponent },
+          { path: 'padrinos', component: PadrinosHomeComponent },
+          { path: 'voluntarios', component: VoluntariosHomeComponent },
+          { path: 'niños', component: NinosHomeComponent },
+          { path: 'administracion-contenido', component: AdminContenidoComponent },
+          { path: 'actividades', component: ActividadesHomeComponent },
+          { path: 'donaciones', component: DonacionesHomeComponent },
+          { path: 'perfil', component: PerfilComponent }
+        ]
+      }
+    ]
+  },
+
+  { path: '**', redirectTo: '' }, // comodín
 ];
+

@@ -1,29 +1,27 @@
 <nav class="navbar">
- 
   <div class="navbar-logo">
     <img [src]="logo" alt="Logo Fundación Huahuacuna" />
   </div>
 
- 
   <ul class="navbar-links">
- 
-   <li (click)="irA('/padrino/ninos-bitacora')">
-    <i class="fa-solid fa-heart"></i> Apadrinamiento
-  </li>
+    <!-- Navegación relativa: solo nombres de rutas hijas -->
+  
 
-  <li (click)="irA('/padrino/ninos-apadrinados')">
-    <i class="fa-solid fa-heart"></i> Mis niños
-  </li>
+    <li (click)="irA('ninos-bitacora')">
+      <i class="fa-solid fa-heart"></i> Apadrinamiento
+    </li>
+
+    <li (click)="irA('ninos-apadrinados')">
+      <i class="fa-solid fa-heart"></i> Mis niños
+    </li>
   </ul>
 
-  
   <div class="navbar-user" (click)="toggleMenu()" tabindex="0">
     <i class="fa-solid fa-circle-user"></i>
     <span>Mi perfil</span>
 
-    
     <div class="user-menu" *ngIf="menuAbierto">
-      <button (click)="irA('/padrino/perfil')" class="menu-item">
+      <button (click)="irA('perfil')" class="menu-item">
         <i class="fa-solid fa-id-card"></i> Ver perfil
       </button>
       <button (click)="cerrarSesion()" class="menu-item logout">
@@ -32,6 +30,5 @@
     </div>
   </div>
 </nav>
-
 
 <router-outlet></router-outlet>
