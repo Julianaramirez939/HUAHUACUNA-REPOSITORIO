@@ -19,6 +19,10 @@
         <p><b>Gustos:</b> {{ nino.likings || 'No aplica' }}</p>
         <p><b>Información adicional:</b> {{ nino.additional_information || 'No aplica' }}</p>
       </div>
+
+      <button class="btn-quitar-patrocinio" (click)="quitarApadrinamiento(nino)" >
+        <i class="fa-solid fa-heart-crack"></i> Quitar apadrinamiento
+      </button>
     </div>
   </div>
 </div>

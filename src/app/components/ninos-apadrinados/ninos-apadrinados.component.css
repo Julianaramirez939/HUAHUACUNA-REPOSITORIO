@@ -68,3 +68,25 @@
   margin-top: 20px;
   font-family: "Segoe UI", sans-serif;
 }
+.btn-quitar-patrocinio {
+  background-color: #ff0000e7;
+  color: white;
+  border: none;
+  width: 90%;
+  margin: 15px 0 20px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "Segoe UI", sans-serif;
+  align-self: center;
+}
+
+.btn-quitar-patrocinio:hover {
+  background-color: #b30000d0;
+}
+
+.btn-quitar-patrocinio i {
+  margin-right: 6px;
+}
