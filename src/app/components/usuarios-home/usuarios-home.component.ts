@@ -308,6 +308,8 @@ actualizarUsuario(usuario: UsuarioUI) {
             usuario.state_id = estado;
             usuario.roles_ids = roles;
 
+            usuario.roles = this.rolesDisponibles.filter(r => roles.includes(r.id));
+
               const nuevoEstado = estados.find(e => e.id === estado);
   if (nuevoEstado) {
     usuario.state = nuevoEstado;

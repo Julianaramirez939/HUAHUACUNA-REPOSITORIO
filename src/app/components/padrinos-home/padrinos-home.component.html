@@ -44,3 +44,42 @@
   <p *ngIf="!cargando && padrinos.length === 0">No hay padrinos registrados.</p>
   <p *ngIf="cargando">Cargando padrinos...</p>
 </div>
+
+<div class="paginacion" *ngIf="!cargando && padrinos.length > 0">
+
+  <!-- BOTONES ANTERIOR / SIGUIENTE -->
+  <div class="botones-navegacion">
+    <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+      Anterior
+    </button>
+
+    <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
+
+    <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+      Siguiente
+    </button>
+  </div>
+
+  <!-- IR A PÁGINA -->
+  <div class="ir-pagina">
+    <label for="inputPagina">Ir a:</label>
+
+    <input
+      id="inputPagina"
+      type="number"
+      [(ngModel)]="paginaIr"
+      min="1"
+      [max]="ultimaPagina"
+      [disabled]="ultimaPagina === 1"
+    >
+
+    <button
+      (click)="irAPagina()"
+      [disabled]="ultimaPagina === 1"
+    >
+      Ir
+    </button>
+  </div>
+
+</div>
+

@@ -30,6 +30,9 @@ interface PadrinoUI extends Padrino {
 export class PadrinosHomeComponent implements OnInit {
   padrinos: PadrinoUI[] = [];
   cargando = false;
+  paginaActual = 1;
+  ultimaPagina = 1;
+  paginaIr: number = 1;
 
   constructor(private padrinoService: PadrinoService) {}
 
@@ -38,59 +41,117 @@ export class PadrinosHomeComponent implements OnInit {
   }
 
   // Obtener padrinos (normaliza response.data[0])
- obtenerPadrinos(): void {
-  this.cargando = true;
+obtenerPadrinos(): void {
+    this.cargando = true;
 
-  this.padrinoService.getPadrinos().subscribe({
-    next: (response: any) => {
+    // 🔹 IMPORTANTE: enviar página al servicio
+    this.padrinoService.getPadrinos(this.paginaActual).subscribe({
+      next: (response: any) => {
+        console.log("Backend devolvió:", response);
 
-      console.log("Backend devolvió:", response);
+        const raw = response?.data?.godparents;
+        const lista = Array.isArray(raw) ? raw : [];
 
-      const raw = response?.data?.godparents;
-      const lista = Array.isArray(raw) ? raw : [];
+        // Mapeo normalizado
+        this.padrinos = lista.map((p: any) => ({
+          id: p.id,
+          email: p.email,
+          name: p.name,
+          last_name: p.last_name,
+          phone_number: p.phone_number,
+          identification_type: p.identification_type,
+          identification: p.identification,
+          residence_country: p.residence_country,
+          created_at: p.created_at,
+          updated_at: p.updated_at,
+          attachment: undefined,
+          children: p.children || [],
+          identification_type_name: p.identification_type_name,
+          media_file_url: p.media_file_url,
+          state: p.state
+            ? {
+                id: p.state.id,
+                name: p.state.name,
+                color: p.state.color
+              }
+            : undefined,
+          state_id: p.state_id,
+          showMenu: false,
+        }));
 
-      this.padrinos = lista.map((p: any) => ({
-        id: p.id,
-        email: p.email,
-        name: p.name,
-        last_name: p.last_name,
-        phone_number: p.phone_number,
-        identification_type: p.identification_type,
-        identification: p.identification,
-        residence_country: p.residence_country,
-        created_at: p.created_at,
-        updated_at: p.updated_at,
-        attachment: undefined,
-        children: p.children || [],
-        identification_type_name: p.identification_type_name,
-        media_file_url: p.media_file_url,
-        state: p.state
-          ? {
-              id: p.state.id,
-              name: p.state.name,
-              color: p.state.color
-            }
-          : undefined,
-        state_id: p.state_id,
-        showMenu: false,
-      }));
+        // ============================
+        //     PAGINACIÓN
+        // ============================
+        const pag = response?.data?.pagination;
+        this.paginaActual = pag?.current_page || 1;
+        this.ultimaPagina = pag?.last_page || 1;
 
-      this.cargando = false;
-    },
+        // Sincroniza input "ir a página"
+        this.paginaIr = this.paginaActual;
 
-    error: (error) => {
-      console.error('Error al obtener padrinos:', error);
+        this.cargando = false;
+      },
+
+      error: (error) => {
+        console.error('Error al obtener padrinos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: error.message || 'No se pudieron cargar los padrinos.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#003366',
+        });
+        this.cargando = false;
+      },
+    });
+  }
+
+  // =============================
+  //      Métodos de navegación
+  // =============================
+
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.ultimaPagina) {
+      this.paginaActual++;
+      this.obtenerPadrinos();
+    }
+  }
+
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.obtenerPadrinos();
+    }
+  }
+
+  irAPagina(): void {
+    const destino = Number(this.paginaIr);
+
+    if (!Number.isInteger(destino) || isNaN(destino)) {
       Swal.fire({
-        title: 'Error',
-        text: error.message || 'No se pudieron cargar los padrinos.',
-        icon: 'error',
+        title: 'Atención',
+        text: 'Ingrese un número de página válido',
+        icon: 'warning',
         confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#003366',
+        confirmButtonColor: '#003366'
       });
-      this.cargando = false;
-    },
-  });
-}
+      return;
+    }
+
+    if (destino >= 1 && destino <= this.ultimaPagina) {
+      this.paginaActual = destino;
+      this.obtenerPadrinos();
+    } else {
+      Swal.fire({
+        title: 'Atención',
+        text: 'Este número de página no existe',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#003366'
+      });
+    }
+  }
+
 
   // Actualizar estado del padrino (muestra modal con select)
   actualizarPadrino(padrino: PadrinoUI) {
