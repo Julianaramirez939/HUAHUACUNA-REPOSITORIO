@@ -23,6 +23,7 @@ import { PadrinosHomeComponent } from './components/padrinos-home/padrinos-home.
 import { NinosApadrinadosComponent } from './components/ninos-apadrinados/ninos-apadrinados.component';
 import { NavbarAdminPadrinoComponent } from './components/navbar-admin-padrino/navbar-admin-padrino.component';
 import { NoticiasNinosHomeComponent } from './components/noticias-ninos-home/noticias-ninos-home.component';
+import { ProgresoNinosComponent } from './components/progreso-ninos/progreso-ninos.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardPadrinosHomeComponent },
       { path: 'ninos-bitacora', component: NinosBitacoraComponent },
       { path: 'ninos-apadrinados', component: NinosApadrinadosComponent },
+      { path: 'progreso-ninos', component: ProgresoNinosComponent },
     ],
   },
 
@@ -81,7 +83,8 @@ export const routes: Routes = [
           { path: 'dashboard', component: DashboardPadrinosHomeComponent },
           { path: 'ninos-bitacora', component: NinosBitacoraComponent },
           { path: 'ninos-apadrinados', component: NinosApadrinadosComponent },
-          { path: 'perfil', component: PerfilComponent }
+          { path: 'perfil', component: PerfilComponent },
+          { path: 'progreso-ninos', component: ProgresoNinosComponent },
 
         ]
       },

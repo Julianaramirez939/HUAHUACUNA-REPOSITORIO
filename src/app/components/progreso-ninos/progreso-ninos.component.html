@@ -1,0 +1,76 @@
+<div class="noticias-container">
+
+  <!-- SELECTOR DE NIÑOS -->
+  <div class="selector-ninos">
+    <label for="childSelect">Filtrar por niño:</label>
+
+    <select
+      id="childSelect"
+      [(ngModel)]="selectedChildId"
+      (change)="cargarNoticias()"
+    >
+      <option [ngValue]="null">Todos</option>
+      <option *ngFor="let n of ninos" [ngValue]="n.id">
+        {{ n.full_name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- MENSAJE CARGANDO -->
+  <p *ngIf="cargando" class="loading">
+    Cargando noticias...
+  </p>
+
+  <!-- NO HAY NOTICIAS -->
+  <p *ngIf="!cargando && noticias.length === 0" class="sin-noticias">
+    No hay noticias de este niño aún.
+  </p>
+
+  <!-- GRID DE NOTICIAS -->
+  <div class="noticias-grid" *ngIf="noticias.length > 0">
+
+    <article class="noticia-card" *ngFor="let noticia of noticias">
+
+      <!-- META -->
+      <div class="noticia-meta">
+        <span class="label-ninos">Niños:</span>
+        <span class="nombres">{{ noticia.nombresNinos }}</span>
+      </div>
+
+      <!-- TÍTULO -->
+      <h3 class="titulo">{{ noticia.titulo }}</h3>
+
+      <!-- FECHA -->
+      <p class="fecha">{{ noticia.fecha }}</p>
+
+      <!-- IMAGEN -->
+      <div class="imagen-wrapper" *ngIf="noticia.imagen">
+        <img
+          [src]="noticia.imagen"
+          class="noticia-img"
+          alt="Imagen"
+        >
+      </div>
+
+      <!-- VER IMAGEN -->
+      <a
+        class="ver-imagen"
+        target="_blank"
+        [href]="noticia.imagen"
+        *ngIf="noticia.imagen"
+      >
+        Ver imagen
+      </a>
+
+      <!-- DESCRIPCIÓN -->
+      <div class="descripcion-card">
+        <p class="descripcion-text">
+          {{ noticia.descripcion }}
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+
+</div>
