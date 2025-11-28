@@ -24,6 +24,8 @@ import { NinosApadrinadosComponent } from './components/ninos-apadrinados/ninos-
 import { NavbarAdminPadrinoComponent } from './components/navbar-admin-padrino/navbar-admin-padrino.component';
 import { NoticiasNinosHomeComponent } from './components/noticias-ninos-home/noticias-ninos-home.component';
 import { ProgresoNinosComponent } from './components/progreso-ninos/progreso-ninos.component';
+import { MensajesNinosComponent } from './components/mensajes-ninos/mensajes-ninos.component';
+import { MensajesNinosHomeComponent } from './components/mensajes-ninos-home/mensajes-ninos-home.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +58,7 @@ export const routes: Routes = [
       { path: 'actividades', component: ActividadesHomeComponent },
       { path: 'donaciones', component: DonacionesHomeComponent },
       { path: 'noticias-crud', component: NoticiasNinosHomeComponent },
+      { path: 'mensajes-ninos-home', component: MensajesNinosHomeComponent },
     ],
   },
   {
@@ -67,6 +70,7 @@ export const routes: Routes = [
       { path: 'ninos-bitacora', component: NinosBitacoraComponent },
       { path: 'ninos-apadrinados', component: NinosApadrinadosComponent },
       { path: 'progreso-ninos', component: ProgresoNinosComponent },
+      { path: 'mensajes-ninos', component: MensajesNinosComponent },
     ],
   },
 
@@ -85,8 +89,8 @@ export const routes: Routes = [
           { path: 'ninos-apadrinados', component: NinosApadrinadosComponent },
           { path: 'perfil', component: PerfilComponent },
           { path: 'progreso-ninos', component: ProgresoNinosComponent },
-
-        ]
+          { path: 'mensajes-ninos', component: MensajesNinosComponent },
+        ],
       },
       // Admin dentro del combinado
       {
@@ -98,16 +102,18 @@ export const routes: Routes = [
           { path: 'padrinos', component: PadrinosHomeComponent },
           { path: 'voluntarios', component: VoluntariosHomeComponent },
           { path: 'niños', component: NinosHomeComponent },
-          { path: 'administracion-contenido', component: AdminContenidoComponent },
+          {
+            path: 'administracion-contenido',
+            component: AdminContenidoComponent,
+          },
           { path: 'actividades', component: ActividadesHomeComponent },
           { path: 'donaciones', component: DonacionesHomeComponent },
           { path: 'perfil', component: PerfilComponent },
-          { path: 'noticias-crud', component: NoticiasNinosHomeComponent }
-        ]
-      }
-    ]
+          { path: 'noticias-crud', component: NoticiasNinosHomeComponent },
+        ],
+      },
+    ],
   },
 
   { path: '**', redirectTo: '' }, // comodín
 ];
-

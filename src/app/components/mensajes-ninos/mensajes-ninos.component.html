@@ -1,0 +1,33 @@
+<div class="header-mensajes">
+  <button (click)="abrirModalCrearMensaje()">+ Enviar mensaje</button>
+</div>
+
+<!-- LISTADO DE MENSAJES -->
+<div *ngFor="let m of mensajes" class="card-mensaje">
+
+  <!-- IZQUIERDA -->
+  <div class="card-info">
+    <p>
+      <b>Padrino:</b> {{ m.godparent.full_name }}
+    </p>
+
+    <p>
+      <b>Niño:</b> {{ m.children.full_name }}
+    </p>
+
+    <p>
+      <b>Asunto:</b> {{ m.subject }}
+    </p>
+
+    <p>
+      <b>Mensaje:</b> {{ m.content }}
+    </p>
+  </div>
+
+  <!-- DERECHA -->
+  <div class="card-fecha">
+  {{ formatearFecha12(m.created_at) }}
+</div>
+
+
+</div>

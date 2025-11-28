@@ -128,6 +128,22 @@ export class PadrinoService {
       catchError((error) => this.manejarError(error))
     );
   }
+traerPadrinosTodos(): Observable<Padrino[]> {
+  const token = sessionStorage.getItem('token') || '';
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+
+  const url = `${this.endpoint}`;
+
+  return this.http.get<{ data: any }>(url, { headers }).pipe(
+    map((res) => Array.isArray(res.data) ? res.data.flat() : []),
+    tap((p) => console.log(`[PadrinoService] Padrinos cargados: ${p.length}`)),
+    catchError((error) => this.manejarError(error))
+  );
+}
+
+
 
   // ============================================================
   //  Obtener estados

@@ -1,5 +1,4 @@
 <div class="noticias-container">
-
   <!-- SELECTOR DE NIÑOS -->
   <div class="selector-ninos">
     <label for="childSelect">Filtrar por niño:</label>
@@ -17,9 +16,7 @@
   </div>
 
   <!-- MENSAJE CARGANDO -->
-  <p *ngIf="cargando" class="loading">
-    Cargando noticias...
-  </p>
+  <p *ngIf="cargando" class="loading">Cargando noticias...</p>
 
   <!-- NO HAY NOTICIAS -->
   <p *ngIf="!cargando && noticias.length === 0" class="sin-noticias">
@@ -28,9 +25,7 @@
 
   <!-- GRID DE NOTICIAS -->
   <div class="noticias-grid" *ngIf="noticias.length > 0">
-
     <article class="noticia-card" *ngFor="let noticia of noticias">
-
       <!-- META -->
       <div class="noticia-meta">
         <span class="label-ninos">Niños:</span>
@@ -40,16 +35,9 @@
       <!-- TÍTULO -->
       <h3 class="titulo">{{ noticia.titulo }}</h3>
 
-      <!-- FECHA -->
-      <p class="fecha">{{ noticia.fecha }}</p>
-
       <!-- IMAGEN -->
       <div class="imagen-wrapper" *ngIf="noticia.imagen">
-        <img
-          [src]="noticia.imagen"
-          class="noticia-img"
-          alt="Imagen"
-        >
+        <img [src]="noticia.imagen" class="noticia-img" alt="Imagen" />
       </div>
 
       <!-- VER IMAGEN -->
@@ -68,9 +56,8 @@
           {{ noticia.descripcion }}
         </p>
       </div>
-
+      <!-- FECHA -->
+      <p class="fecha">{{ noticia.fecha }}</p>
     </article>
-
   </div>
-
 </div>
