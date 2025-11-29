@@ -1,33 +1,69 @@
 <div class="header-mensajes">
+  <div class="leyenda">
+    <div class="cuadro enviado"></div>
+    <span>Enviados</span>
+
+    <div class="cuadro recibido"></div>
+    <span>Recibidos</span>
+  </div>
+
   <button (click)="abrirModalCrearMensaje()">+ Enviar mensaje</button>
 </div>
 
 <!-- LISTADO DE MENSAJES -->
-<div *ngFor="let m of mensajes" class="card-mensaje">
-
+<div
+  *ngFor="let m of mensajes"
+  class="card-mensaje"
+  [ngClass]="{ 'admin-msg': m.is_from_admin }"
+>
   <!-- IZQUIERDA -->
   <div class="card-info">
-    <p>
-      <b>Padrino:</b> {{ m.godparent.full_name }}
-    </p>
+    <!-- ASUNTO: grande, sin label -->
+    <h3 class="asunto">{{ m.subject }}</h3>
 
-    <p>
-      <b>Niño:</b> {{ m.children.full_name }}
-    </p>
+    <!-- MENSAJE: debajo del asunto, sin label -->
+    <p class="mensaje">{{ m.content }}</p>
 
-    <p>
-      <b>Asunto:</b> {{ m.subject }}
-    </p>
-
-    <p>
-      <b>Mensaje:</b> {{ m.content }}
-    </p>
+    <!-- NIÑO: con label -->
+    <p class="nino"><b>Niño:</b> {{ m.children.full_name }}</p>
   </div>
 
-  <!-- DERECHA -->
+  <!-- DERECHA: FECHA -->
   <div class="card-fecha">
-  {{ formatearFecha12(m.created_at) }}
+    {{ formatearFecha12(m.created_at) }}
+  </div>
 </div>
 
+<!-- PAGINACIÓN -->
+<div class="paginacion" *ngIf="!cargando && mensajes.length > 0">
+  <div class="botones-navegacion">
+    <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+      Anterior
+    </button>
 
+    <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
+
+    <button
+      (click)="paginaSiguiente()"
+      [disabled]="paginaActual === ultimaPagina"
+    >
+      Siguiente
+    </button>
+  </div>
+
+  <div class="ir-pagina">
+    <label for="irPagina">Ir a:</label>
+    <input
+      id="irPagina"
+      type="number"
+      [(ngModel)]="paginaIr"
+      min="1"
+      [max]="ultimaPagina"
+      (keyup.enter)="irAPagina()"
+      [disabled]="ultimaPagina <= 1"
+    />
+    <button (click)="irAPagina()" [disabled]="ultimaPagina <= 1 || !paginaIr">
+      Ir
+    </button>
+  </div>
 </div>

@@ -3,6 +3,7 @@ export interface ListarMensajeNino {
   subject: string;
   content: string;
   created_at: string;
+  is_from_admin?: boolean;
   godparent: {
     full_name: string;
   };

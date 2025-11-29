@@ -3,16 +3,50 @@
 </div>
 
 <div *ngFor="let m of mensajes" class="card-mensaje">
-
   <div class="card-info">
+    <!-- Asunto grande y sin label -->
+    <h3 class="asunto">{{ m.subject }}</h3>
+
+    <!-- Mensaje sin label -->
+    <p class="contenido-mensaje">{{ m.content }}</p>
+
+    <!-- Padrino y niño como antes -->
     <p><b>Padrino:</b> {{ m.godparent.full_name }}</p>
     <p><b>Niño:</b> {{ m.children.full_name }}</p>
-    <p><b>Asunto:</b> {{ m.subject }}</p>
-    <p><b>Mensaje:</b> {{ m.content }}</p>
   </div>
 
   <div class="card-fecha">
     {{ formatearFecha12(m.created_at) }}
   </div>
 
+    
 </div>
+<div class="paginacion" *ngIf="!cargando && mensajes.length > 0">
+    <div class="botones-navegacion">
+      <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+        Anterior
+      </button>
+
+      <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
+
+      <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+        Siguiente
+      </button>
+    </div>
+
+    <div class="ir-pagina">
+      <label for="irPagina">Ir a:</label>
+      <input
+        id="irPagina"
+        type="number"
+        [(ngModel)]="paginaIr"
+        min="1"
+        [max]="ultimaPagina"
+        (keyup.enter)="irAPagina()"
+        [disabled]="ultimaPagina <= 1"
+      />
+      <button (click)="irAPagina()" [disabled]="ultimaPagina <= 1 || !paginaIr">
+        Ir
+      </button>
+    </div>
+  </div>
