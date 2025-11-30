@@ -1,3 +1,4 @@
+//Interface para los mensajes de los niños (listar)
 export interface ListarMensajeNino {
   id: number;
   subject: string;

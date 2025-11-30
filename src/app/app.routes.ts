@@ -77,9 +77,8 @@ export const routes: Routes = [
   // Ruta combinada: solo usuarios con ambos roles la verán
   {
     path: 'admin-padrino',
-    component: NavbarAdminPadrinoComponent, // Navbar combinado siempre visible
+    component: NavbarAdminPadrinoComponent,
     children: [
-      // Padrino dentro del combinado
       {
         path: 'padrino',
         component: NavbarPadrinoHomeComponent,
@@ -92,7 +91,7 @@ export const routes: Routes = [
           { path: 'mensajes-ninos', component: MensajesNinosComponent },
         ],
       },
-      // Admin dentro del combinado
+
       {
         path: 'admin',
         component: NavbarHomeComponent,
@@ -115,5 +114,5 @@ export const routes: Routes = [
     ],
   },
 
-  { path: '**', redirectTo: '' }, // comodín
+  { path: '**', redirectTo: '' },
 ];

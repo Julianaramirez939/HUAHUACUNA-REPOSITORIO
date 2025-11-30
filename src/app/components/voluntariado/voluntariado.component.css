@@ -12,7 +12,6 @@
   overflow: hidden;
 }
 
-
 .header-logo {
   display: flex;
   flex-direction: column;
@@ -28,7 +27,6 @@
   text-align: center;
 }
 
-
 .formulario-voluntariado {
   width: 100%;
   max-width: 1100px;
@@ -37,7 +35,6 @@
   align-items: center;
 }
 
-
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -45,7 +42,6 @@
   margin-bottom: 2rem;
   width: 100%;
 }
-
 
 .form-group {
   display: flex;
@@ -58,7 +54,6 @@ label {
   margin-bottom: 0.4rem;
   font-size: 1rem;
 }
-
 
 input,
 select {
@@ -78,7 +73,6 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-
 ::ng-deep .ng-select {
   width: 100%;
   font-size: 1rem;
@@ -91,7 +85,7 @@ select:focus {
   background-color: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -104,7 +98,6 @@ select:focus {
   border-color: #2563eb;
 }
 
-
 ::ng-deep .ng-select .ng-placeholder {
   color: #6b7280;
   text-align: center;
@@ -112,12 +105,10 @@ select:focus {
   font-style: italic;
 }
 
-
 ::ng-deep .ng-select .ng-value {
   text-align: left;
   color: #111827;
 }
-
 
 ::ng-deep .ng-dropdown-panel {
   border: 1px solid #d1d5db;
@@ -133,12 +124,10 @@ select:focus {
   transition: background-color 0.2s, color 0.2s;
 }
 
-
 ::ng-deep .ng-dropdown-panel .ng-option:hover {
   background-color: #2563eb;
   color: #ffffff;
 }
-
 
 ::ng-deep .ng-dropdown-panel .ng-option-selected {
   background-color: #1e3a8a;
@@ -155,12 +144,10 @@ select:focus {
   text-align: center !important;
 }
 
-
 ::ng-deep .ng-select .ng-arrow-wrapper {
   position: absolute;
   right: 10px;
 }
-
 
 ::ng-deep .ng-select.ng-select-single .ng-value {
   width: 100%;
@@ -170,19 +157,16 @@ select:focus {
   color: #111827;
 }
 
-
-.file-group input[type='file'] {
+.file-group input[type="file"] {
   border: none;
   padding: 0.5rem 0;
 }
-
 
 .error-message {
   color: #dc2626;
   font-size: 0.9rem;
   margin-top: 0.3rem;
 }
-
 
 .btn-voluntariado-submit {
   background-color: #162663;
@@ -199,4 +183,3 @@ select:focus {
 .btn-voluntariado-submit:hover {
   background-color: #1e3a8a;
 }
-

@@ -10,31 +10,24 @@
   <button (click)="abrirModalCrearMensaje()">+ Enviar mensaje</button>
 </div>
 
-<!-- LISTADO DE MENSAJES -->
 <div
   *ngFor="let m of mensajes"
   class="card-mensaje"
   [ngClass]="{ 'admin-msg': m.is_from_admin }"
 >
-  <!-- IZQUIERDA -->
   <div class="card-info">
-    <!-- ASUNTO: grande, sin label -->
     <h3 class="asunto">{{ m.subject }}</h3>
 
-    <!-- MENSAJE: debajo del asunto, sin label -->
     <p class="mensaje">{{ m.content }}</p>
 
-    <!-- NIÑO: con label -->
     <p class="nino"><b>Niño:</b> {{ m.children.full_name }}</p>
   </div>
 
-  <!-- DERECHA: FECHA -->
   <div class="card-fecha">
     {{ formatearFecha12(m.created_at) }}
   </div>
 </div>
 
-<!-- PAGINACIÓN -->
 <div class="paginacion" *ngIf="!cargando && mensajes.length > 0">
   <div class="botones-navegacion">
     <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">

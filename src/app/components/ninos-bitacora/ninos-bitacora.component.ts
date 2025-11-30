@@ -10,19 +10,22 @@ import { PadrinoService } from '../../services/padrinos.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './ninos-bitacora.component.html',
-  styleUrls: ['./ninos-bitacora.component.css']
+  styleUrls: ['./ninos-bitacora.component.css'],
 })
-//Componente que muestra la bitacora de niños disponibles en el perfil del padrino
+//Componente que muestra la lista de niños disponibles en el perfil del padrino
 export class NinosBitacoraComponent implements OnInit {
   ninos: NinoListar[] = [];
   cargando = true;
 
-  constructor(private ninosService: NinosService, private padrinoService: PadrinoService) {}
+  constructor(
+    private ninosService: NinosService,
+    private padrinoService: PadrinoService
+  ) {}
 
   ngOnInit(): void {
     this.cargarNinos();
   }
-
+  //Metodo para cargar niños los niños disponibles para apadrinar
   cargarNinos(): void {
     const padrinoIdStr = sessionStorage.getItem('padrino');
     if (!padrinoIdStr) {
@@ -40,29 +43,27 @@ export class NinosBitacoraComponent implements OnInit {
 
     this.cargando = true;
     this.ninosService.traerNinosSinPadrino(padrinoId).subscribe({
-  next: (data) => {
-    console.log('data cruda', data);
+      next: (data) => {
+        console.log('data cruda', data);
 
-    // Aplanar arrays de niños si vienen varios arrays
-    const todosLosNinos = data.flat();
+        const todosLosNinos = data.flat();
 
-    // Filtrar solo los activos
-    this.ninos = todosLosNinos.filter(nino => 
-      (Array.isArray(nino.state) ? nino.state : [nino.state])
-        .some(s => s?.name?.toLowerCase() === 'activo')
-    );
+        this.ninos = todosLosNinos.filter((nino) =>
+          (Array.isArray(nino.state) ? nino.state : [nino.state]).some(
+            (s) => s?.name?.toLowerCase() === 'activo'
+          )
+        );
 
-    console.log('this.ninos filtrados', this.ninos);
-    this.cargando = false;
-  },
-  error: (err) => {
-    console.error('Error al cargar los niños:', err);
-    this.cargando = false;
+        console.log('this.ninos filtrados', this.ninos);
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar los niños:', err);
+        this.cargando = false;
+      },
+    });
   }
-});
-
-  }
-
+//Metodo para apadrinar un niño 
   apadrinar(nino: NinoListar): void {
     const padrinoIdStr = sessionStorage.getItem('padrino');
     if (!padrinoIdStr) {
@@ -82,8 +83,8 @@ export class NinosBitacoraComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#003366', // azul
-      cancelButtonColor: '#d33'      // rojo
+      confirmButtonColor: '#003366', 
+      cancelButtonColor: '#d33', 
     }).then((result) => {
       if (result.isConfirmed) {
         this.padrinoService.apadrinarNino(padrinoId, [nino.id]).subscribe({
@@ -93,9 +94,8 @@ export class NinosBitacoraComponent implements OnInit {
               text: `${nino.name} ${nino.last_name} ahora está bajo tu patrocinio.`,
               icon: 'success',
               confirmButtonColor: '#003366',
-              confirmButtonText: 'Aceptar'
+              confirmButtonText: 'Aceptar',
             }).then(() => {
-              // Recargar la lista de niños después de apadrinar
               this.cargarNinos();
             });
           },
@@ -105,12 +105,11 @@ export class NinosBitacoraComponent implements OnInit {
               title: 'Error',
               text: 'No se pudo apadrinar al niño.',
               icon: 'error',
-              confirmButtonColor: '#003366'
+              confirmButtonColor: '#003366',
             });
-          }
+          },
         });
       }
     });
   }
 }
-

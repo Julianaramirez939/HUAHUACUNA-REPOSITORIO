@@ -1,3 +1,4 @@
+//Interface para las cards de las noticias
 export interface NoticiaProgreso {
   id: number;
   titulo: string;

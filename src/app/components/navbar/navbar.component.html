@@ -4,13 +4,31 @@
   </div>
 
   <ul class="navbar-links">
-  <li (click)="onNavClick('inicio')" [class.active]="activeLink === 'inicio'">Inicio</li>
-  <li (click)="onNavClick('quienes-somos')" [class.active]="activeLink === 'quienes-somos'">¿Quiénes somos?</li>
-  <li (click)="onNavClick('que-hacemos')" [class.active]="activeLink === 'que-hacemos'">¿Qué hacemos?</li>
-  <li (click)="onNavClick('unete')" [class.active]="activeLink === 'unete'">Únete</li>
-  <li (click)="onNavClick('contacto')" [class.active]="activeLink === 'contacto'">Contáctanos</li>
-</ul>
-
+    <li (click)="onNavClick('inicio')" [class.active]="activeLink === 'inicio'">
+      Inicio
+    </li>
+    <li
+      (click)="onNavClick('quienes-somos')"
+      [class.active]="activeLink === 'quienes-somos'"
+    >
+      ¿Quiénes somos?
+    </li>
+    <li
+      (click)="onNavClick('que-hacemos')"
+      [class.active]="activeLink === 'que-hacemos'"
+    >
+      ¿Qué hacemos?
+    </li>
+    <li (click)="onNavClick('unete')" [class.active]="activeLink === 'unete'">
+      Únete
+    </li>
+    <li
+      (click)="onNavClick('contacto')"
+      [class.active]="activeLink === 'contacto'"
+    >
+      Contáctanos
+    </li>
+  </ul>
 
   <div class="navbar-actions">
     <button class="btn-donar" (click)="onNavClick('donar')">
@@ -22,6 +40,5 @@
     </button>
   </div>
 </nav>
-
 
 <router-outlet></router-outlet>

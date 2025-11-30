@@ -1,10 +1,8 @@
 <div class="que-hacemos-container" *ngIf="impacto; else cargandoTpl">
-  <!-- Banner azul -->
   <div class="banner-azul">
     <h2>NUESTRO IMPACTO</h2>
   </div>
 
-  <!-- Impacto -->
   <div class="impacto-circulos">
     <div class="impacto-item">
       <div class="circulo azul">
@@ -24,14 +22,17 @@
 
     <div class="impacto-item">
       <div class="circulo azul">
-        <div class="numero">{{ impacto["municipalities_influenced"].amount }}</div>
+        <div class="numero">
+          {{ impacto["municipalities_influenced"].amount }}
+        </div>
       </div>
       <div class="titulo">{{ impacto["municipalities_influenced"].title }}</div>
-      <div class="subtitulo">{{ impacto["municipalities_influenced"].subtitle }}</div>
+      <div class="subtitulo">
+        {{ impacto["municipalities_influenced"].subtitle }}
+      </div>
     </div>
   </div>
 
-  <!-- ACTIVIDADES REGULARES -->
   <div *ngIf="actividadesRegulares.length">
     <div class="banner-azul">
       <h2>ACTIVIDADES REGULARES</h2>
@@ -39,21 +40,26 @@
 
     <div class="actividades-grid">
       <div class="actividad-card" *ngFor="let a of actividadesRegulares">
-        <img *ngIf="a.media_file_url" [src]="a.media_file_url" alt="{{ a.name }}" class="actividad-img" />
+        <img
+          *ngIf="a.media_file_url"
+          [src]="a.media_file_url"
+          alt="{{ a.name }}"
+          class="actividad-img"
+        />
         <div class="actividad-body">
           <h3>{{ a.name }}</h3>
           <p *ngIf="a.description">{{ a.description }}</p>
           <p *ngIf="a.location"><strong>Ubicación:</strong> {{ a.location }}</p>
           <p *ngIf="a.date"><strong>Fecha:</strong> {{ a.date }}</p>
-          <p *ngIf="a.hour && a.hour !== '00:00'"><strong>Hora:</strong> {{ a.hour }}</p>
+          <p *ngIf="a.hour && a.hour !== '00:00'">
+            <strong>Hora:</strong> {{ a.hour }}
+          </p>
           <p *ngIf="a.price"><strong>Precio:</strong> {{ a.price }}</p>
-          
         </div>
       </div>
     </div>
   </div>
 
-  <!-- EVENTOS -->
   <div *ngIf="eventos.length">
     <div class="banner-azul">
       <h2>EVENTOS</h2>
@@ -61,15 +67,21 @@
 
     <div class="actividades-grid">
       <div class="actividad-card" *ngFor="let e of eventos">
-        <img *ngIf="e.media_file_url" [src]="e.media_file_url" alt="{{ e.name }}" class="actividad-img" />
+        <img
+          *ngIf="e.media_file_url"
+          [src]="e.media_file_url"
+          alt="{{ e.name }}"
+          class="actividad-img"
+        />
         <div class="actividad-body">
           <h3>{{ e.name }}</h3>
           <p *ngIf="e.description">{{ e.description }}</p>
           <p *ngIf="e.location"><strong>Ubicación:</strong> {{ e.location }}</p>
           <p *ngIf="e.date"><strong>Fecha:</strong> {{ e.date }}</p>
-          <p *ngIf="e.hour && e.hour !== '00:00'"><strong>Hora:</strong> {{ e.hour }}</p>
+          <p *ngIf="e.hour && e.hour !== '00:00'">
+            <strong>Hora:</strong> {{ e.hour }}
+          </p>
           <p *ngIf="e.price"><strong>Precio:</strong> {{ e.price }}</p>
-          
         </div>
       </div>
     </div>
@@ -77,5 +89,5 @@
 </div>
 
 <ng-template #cargandoTpl>
-  <p style="text-align: center;">Cargando información...</p>
+  <p style="text-align: center">Cargando información...</p>
 </ng-template>

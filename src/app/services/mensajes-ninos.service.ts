@@ -9,6 +9,7 @@ import { ListarMensajeNino } from '../interfaces/listar-mensaje-nino';
 @Injectable({
   providedIn: 'root',
 })
+//Servicio para los mensajes de los niños
 export class MensajesNinosService {
   private readonly endpoint = `${API_URL}/godparent-messages`;
 
@@ -23,7 +24,7 @@ export class MensajesNinosService {
   }
 
   /**
-   * 1) GET paginado de mensajes
+   * Obtener paginado de mensajes
    */
   traerMensajes(
     page: number = 1
@@ -33,8 +34,8 @@ export class MensajesNinosService {
 
     return this.http.get<{ data: any }>(url, { headers }).pipe(
       map((res) => ({
-        data: res.data?.godparent_messages ?? [], // 🔥 Arreglo correcto
-        pagination: res.data?.pagination ?? null, // 🔥 Paginación real
+        data: res.data?.godparent_messages ?? [],
+        pagination: res.data?.pagination ?? null,
       })),
       tap(() =>
         console.log(
@@ -46,44 +47,45 @@ export class MensajesNinosService {
   }
 
   /**
-   * 2) GET filtrado por godparent_id
+   * Obtener los mensajes por padrino
    */
-traerMensajesPorPadrino(
-  godparent_id: number,
-  page: number = 1
-): Observable<{ data: any[]; pagination: any }> {
-  const headers = this.getHeaders();
-  const url = `${this.endpoint}?godparent_id=${godparent_id}&page=${page}`;
+  traerMensajesPorPadrino(
+    godparent_id: number,
+    page: number = 1
+  ): Observable<{ data: any[]; pagination: any }> {
+    const headers = this.getHeaders();
+    const url = `${this.endpoint}?godparent_id=${godparent_id}&page=${page}`;
 
-  return this.http.get<any>(url, { headers }).pipe(
-    map((res) => ({
-      data: res.data?.godparent_messages ?? [],
-      pagination: res.data?.pagination ?? null,
-    })),
-    tap((resFinal) =>
-      console.log(
-        `[GodparentMessageService] Padrino ${godparent_id}, mensajes: ${resFinal.data.length}, página: ${page}`
-      )
-    ),
-    catchError((err) => this.manejarError(err))
-  );
-}
-
+    return this.http.get<any>(url, { headers }).pipe(
+      map((res) => ({
+        data: res.data?.godparent_messages ?? [],
+        pagination: res.data?.pagination ?? null,
+      })),
+      tap((resFinal) =>
+        console.log(
+          `[GodparentMessageService] Padrino ${godparent_id}, mensajes: ${resFinal.data.length}, página: ${page}`
+        )
+      ),
+      catchError((err) => this.manejarError(err))
+    );
+  }
 
   /**
-   * 3) Crear mensaje
+   * Crear mensaje
    */
- crearMensaje(body: CrearMensajeNino, is_from_admin: boolean | null): Observable<any> {
-  const headers = this.getHeaders();
+  crearMensaje(
+    body: CrearMensajeNino,
+    is_from_admin: boolean | null
+  ): Observable<any> {
+    const headers = this.getHeaders();
 
-  const url = `${this.endpoint}?is_from_admin=${is_from_admin}`;
+    const url = `${this.endpoint}?is_from_admin=${is_from_admin}`;
 
-  return this.http.post<any>(url, body, { headers }).pipe(
-    tap(() => console.log('[GodparentMessageService] Mensaje creado.')),
-    catchError((error) => this.manejarError(error))
-  );
-}
-
+    return this.http.post<any>(url, body, { headers }).pipe(
+      tap(() => console.log('[GodparentMessageService] Mensaje creado.')),
+      catchError((error) => this.manejarError(error))
+    );
+  }
 
   /**
    * Manejo de errores estándar

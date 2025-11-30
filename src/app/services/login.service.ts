@@ -27,30 +27,35 @@ export class LoginService {
   iniciarSesion(credenciales: CredencialesLogin): Observable<LoginResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post<LoginResponse>(this.endpoint, credenciales, { headers }).pipe(
-      // Si la respuesta contiene token, se guarda en sessionStorage junto con los datos del usuario
-      tap((respuesta) => {
-        if (respuesta?.token) {
-          sessionStorage.setItem('token', respuesta.token);
-          sessionStorage.setItem('user', JSON.stringify(respuesta.user));
-          sessionStorage.setItem('padrino', JSON.stringify(respuesta.godparent_id));
-        }
-      }),
-      // Manejo de errores provenientes del backend
-      catchError((error) => {
-        console.error('[LoginService] Error en iniciarSesion:', error);
+    return this.http
+      .post<LoginResponse>(this.endpoint, credenciales, { headers })
+      .pipe(
+        // Si la respuesta contiene token, se guarda en sessionStorage junto con los datos del usuario
+        tap((respuesta) => {
+          if (respuesta?.token) {
+            sessionStorage.setItem('token', respuesta.token);
+            sessionStorage.setItem('user', JSON.stringify(respuesta.user));
+            sessionStorage.setItem(
+              'padrino',
+              JSON.stringify(respuesta.godparent_id)
+            );
+          }
+        }),
+        // Manejo de errores provenientes del backend
+        catchError((error) => {
+          console.error('[LoginService] Error en iniciarSesion:', error);
 
-        // Angular usualmente coloca la respuesta de error en error.error
-        const backendError = error?.error || {};
-        const mensaje = backendError.message || 'No se pudo iniciar sesión';
-        const errores = backendError.errors || null;
+          // Angular usualmente coloca la respuesta de error en error.error
+          const backendError = error?.error || {};
+          const mensaje = backendError.message || 'No se pudo iniciar sesión';
+          const errores = backendError.errors || null;
 
-        // Retornamos un objeto con message y errors para que el componente lo procese
-        return throwError(() => ({
-          message: mensaje,
-          errors: errores
-        }));
-      })
-    );
+          // Retornamos un objeto con message y errors para que el componente lo procese
+          return throwError(() => ({
+            message: mensaje,
+            errors: errores,
+          }));
+        })
+      );
   }
 }

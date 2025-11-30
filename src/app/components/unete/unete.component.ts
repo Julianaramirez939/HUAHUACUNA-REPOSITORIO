@@ -17,7 +17,7 @@ export class UneteComponent {
   @Input() altura: number = 550;
 
   constructor(private router: Router) {}
-//Metodo para navegar a una ruta especifica
+  //Metodo para navegar a una ruta especifica
   irA(ruta: string) {
     this.router.navigate([ruta]);
   }

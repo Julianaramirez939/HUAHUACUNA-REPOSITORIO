@@ -1,28 +1,25 @@
-
 .login-container {
-  max-width: 420px; 
-  margin: 50px auto; 
-  padding: 2rem; 
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 2rem;
   background-color: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
   border-radius: 12px;
   font-family: "Segoe UI", sans-serif;
 }
 
-
 .login-logo {
-  width: 180px; 
+  width: 180px;
   height: 180px;
   display: block;
   margin: 0 auto 1.3rem;
 }
 
-
 .login-title {
   text-align: center;
   margin-bottom: 1.5rem;
   color: #2c3e50;
-  font-size: 1.6rem; 
+  font-size: 1.6rem;
   font-weight: 600;
 }
 
@@ -33,16 +30,14 @@
   width: 95%;
 }
 
-
 .form-group {
   width: 95%;
-  max-width: 360px; 
+  max-width: 360px;
   display: flex;
   flex-direction: column;
-  align-items: stretch; 
+  align-items: stretch;
   margin-bottom: 1rem;
 }
-
 
 input[type="text"],
 input[type="password"] {
@@ -60,12 +55,10 @@ input:focus {
   outline: none;
 }
 
-
-
 .show-password-checkbox {
   display: flex;
   align-items: center;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   gap: 0.4rem;
   font-size: 0.95rem;
   width: 100%;
@@ -73,16 +66,19 @@ input:focus {
   margin-bottom: 0.9rem;
 }
 
+.show-password-checkbox input[type="checkbox"] {
+  accent-color: #003366;
+}
 
 .btn-login,
 .btn-register {
   width: 100%;
-  padding: 0.8rem; 
+  padding: 0.8rem;
   margin-top: 0.4rem;
   border: none;
   border-radius: 7px;
   color: white;
-  font-size: 1.05rem; 
+  font-size: 1.05rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-weight: 500;
@@ -149,7 +145,7 @@ input:focus {
 
 .btn-back i {
   color: black;
-  font-size: 1.3rem; 
+  font-size: 1.3rem;
 }
 
 .btn-back:hover {

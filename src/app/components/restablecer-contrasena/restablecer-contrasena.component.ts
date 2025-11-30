@@ -158,7 +158,9 @@ export class RestablecerContrasenaComponent implements OnInit {
         await Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: error?.message || 'No se pudo restablecer la contraseña. Intenta nuevamente.',
+          text:
+            error?.message ||
+            'No se pudo restablecer la contraseña. Intenta nuevamente.',
           confirmButtonColor: '#162663',
           confirmButtonText: 'Aceptar',
         });
@@ -186,7 +188,10 @@ export class RestablecerContrasenaComponent implements OnInit {
       },
     };
 
-    if (this.formularioReestablecer.errors?.['noCoincide'] && campo === 'confirmPassword') {
+    if (
+      this.formularioReestablecer.errors?.['noCoincide'] &&
+      campo === 'confirmPassword'
+    ) {
       return 'Las contraseñas no coinciden';
     }
 

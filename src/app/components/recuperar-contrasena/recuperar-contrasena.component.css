@@ -1,4 +1,3 @@
-
 .forgot-container {
   display: flex;
   justify-content: center;
@@ -7,17 +6,15 @@
   padding: 1.5rem;
 }
 
-
 .forgot-content {
   background: #ffffff;
   max-width: 420px;
   width: 100%;
-  padding: 2.3rem; 
+  padding: 2.3rem;
   border-radius: 14px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
   text-align: center;
 }
-
 
 .forgot-logo {
   width: 150px;
@@ -25,15 +22,13 @@
   margin-bottom: 1.2rem;
 }
 
-
 .forgot-title {
   color: #2c3e50;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1.8rem;
   font-family: "Segoe UI", sans-serif;
 }
-
 
 .forgot-label {
   display: block;
@@ -41,20 +36,19 @@
   font-weight: 600;
   color: #000;
   margin-bottom: 0.4rem;
-  font-size: 1rem; 
+  font-size: 1rem;
   font-family: "Segoe UI", sans-serif;
 }
 
-
 .forgot-input {
   width: 96%;
-  padding: 0.8rem; 
+  padding: 0.8rem;
   border: 1px solid #d1d5db;
   border-radius: 0.4rem;
-  font-size: 1rem; 
+  font-size: 1rem;
   font-family: "Segoe UI", sans-serif;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  margin-bottom: 1.2rem; 
+  margin-bottom: 1.2rem;
 }
 
 .forgot-input:focus {
@@ -62,7 +56,6 @@
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
 }
-
 
 .error-msg {
   color: red;
@@ -72,15 +65,14 @@
   text-align: left;
 }
 
-
 .btn-send {
   background-color: #162663;
   color: white;
   border: none;
-  border-radius: 8px; 
-  padding: 0.8rem 1.5rem; 
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
   font-weight: 600;
-  font-size: 1rem; 
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.1s ease;
   width: 100%;
@@ -97,7 +89,6 @@
   cursor: not-allowed;
 }
 
-
 .back-to-login {
   margin-top: 1.3rem;
 }
@@ -105,7 +96,7 @@
 .back-to-login a {
   color: #1e3a8a;
   text-decoration: none;
-  font-size: 1.05rem; 
+  font-size: 1.05rem;
   font-weight: 500;
 }
 

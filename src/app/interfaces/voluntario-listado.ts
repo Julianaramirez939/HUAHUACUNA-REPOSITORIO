@@ -1,4 +1,4 @@
-
+//Interface para listar un voluntario
 export interface VoluntarioListado {
   id: number;
   name: string;

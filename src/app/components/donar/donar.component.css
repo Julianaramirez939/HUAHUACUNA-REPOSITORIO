@@ -8,11 +8,11 @@
 }
 
 .donar-header {
-  background-color: #2863e3ff; 
+  background-color: #2863e3ff;
   padding: 1rem 2rem;
   color: #fff;
   margin-bottom: 1rem;
-  width: 100%; 
+  width: 100%;
   border-radius: 0;
   text-align: center;
 }
@@ -40,13 +40,12 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: default;
-  height: 400px; 
-  
+  height: 400px;
 
-  background-size: cover;       
-  background-position: center; 
-  background-repeat: no-repeat; 
-  filter: brightness(0.85);      
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.85);
   display: flex;
   align-items: flex-end;
   transition: filter 0.3s ease;
@@ -59,11 +58,11 @@
 .overlay {
   position: absolute;
   bottom: 0;
-  left: 0; 
+  left: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.45); 
-  padding: 1.5rem; 
-  box-sizing: border-box; 
+  background: rgba(0, 0, 0, 0.45);
+  padding: 1.5rem;
+  box-sizing: border-box;
   text-align: center;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -71,10 +70,10 @@
 
 .overlay-content {
   color: #fff;
-  max-width: 90%; 
-  margin: 0 auto; 
+  max-width: 90%;
+  margin: 0 auto;
   text-align: center;
-  word-wrap: break-word; 
+  word-wrap: break-word;
 }
 
 .overlay-content h2 {
@@ -95,7 +94,6 @@
   color: #ffcc00;
   margin-top: 0.5rem;
 }
-/* ---------- MODAL GENERAL ---------- */
 
 .modal-backdrop {
   position: fixed;
@@ -103,21 +101,20 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 3000;
 }
 
-/* FORMULARIO ESTILIZADO COMO EL DE VOLUNTARIOS */
 .modal-form {
   background: #fff;
   padding: 2.2rem;
   width: 95%;
   max-width: 800px;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   animation: fadeIn 0.28s ease-in-out;
   font-family: "Segoe UI", sans-serif;
 }
@@ -130,7 +127,6 @@
   font-weight: 700;
 }
 
-/* GRID igual al formulario anterior */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -150,7 +146,6 @@ label {
   font-size: 1rem;
 }
 
-/* Inputs iguales al diseño previo */
 .modal-form input {
   padding: 0.7rem;
   border-radius: 6px;
@@ -166,8 +161,6 @@ label {
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
-
-/* ---------- ESTILOS NG-SELECT IGUALES A TU FORMULARIO ---------- */
 
 ::ng-deep .ng-select {
   width: 100%;
@@ -203,7 +196,7 @@ label {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 ::ng-deep .ng-dropdown-panel .ng-option {
@@ -247,7 +240,6 @@ label {
   transform: translateY(0);
   box-shadow: 0 3px 8px rgba(40, 99, 227, 0.35);
 }
-/* ---------- MODAL GENERAL ---------- */
 
 .modal-backdrop {
   position: fixed;
@@ -255,21 +247,20 @@ label {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 3000;
 }
 
-/* FORMULARIO ESTILIZADO */
 .modal-form {
   background: #fff;
-  padding: 1.8rem 2.2rem; /* igual al formulario anterior */
+  padding: 1.8rem 2.2rem;
   width: 95%;
   max-width: 800px;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   animation: fadeIn 0.28s ease-in-out;
   font-family: "Segoe UI", sans-serif;
 }
@@ -282,11 +273,10 @@ label {
   font-weight: 700;
 }
 
-/* GRID igual al formulario de voluntarios */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.1rem 2.8rem; /* spacing uniforme */
+  gap: 1.1rem 2.8rem;
   margin-bottom: 1rem;
 }
 
@@ -295,7 +285,6 @@ label {
   flex-direction: column;
 }
 
-/* Campo monto media fila */
 .form-group.monto-half {
   grid-column: span 1;
   max-width: 260px;
@@ -308,19 +297,16 @@ label {
   font-size: 1rem;
 }
 .form-group.monto-half {
-  grid-column: 1 / -1; /* ocupa toda la fila */
+  grid-column: 1 / -1;
   max-width: 260px;
-  margin: 0 auto;       /* centrado horizontal */
-  align-items: center;   /* centra label e input */
-  text-align: center;    /* centra texto del label */
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
 }
 
-
-
-/* ---------- INPUTS COMPACTOS ---------- */
 .modal-form input {
   padding: 0.55rem 0.65rem;
-  height: 36px; /* igual que select */
+  height: 36px;
   border-radius: 6px;
   border: 1px solid #d1d5db;
   font-size: 0.95rem;
@@ -335,8 +321,6 @@ label {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-
-
 ::ng-deep .ng-select {
   width: 100%;
   font-size: 1rem;
@@ -349,7 +333,7 @@ label {
   background-color: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -362,7 +346,6 @@ label {
   border-color: #2563eb;
 }
 
-
 ::ng-deep .ng-select .ng-placeholder {
   color: #6b7280;
   text-align: center;
@@ -370,12 +353,10 @@ label {
   font-style: italic;
 }
 
-
 ::ng-deep .ng-select .ng-value {
   text-align: left;
   color: #111827;
 }
-
 
 ::ng-deep .ng-dropdown-panel {
   border: 1px solid #d1d5db;
@@ -391,12 +372,10 @@ label {
   transition: background-color 0.2s, color 0.2s;
 }
 
-
 ::ng-deep .ng-dropdown-panel .ng-option:hover {
   background-color: #2563eb;
   color: #ffffff;
 }
-
 
 ::ng-deep .ng-dropdown-panel .ng-option-selected {
   background-color: #1e3a8a;
@@ -413,12 +392,10 @@ label {
   text-align: center !important;
 }
 
-
 ::ng-deep .ng-select .ng-arrow-wrapper {
   position: absolute;
   right: 10px;
 }
-
 
 ::ng-deep .ng-select.ng-select-single .ng-value {
   width: 100%;
@@ -428,20 +405,17 @@ label {
   color: #111827;
 }
 
-
-/* ---------- BOTONES ---------- */
-
 .modal-buttons {
   display: flex;
-  justify-content: center; /* centra horizontalmente */
-  gap: 0.5rem;             /* espacio pequeño entre botones */
+  justify-content: center;
+  gap: 0.5rem;
   margin-top: 1.5rem;
 }
 
 .modal-buttons .btn-submit,
 .modal-buttons .btn-cancelar {
-  width: 120px;            /* mismo ancho fijo */
-  padding: 0.6rem 0;       /* altura uniforme */
+  width: 120px;
+  padding: 0.6rem 0;
   font-size: 0.95rem;
   font-weight: 600;
   border-radius: 8px;
@@ -469,17 +443,11 @@ label {
   background-color: #c4c4c4;
 }
 
-
-/* Mensajes de error en rojo */
 .error {
-  color: #ff0000; /* rojo intenso */
+  color: #ff0000;
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
-
-
-
-/* ---------- BOTÓN DONAR ---------- */
 
 .btn-donar {
   background-color: #2863e3;
@@ -507,8 +475,13 @@ label {
   box-shadow: 0 3px 8px rgba(40, 99, 227, 0.35);
 }
 
-/* Animación */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.97); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

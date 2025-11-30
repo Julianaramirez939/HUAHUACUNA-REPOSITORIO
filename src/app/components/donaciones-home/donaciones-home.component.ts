@@ -41,7 +41,6 @@ export class DonacionesHomeComponent implements OnInit {
 
     this.donacionesService.getDonaciones(page).subscribe({
       next: (res) => {
-        // res ya tiene la forma { donaciones: [], pagination: {...}, links: {...} }
         this.donaciones = res.donaciones;
         this.paginaActual = res.pagination?.current_page || 1;
         this.ultimaPagina = res.pagination?.last_page || 1;
@@ -89,7 +88,7 @@ export class DonacionesHomeComponent implements OnInit {
     this.paginaActual = destino;
     this.obtenerDonaciones(this.paginaActual);
   }
-
+//Metodo para actualizar una donacion
   actualizarDonacion(donacion: Donaciones & { showMenu?: boolean }): void {
     if (!donacion.id) {
       Swal.fire('Error', 'La donación no tiene ID válido', 'error');
@@ -164,7 +163,7 @@ export class DonacionesHomeComponent implements OnInit {
           showCancelButton: true,
           confirmButtonText: 'Actualizar',
           cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#003366', // azul oscuro
+          confirmButtonColor: '#003366',
           cancelButtonColor: '#dc2626',
           didOpen: () => {
             const selectEl = document.getElementById(
@@ -242,7 +241,7 @@ export class DonacionesHomeComponent implements OnInit {
                     title: 'Donación actualizada',
                     text: `${donacionActualizar.name} actualizada correctamente.`,
                     icon: 'success',
-                    confirmButtonColor: '#003366', // azul oscuro
+                    confirmButtonColor: '#003366',
                   });
                 },
                 error: (err) => {
@@ -250,7 +249,7 @@ export class DonacionesHomeComponent implements OnInit {
                     title: 'Error',
                     text: err.message || 'No se pudo actualizar la donación.',
                     icon: 'error',
-                    confirmButtonColor: '#003366', // azul oscuro
+                    confirmButtonColor: '#003366',
                   });
                 },
               });
@@ -262,7 +261,7 @@ export class DonacionesHomeComponent implements OnInit {
           title: 'Error',
           text: 'No se pudieron cargar los tipos de identificación.',
           icon: 'error',
-          confirmButtonColor: '#003366', // azul oscuro
+          confirmButtonColor: '#003366',
         });
       },
     });
@@ -302,10 +301,12 @@ export class DonacionesHomeComponent implements OnInit {
       }
     });
   }
+
+  //Metodo para generar el pdf del reporte de donacion del donante
   generarReporteDonacion(): void {
     forkJoin({
-      metodos: this.constantesService.obtenerTiposMetodoDonacion(), // array ya mapeado
-      tiposIdentificacion: this.constantesService.obtenerTiposIdentificacion(), // objeto con data
+      metodos: this.constantesService.obtenerTiposMetodoDonacion(),
+      tiposIdentificacion: this.constantesService.obtenerTiposIdentificacion(),
     }).subscribe({
       next: ({ metodos, tiposIdentificacion }) => {
         const metodosArray = Array.isArray(metodos) ? metodos : [];
@@ -363,7 +364,7 @@ export class DonacionesHomeComponent implements OnInit {
           showCancelButton: true,
           confirmButtonText: 'Generar',
           cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#003366', // azul oscuro
+          confirmButtonColor: '#003366',
           cancelButtonColor: '#dc2626',
           preConfirm: () => {
             const name = (
@@ -416,7 +417,6 @@ export class DonacionesHomeComponent implements OnInit {
           },
         }).then((result) => {
           if (result.isConfirmed && result.value) {
-            // Abrir PDF en otra ventana
             this.donacionesService.generarReporte(result.value).subscribe({
               next: (pdfBlob: Blob) => {
                 const url = window.URL.createObjectURL(pdfBlob);

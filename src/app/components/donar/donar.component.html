@@ -9,7 +9,6 @@
   </p>
 
   <div class="donar-container" [style.height.px]="altura">
-    <!-- PSE -->
     <div
       class="donar-card"
       [style.background-image]="'url(' + imagenPSE + ')'"
@@ -28,7 +27,6 @@
       </div>
     </div>
 
-    <!-- En especie -->
     <div
       class="donar-card"
       [style.background-image]="'url(' + imagenEspecie + ')'"
@@ -48,9 +46,6 @@
   </div>
 </div>
 
-<!-- ⭐ MODAL DE DONACIÓN ⭐ -->
-
-<!-- ⭐ MODAL DE DONACIÓN ⭐ -->
 <div class="modal-backdrop" *ngIf="modalAbierta">
   <div class="modal-form">
     <h2>Formulario de Donación</h2>
@@ -60,7 +55,6 @@
       (ngSubmit)="enviarFormulario()"
       class="form-grid"
     >
-      <!-- Nombre completo -->
       <div class="form-group">
         <label>Nombre completo*</label>
         <input type="text" formControlName="nombreCompleto" />
@@ -82,7 +76,6 @@
         </small>
       </div>
 
-      <!-- Correo -->
       <div class="form-group">
         <label>Correo electrónico*</label>
         <input type="email" formControlName="correo" />
@@ -102,7 +95,6 @@
         </small>
       </div>
 
-      <!-- Tipo de identificación -->
       <div class="form-group">
         <label>Tipo de identificación*</label>
         <ng-select
@@ -125,7 +117,6 @@
         </small>
       </div>
 
-      <!-- Número de identificación -->
       <div class="form-group">
         <label>Número de identificación*</label>
         <input type="text" formControlName="identificacion" />
@@ -147,7 +138,6 @@
         </small>
       </div>
 
-      <!-- Monto -->
       <div class="form-group monto-half">
         <label>Monto*</label>
         <input type="text" formControlName="monto" />
@@ -166,8 +156,6 @@
           >
         </small>
       </div>
-
-      <!-- Contenedor de botones unificado -->
     </form>
 
     <div class="modal-buttons">

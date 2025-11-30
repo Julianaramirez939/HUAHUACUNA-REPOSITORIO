@@ -1,3 +1,4 @@
+//Interface para el reporte de donaciones
 export interface Reporte {
   name: string;
   identification_type: number;

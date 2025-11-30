@@ -6,8 +6,8 @@ import { FondoComponent } from '../fondo-imagen/fondo.component';
   standalone: true,
   imports: [FondoComponent],
   templateUrl: './dashboard-home.component.html',
-  styleUrl: './dashboard-home.component.css'
+  styleUrl: './dashboard-home.component.css',
 })
-export class DashboardHomeComponent {
 
-}
+//Panel de inicio al entrar al panel de administracion
+export class DashboardHomeComponent {}

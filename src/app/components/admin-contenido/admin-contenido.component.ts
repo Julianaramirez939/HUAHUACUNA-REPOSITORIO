@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { LandingPageService } from '../../services/lading-page.service';
 import { LandingPageContent } from '../../interfaces/landing-page';
 import Swal from 'sweetalert2';
@@ -9,7 +14,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-admin-contenido',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './admin-contenido.component.html',
-  styleUrls: ['./admin-contenido.component.css']
+  styleUrls: ['./admin-contenido.component.css'],
 })
 
 //Componente que maneja la edición del contenido de la landing page desde el panel de administración
@@ -19,7 +24,10 @@ export class AdminContenidoComponent implements OnInit {
   landingId: number | null = null;
   enviando = false;
 
-  constructor(private fb: FormBuilder, private landingService: LandingPageService) {
+  constructor(
+    private fb: FormBuilder,
+    private landingService: LandingPageService
+  ) {
     this.formularioLanding = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       vision: ['', Validators.required],
@@ -43,7 +51,7 @@ export class AdminContenidoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarLanding();
   }
-// Metodo para cargar el contenido de la landing page y rellenar el formulario
+  // Metodo para cargar el contenido de la landing page y rellenar el formulario
   cargarLanding(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
@@ -73,39 +81,67 @@ export class AdminContenidoComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('Error', 'No se pudo cargar la información de la landing', 'error');
+        Swal.fire(
+          'Error',
+          'No se pudo cargar la información de la landing',
+          'error'
+        );
         this.cargando = false;
-      }
+      },
     });
   }
-// Metodo para obtener el mensaje de error correspondiente a cada campo del formulario
+  // Metodo para obtener el mensaje de error correspondiente a cada campo del formulario
   obtenerMensajeError(campo: string): string {
     const control = this.formularioLanding.get(campo);
     if (!control || !control.errors) return '';
 
     const mensajes: Record<string, Record<string, string>> = {
-      email: { required: 'El correo es obligatorio', email: 'Formato de correo no válido' },
+      email: {
+        required: 'El correo es obligatorio',
+        email: 'Formato de correo no válido',
+      },
       vision: { required: 'La visión es obligatoria' },
       address: { required: 'La dirección es obligatoria' },
       mission: { required: 'La misión es obligatoria' },
       phoneNumber: { required: 'El teléfono es obligatorio' },
       facebook: { required: 'El enlace de Facebook es obligatorio' },
       instagram: { required: 'El enlace de Instagram es obligatorio' },
-      sponsoredChildrenTitle: { required: 'El título de niños apadrinados es obligatorio' },
-      sponsoredChildrenAmount: { required: 'La cantidad de niños apadrinados es obligatoria', min: 'La cantidad debe ser 0 o mayor' },
-      sponsoredChildrenSubtitle: { required: 'El subtítulo de niños apadrinados es obligatorio' },
-      yearsOfExperienceTitle: { required: 'El título de años de experiencia es obligatorio' },
-      yearsOfExperienceAmount: { required: 'La cantidad de años es obligatoria', min: 'La cantidad debe ser 0 o mayor' },
-      yearsOfExperienceSubtitle: { required: 'El subtítulo de años de experiencia es obligatorio' },
-      municipalitiesTitle: { required: 'El título de municipios impactados es obligatorio' },
-      municipalitiesAmount: { required: 'La cantidad de municipios es obligatoria', min: 'La cantidad debe ser 0 o mayor' },
-      municipalitiesSubtitle: { required: 'El subtítulo de municipios impactados es obligatorio' },
+      sponsoredChildrenTitle: {
+        required: 'El título de niños apadrinados es obligatorio',
+      },
+      sponsoredChildrenAmount: {
+        required: 'La cantidad de niños apadrinados es obligatoria',
+        min: 'La cantidad debe ser 0 o mayor',
+      },
+      sponsoredChildrenSubtitle: {
+        required: 'El subtítulo de niños apadrinados es obligatorio',
+      },
+      yearsOfExperienceTitle: {
+        required: 'El título de años de experiencia es obligatorio',
+      },
+      yearsOfExperienceAmount: {
+        required: 'La cantidad de años es obligatoria',
+        min: 'La cantidad debe ser 0 o mayor',
+      },
+      yearsOfExperienceSubtitle: {
+        required: 'El subtítulo de años de experiencia es obligatorio',
+      },
+      municipalitiesTitle: {
+        required: 'El título de municipios impactados es obligatorio',
+      },
+      municipalitiesAmount: {
+        required: 'La cantidad de municipios es obligatoria',
+        min: 'La cantidad debe ser 0 o mayor',
+      },
+      municipalitiesSubtitle: {
+        required: 'El subtítulo de municipios impactados es obligatorio',
+      },
     };
 
     const errorKey = Object.keys(control.errors)[0];
     return mensajes[campo]?.[errorKey] || 'Campo inválido';
   }
-// Metodo para actualizar el contenido de la landing page
+  // Metodo para actualizar el contenido de la landing page
   actualizarLanding(): void {
     if (!this.landingId) return;
 
@@ -122,7 +158,7 @@ export class AdminContenidoComponent implements OnInit {
         Swal.fire({
           icon: 'warning',
           title: 'Campos obligatorios',
-          html: errores.map(e => `<p style="color:red">${e}</p>`).join(''),
+          html: errores.map((e) => `<p style="color:red">${e}</p>`).join(''),
         });
       }
       return;
@@ -156,31 +192,33 @@ export class AdminContenidoComponent implements OnInit {
           amount: this.formularioLanding.value.municipalitiesAmount,
           subtitle: this.formularioLanding.value.municipalitiesSubtitle,
         },
-      }
+      },
     };
 
     this.enviando = true;
-   this.landingService.actualizarLandingContent(this.landingId, payload).subscribe({
-  next: () => {
-    this.enviando = false;
-    Swal.fire({
-      icon: 'success',
-      title: 'Éxito',
-      text: 'Contenido de la landing actualizado',
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#003366',
-    });
-  },
-  error: (err) => {
-    this.enviando = false;
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: err.message || 'No se pudo actualizar',
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#003366',
-    });
-  }
-});
+    this.landingService
+      .actualizarLandingContent(this.landingId, payload)
+      .subscribe({
+        next: () => {
+          this.enviando = false;
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Contenido de la landing actualizado',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#003366',
+          });
+        },
+        error: (err) => {
+          this.enviando = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err.message || 'No se pudo actualizar',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#003366',
+          });
+        },
+      });
   }
 }

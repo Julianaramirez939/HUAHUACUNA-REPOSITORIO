@@ -1,6 +1,5 @@
-import { Estado } from "./estados";
-import { NinoListar } from "./nino-listar";
-
+import { NinoListar } from './nino-listar';
+//Interface para el padrino (listar)
 export interface Padrino {
   id?: number;
   email: string;

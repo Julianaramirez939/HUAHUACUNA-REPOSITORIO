@@ -15,7 +15,7 @@ import { LOGO } from '../../../global';
 
 /**
  * Componente encargado del inicio de sesión de los usuarios.
- * 
+ *
  * Permite ingresar al sistema mediante correo electrónico y contraseña,
  * mostrando validaciones de formulario y mensajes interactivos con SweetAlert2.
  */
@@ -27,7 +27,6 @@ import { LOGO } from '../../../global';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
   /** Formulario reactivo para el inicio de sesión */
   formularioLogin: FormGroup;
 
@@ -47,13 +46,7 @@ export class LoginComponent {
   ) {
     // Inicialización del formulario reactivo con validaciones
     this.formularioLogin = this.fb.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-        ],
-      ],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
@@ -74,7 +67,6 @@ export class LoginComponent {
    * y muestra mensajes según la respuesta recibida.
    */
   enviarFormulario(): void {
-
     // Si el formulario no es válido, muestra los errores
     if (this.formularioLogin.invalid) {
       this.formularioLogin.markAllAsTouched();
@@ -158,36 +150,28 @@ export class LoginComponent {
     this.enrutador.navigate(['/apadrinamiento']);
   }
 
+  /** Redirige al dashboard según el rol del usuario */
+  irADashboard(): void {
+    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const roles = user.roles?.map((r: any) => r.name) || [];
 
-/** Redirige al dashboard según el rol del usuario */
-irADashboard(): void {
-  const user = JSON.parse(sessionStorage.getItem('user') || '{}');
-  const roles = user.roles?.map((r: any) => r.name) || [];
+    if (roles.includes('Administrador') && roles.includes('Padrino')) {
+      this.enrutador.navigate(['admin-padrino', 'admin']);
+      return;
+    }
 
-  // 🔥 Caso 3: Tiene ambos roles
-  if (roles.includes('Administrador') && roles.includes('Padrino')) {
-    // Redirige al navbar combinado
-    this.enrutador.navigate(['admin-padrino', 'admin']); // O 'padrino' si quieres iniciar en esa vista
-    return;
+    if (roles.includes('Administrador')) {
+      this.enrutador.navigate(['home', 'dashboard']);
+      return;
+    }
+
+    if (roles.includes('Padrino')) {
+      this.enrutador.navigate(['padrino', 'dashboard']);
+      return;
+    }
+
+    this.enrutador.navigate(['']);
   }
-
-  // 🔹 Caso 1: Solo administrador
-  if (roles.includes('Administrador')) {
-    this.enrutador.navigate(['home', 'dashboard']);
-    return;
-  }
-
-  // 🔹 Caso 2: Solo padrino
-  if (roles.includes('Padrino')) {
-    this.enrutador.navigate(['padrino', 'dashboard']);
-    return;
-  }
-
-  // ⚠️ Caso sin rol válido
-  this.enrutador.navigate(['']);
-}
-
-
 
   /** Redirige al inicio (por ahora al navbar principal) */
   volverInicio(): void {

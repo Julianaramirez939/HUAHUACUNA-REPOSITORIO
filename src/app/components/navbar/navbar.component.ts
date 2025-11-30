@@ -14,13 +14,13 @@ import { LOGO } from '../../../global';
 //Componente del navbar que permite la navegación y el scroll suave en la landing page
 export class NavbarComponent {
   logo = LOGO;
-    activeLink: string = 'inicio';
+  activeLink: string = 'inicio';
 
   constructor(private router: Router) {}
 
- //Metodo para manejar los clics en los enlaces de navegación
+  //Metodo para manejar los clics en los enlaces de navegación
   onNavClick(sectionId: string) {
-      this.activeLink = sectionId; 
+    this.activeLink = sectionId;
     if (sectionId === 'donar') {
       this.router.navigate(['/donar']);
       return;

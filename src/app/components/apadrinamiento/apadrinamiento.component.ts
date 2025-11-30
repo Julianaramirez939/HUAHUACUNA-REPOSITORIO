@@ -21,8 +21,9 @@ import { CrearPadrino } from '../../interfaces/crear-padrino';
   templateUrl: './apadrinamiento.component.html',
   styleUrls: ['./apadrinamiento.component.css'],
 })
-export class ApadrinamientoComponent implements OnInit {
 
+//Componente para el formulario de registro de un padrino desde la pagina principal
+export class ApadrinamientoComponent implements OnInit {
   formularioPadrino: FormGroup;
   tiposIdentificacion: { id: number; name: string }[] = [];
   cargandoTipos = false;
@@ -42,11 +43,19 @@ export class ApadrinamientoComponent implements OnInit {
       {
         nombre: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/),
+          ],
         ],
         apellidos: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/),
+          ],
         ],
         telefono: [
           '',
@@ -77,7 +86,7 @@ export class ApadrinamientoComponent implements OnInit {
         documento: [null, Validators.required],
       },
       {
-        validators: [this.passwordsCoincidenValidator] // ⭐ Validador personalizado
+        validators: [this.passwordsCoincidenValidator],
       }
     );
   }
@@ -86,7 +95,7 @@ export class ApadrinamientoComponent implements OnInit {
     this.cargarTiposIdentificacion();
   }
 
-  // ⭐ Validador personalizado
+//Metodo para validar la contraseña y la confirmacion de la contraseña en el formulario 
   passwordsCoincidenValidator(form: AbstractControl): ValidationErrors | null {
     const pass = form.get('password')?.value;
     const confirm = form.get('password_confirmation')?.value;
@@ -98,7 +107,7 @@ export class ApadrinamientoComponent implements OnInit {
 
     return null;
   }
-
+//Metodo para cargar los tipos de identificacion en el select
   cargarTiposIdentificacion(): void {
     this.cargandoTipos = true;
 
@@ -108,27 +117,34 @@ export class ApadrinamientoComponent implements OnInit {
         this.cargandoTipos = false;
       },
       error: () => {
-        Swal.fire('Error', 'No se pudieron cargar los tipos de identificación', 'error');
+        Swal.fire(
+          'Error',
+          'No se pudieron cargar los tipos de identificación',
+          'error'
+        );
         this.cargandoTipos = false;
       },
     });
   }
-
-  onFileSelected(event: any): void {
+//Metodo para manejar el documento de identificacion desde el formulario
+  seleccionarArchivo(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.documentoFile = file;
       this.formularioPadrino.patchValue({ documento: file });
     }
   }
-
+//Metodo para enviar los datos del del formulario
   enviarFormulario(): void {
     if (this.formularioPadrino.invalid) {
       this.formularioPadrino.markAllAsTouched();
       return;
     }
 
-    if (this.formularioPadrino.value.password !== this.formularioPadrino.value.password_confirmation) {
+    if (
+      this.formularioPadrino.value.password !==
+      this.formularioPadrino.value.password_confirmation
+    ) {
       Swal.fire({
         icon: 'warning',
         title: 'Las contraseñas no coinciden',
@@ -179,7 +195,7 @@ export class ApadrinamientoComponent implements OnInit {
       },
     });
   }
-
+//Metodo para manejar los erorres del formulario
   obtenerMensajeError(campo: string): string {
     const control = this.formularioPadrino.get(campo);
     if (!control || !control.errors) return '';

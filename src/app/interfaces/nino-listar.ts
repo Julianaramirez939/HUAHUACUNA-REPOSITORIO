@@ -1,5 +1,5 @@
 import { EstadoNino } from './estado-nino';
-
+//Interface del niño (listar)
 export interface NinoListar {
   id: number;
   name: string;
@@ -13,7 +13,7 @@ export interface NinoListar {
   likings: string;
   additional_information?: string;
   media_file_url?: string;
-  state: EstadoNino;  // 👈 ahora tiene el color, slug, etc.
+  state: EstadoNino; 
   created_at?: string;
   updated_at?: string;
   showMenu?: boolean;

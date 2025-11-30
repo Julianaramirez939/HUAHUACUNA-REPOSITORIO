@@ -13,7 +13,6 @@
   box-sizing: border-box;
 }
 
-
 .navbar-logo img {
   height: 55px;
   cursor: pointer;
@@ -23,7 +22,6 @@
   transform: scale(1.05);
 }
 
-
 .navbar-links {
   display: flex;
   list-style: none;
@@ -32,9 +30,9 @@
   padding: 0;
 }
 .navbar-links li {
-  display: flex;              
-  align-items: center;        
-  gap: 0.5rem;                 
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
   color: #162663;
   font-weight: 500;
@@ -46,7 +44,6 @@
   color: #225a9b;
   transform: translateY(-2px);
 }
-
 
 .navbar-user {
   position: relative;
@@ -64,7 +61,6 @@
 .navbar-user:hover {
   color: #225a9b;
 }
-
 
 .user-menu {
   position: absolute;

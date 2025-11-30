@@ -11,44 +11,66 @@
     novalidate
   >
     <div class="form-grid">
-
-      <!-- Nombre -->
       <div class="form-group">
         <label>Nombre *</label>
         <input type="text" formControlName="nombre" />
-        <p *ngIf="formularioPadrino.get('nombre')?.invalid && (formularioPadrino.get('nombre')?.touched || formularioPadrino.get('nombre')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('nombre') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('nombre')?.invalid &&
+            (formularioPadrino.get('nombre')?.touched ||
+              formularioPadrino.get('nombre')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("nombre") }}
         </p>
       </div>
 
-      <!-- Apellidos -->
       <div class="form-group">
         <label>Apellidos *</label>
         <input type="text" formControlName="apellidos" />
-        <p *ngIf="formularioPadrino.get('apellidos')?.invalid && (formularioPadrino.get('apellidos')?.touched || formularioPadrino.get('apellidos')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('apellidos') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('apellidos')?.invalid &&
+            (formularioPadrino.get('apellidos')?.touched ||
+              formularioPadrino.get('apellidos')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("apellidos") }}
         </p>
       </div>
 
-      <!-- Teléfono -->
       <div class="form-group">
         <label>Teléfono *</label>
         <input type="text" formControlName="telefono" />
-        <p *ngIf="formularioPadrino.get('telefono')?.invalid && (formularioPadrino.get('telefono')?.touched || formularioPadrino.get('telefono')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('telefono') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('telefono')?.invalid &&
+            (formularioPadrino.get('telefono')?.touched ||
+              formularioPadrino.get('telefono')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("telefono") }}
         </p>
       </div>
 
-      <!-- Email -->
       <div class="form-group">
         <label>Correo electrónico *</label>
         <input type="email" formControlName="email" />
-        <p *ngIf="formularioPadrino.get('email')?.invalid && (formularioPadrino.get('email')?.touched || formularioPadrino.get('email')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('email') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('email')?.invalid &&
+            (formularioPadrino.get('email')?.touched ||
+              formularioPadrino.get('email')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("email") }}
         </p>
       </div>
 
-      <!-- Tipo de identificación -->
       <div class="form-group">
         <label>Tipo de identificación *</label>
         <ng-select
@@ -61,70 +83,110 @@
           [clearable]="true"
         ></ng-select>
 
-        <p *ngIf="formularioPadrino.get('tipoIdentificacion')?.invalid && (formularioPadrino.get('tipoIdentificacion')?.touched || formularioPadrino.get('tipoIdentificacion')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('tipoIdentificacion') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('tipoIdentificacion')?.invalid &&
+            (formularioPadrino.get('tipoIdentificacion')?.touched ||
+              formularioPadrino.get('tipoIdentificacion')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("tipoIdentificacion") }}
         </p>
       </div>
 
-      <!-- Identificación -->
       <div class="form-group">
         <label>Número de identificación *</label>
         <input type="text" formControlName="identificacion" />
-        <p *ngIf="formularioPadrino.get('identificacion')?.invalid && (formularioPadrino.get('identificacion')?.touched || formularioPadrino.get('identificacion')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('identificacion') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('identificacion')?.invalid &&
+            (formularioPadrino.get('identificacion')?.touched ||
+              formularioPadrino.get('identificacion')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("identificacion") }}
         </p>
       </div>
 
-      <!-- País -->
       <div class="form-group">
         <label>País de residencia *</label>
         <input type="text" formControlName="pais" />
-        <p *ngIf="formularioPadrino.get('pais')?.invalid && (formularioPadrino.get('pais')?.touched || formularioPadrino.get('pais')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('pais') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('pais')?.invalid &&
+            (formularioPadrino.get('pais')?.touched ||
+              formularioPadrino.get('pais')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("pais") }}
         </p>
       </div>
 
-      <!-- Password -->
       <div class="form-group">
         <label>Contraseña *</label>
-        <input [type]="verPassword ? 'text' : 'password'" formControlName="password" />
-        <p *ngIf="formularioPadrino.get('password')?.invalid && (formularioPadrino.get('password')?.touched || formularioPadrino.get('password')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('password') }}
+        <input
+          [type]="verPassword ? 'text' : 'password'"
+          formControlName="password"
+        />
+        <p
+          *ngIf="
+            formularioPadrino.get('password')?.invalid &&
+            (formularioPadrino.get('password')?.touched ||
+              formularioPadrino.get('password')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("password") }}
         </p>
 
         <label class="checkbox-password">
-          <input type="checkbox" (change)="verPassword = !verPassword" /> Mostrar contraseña
+          <input type="checkbox" (change)="verPassword = !verPassword" />
+          Mostrar contraseña
         </label>
       </div>
 
-      <!-- Confirmación Password -->
       <div class="form-group">
         <label>Confirmar contraseña *</label>
-        <input [type]="verPassword ? 'text' : 'password'" formControlName="password_confirmation" />
-        <p *ngIf="formularioPadrino.get('password_confirmation')?.invalid && (formularioPadrino.get('password_confirmation')?.touched || formularioPadrino.get('password_confirmation')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('password_confirmation') }}
+        <input
+          [type]="verPassword ? 'text' : 'password'"
+          formControlName="password_confirmation"
+        />
+        <p
+          *ngIf="
+            formularioPadrino.get('password_confirmation')?.invalid &&
+            (formularioPadrino.get('password_confirmation')?.touched ||
+              formularioPadrino.get('password_confirmation')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("password_confirmation") }}
         </p>
       </div>
 
-      <!-- Documento -->
       <div class="form-group file-group">
         <label>Adjunta tu documento de identificación *</label>
         <input
           #inputDocumento
           type="file"
           formControlName="documento"
-          (change)="onFileSelected($event)"
+          (change)="seleccionarArchivo($event)"
         />
-        <p *ngIf="formularioPadrino.get('documento')?.invalid && (formularioPadrino.get('documento')?.touched || formularioPadrino.get('documento')?.dirty)" class="error-message">
-          {{ obtenerMensajeError('documento') }}
+        <p
+          *ngIf="
+            formularioPadrino.get('documento')?.invalid &&
+            (formularioPadrino.get('documento')?.touched ||
+              formularioPadrino.get('documento')?.dirty)
+          "
+          class="error-message"
+        >
+          {{ obtenerMensajeError("documento") }}
         </p>
       </div>
-
     </div>
 
-    <button type="submit" class="btn-padrino-submit">
-      Registrarme
-    </button>
-
+    <button type="submit" class="btn-padrino-submit">Registrarme</button>
   </form>
 </div>

@@ -1,5 +1,11 @@
+<div class="reporte-btn-container">
+  <button class="btn-reporte" (click)="generarPdf()">
+    <i class="fas fa-file-pdf"></i>
+    Generar PDF
+  </button>
+</div>
+
 <div class="noticias-container">
-  <!-- SELECTOR DE NIÑOS -->
   <div class="selector-ninos">
     <label for="childSelect">Filtrar por niño:</label>
 
@@ -15,32 +21,25 @@
     </select>
   </div>
 
-  <!-- MENSAJE CARGANDO -->
   <p *ngIf="cargando" class="loading">Cargando noticias...</p>
 
-  <!-- NO HAY NOTICIAS -->
   <p *ngIf="!cargando && noticias.length === 0" class="sin-noticias">
     No hay noticias de este niño aún.
   </p>
 
-  <!-- GRID DE NOTICIAS -->
   <div class="noticias-grid" *ngIf="noticias.length > 0">
     <article class="noticia-card" *ngFor="let noticia of noticias">
-      <!-- META -->
       <div class="noticia-meta">
         <span class="label-ninos">Niños:</span>
         <span class="nombres">{{ noticia.nombresNinos }}</span>
       </div>
 
-      <!-- TÍTULO -->
       <h3 class="titulo">{{ noticia.titulo }}</h3>
 
-      <!-- IMAGEN -->
       <div class="imagen-wrapper" *ngIf="noticia.imagen">
         <img [src]="noticia.imagen" class="noticia-img" alt="Imagen" />
       </div>
 
-      <!-- VER IMAGEN -->
       <a
         class="ver-imagen"
         target="_blank"
@@ -50,13 +49,12 @@
         Ver imagen
       </a>
 
-      <!-- DESCRIPCIÓN -->
       <div class="descripcion-card">
         <p class="descripcion-text">
           {{ noticia.descripcion }}
         </p>
       </div>
-      <!-- FECHA -->
+
       <p class="fecha">{{ noticia.fecha }}</p>
     </article>
   </div>

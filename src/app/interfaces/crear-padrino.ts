@@ -1,3 +1,4 @@
+//Interface para crear un padrino
 export interface CrearPadrino {
   email: string;
   password: string;

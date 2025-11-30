@@ -1,5 +1,5 @@
 import { NinoListar } from "./nino-listar";
-
+//Interface de las noticias de los niños (listar)
 export interface NinosNoticias {
   id: number;
   title: string;

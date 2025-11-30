@@ -36,7 +36,7 @@
   padding: 0.3rem 0;
   min-width: 160px;
   z-index: 10;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .acciones .menu li {
@@ -93,7 +93,7 @@
   align-items: center;
   gap: 1rem;
   margin-top: 1rem;
-  font-family: "Segoe UI", sans-seri
+  font-family: "Segoe UI", sans-seri;
 }
 
 .paginacion {

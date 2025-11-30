@@ -1,3 +1,4 @@
+//Interface para actualizar un niño
 export interface NinoActualizar {
   id: number;
   name: string;
@@ -8,6 +9,6 @@ export interface NinoActualizar {
   school_grade: number;
   likings: string;
   additional_information?: string;
-  attachment?: File; // opcional al actualizar
+  attachment?: File; 
   state_id: number;
 }

@@ -18,7 +18,7 @@ import { ConstantesService } from '../../services/constantes.service';
 // Componente para gestionar actividades (proyectos/eventos) desde el panel de administración (CRUD)
 export class ActividadesHomeComponent implements OnInit {
   actividades: (Actividad & { showMenu: boolean })[] = [];
-  cargando = false; 
+  cargando = false;
   paginaActual = 1;
   ultimaPagina = 1;
   paginaIr = 1;
@@ -35,7 +35,7 @@ export class ActividadesHomeComponent implements OnInit {
     this.obtenerActividades();
     this.obtenerTiposActividad();
   }
-//Metodo para listar las actividades en la tabla principal
+  //Metodo para listar las actividades en la tabla principal
   obtenerActividades(): void {
     this.cargando = true;
     this.actividadesService.traerActividades(this.paginaActual).subscribe({
@@ -63,7 +63,7 @@ export class ActividadesHomeComponent implements OnInit {
       },
     });
   }
-//Metodo para obtener los tipos de actividades
+  //Metodo para obtener los tipos de actividades
   obtenerTiposActividad(): void {
     this.constantesService.obtenerTiposActividad().subscribe({
       next: (data) => {
@@ -79,7 +79,7 @@ export class ActividadesHomeComponent implements OnInit {
       },
     });
   }
-//Metodo para ir a una pagina especifica
+  //Metodo para ir a una pagina especifica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
     if (!Number.isInteger(destino) || isNaN(destino)) {
@@ -104,14 +104,14 @@ export class ActividadesHomeComponent implements OnInit {
       });
     }
   }
-//Metodo para ir a la siguiente pagina
+  //Metodo para ir a la siguiente pagina
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
       this.obtenerActividades();
     }
   }
-//Metodo para ir a la pagina anterior
+  //Metodo para ir a la pagina anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
@@ -119,21 +119,21 @@ export class ActividadesHomeComponent implements OnInit {
     }
   }
 
-//Metodo para crear una actividad
-crearActividad(): void {
-  this.actividadesService.getEstados().subscribe({
-    next: (estados: Estado[]) => {
-      const opcionesEstadosHtml = estados
-        .map((e) => `<option value="${e.id}">${e.name}</option>`)
-        .join('');
+  //Metodo para crear una actividad
+  crearActividad(): void {
+    this.actividadesService.getEstados().subscribe({
+      next: (estados: Estado[]) => {
+        const opcionesEstadosHtml = estados
+          .map((e) => `<option value="${e.id}">${e.name}</option>`)
+          .join('');
 
-      const opcionesTiposHtml = this.tiposActividad
-        .map((t) => `<option value="${t.id}">${t.name}</option>`)
-        .join('');
+        const opcionesTiposHtml = this.tiposActividad
+          .map((t) => `<option value="${t.id}">${t.name}</option>`)
+          .join('');
 
-      Swal.fire({
-        title: `<span style="font-family:'Segoe UI',sans-serif;font-weight:600;color:#003366;">Registrar nueva actividad</span>`,
-        html: `
+        Swal.fire({
+          title: `<span style="font-family:'Segoe UI',sans-serif;font-weight:600;color:#003366;">Registrar nueva actividad</span>`,
+          html: `
           <style>
             .swal-field {
               width: 100%;
@@ -215,115 +215,145 @@ crearActividad(): void {
             </div>
           </form>
         `,
-        width: '820px',
-        focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: 'Guardar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#198754',
-        cancelButtonColor: '#dc2626',
-        didOpen: () => {
-          const selects = [
-            document.getElementById('stateSelect') as HTMLSelectElement,
-            document.getElementById('tipoSelect') as HTMLSelectElement,
-          ];
-          selects.forEach(select => {
-            if (select) {
-              select.addEventListener('change', () => {
-                select.style.textAlignLast = 'center';
-              });
+          width: '820px',
+          focusConfirm: false,
+          showCancelButton: true,
+          confirmButtonText: 'Guardar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#198754',
+          cancelButtonColor: '#dc2626',
+          didOpen: () => {
+            const selects = [
+              document.getElementById('stateSelect') as HTMLSelectElement,
+              document.getElementById('tipoSelect') as HTMLSelectElement,
+            ];
+            selects.forEach((select) => {
+              if (select) {
+                select.addEventListener('change', () => {
+                  select.style.textAlignLast = 'center';
+                });
+              }
+            });
+          },
+          preConfirm: () => {
+            const tipoId = Number(
+              (document.getElementById('tipoSelect') as HTMLSelectElement).value
+            );
+            const name = (
+              document.getElementById('name') as HTMLInputElement
+            ).value.trim();
+            const description = (
+              document.getElementById('description') as HTMLTextAreaElement
+            ).value.trim();
+            const date = (document.getElementById('date') as HTMLInputElement)
+              .value;
+            const hour = (document.getElementById('hour') as HTMLInputElement)
+              .value;
+            const location = (
+              document.getElementById('location') as HTMLInputElement
+            ).value.trim();
+            const price = (document.getElementById('price') as HTMLInputElement)
+              .value;
+            const observation = (
+              document.getElementById('observation') as HTMLTextAreaElement
+            ).value.trim();
+            const attachment = (
+              document.getElementById('attachment') as HTMLInputElement
+            ).files?.[0];
+            const state_id = Number(
+              (document.getElementById('stateSelect') as HTMLSelectElement)
+                .value
+            );
+
+            if (!name || !description || !state_id || !tipoId) {
+              Swal.showValidationMessage(
+                'Por favor completa los campos obligatorios (*)'
+              );
+              return false;
             }
-          });
-        },
-        preConfirm: () => {
-          const tipoId = Number((document.getElementById('tipoSelect') as HTMLSelectElement).value);
-          const name = (document.getElementById('name') as HTMLInputElement).value.trim();
-          const description = (document.getElementById('description') as HTMLTextAreaElement).value.trim();
-          const date = (document.getElementById('date') as HTMLInputElement).value;
-          const hour = (document.getElementById('hour') as HTMLInputElement).value;
-          const location = (document.getElementById('location') as HTMLInputElement).value.trim();
-          const price = (document.getElementById('price') as HTMLInputElement).value;
-          const observation = (document.getElementById('observation') as HTMLTextAreaElement).value.trim();
-          const attachment = (document.getElementById('attachment') as HTMLInputElement).files?.[0];
-          const state_id = Number((document.getElementById('stateSelect') as HTMLSelectElement).value);
 
-          if (!name || !description || !state_id || !tipoId) {
-            Swal.showValidationMessage('Por favor completa los campos obligatorios (*)');
-            return false;
+            // Si no hay fecha u hora, se usa un valor por defecto
+            const fechaFinal = date || '';
+            const horaFinal = hour || '';
+
+            const datetime = `${fechaFinal} ${horaFinal}`;
+
+            return {
+              name,
+              description,
+              datetime,
+              location,
+              price: price ? Number(price) : undefined,
+              observation,
+              attachment,
+              state_id,
+              program_type: tipoId,
+            } as unknown as Actividad;
+          },
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            this.actividadesService.crearActividad(result.value).subscribe({
+              next: () => {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Actividad registrada',
+                  text: 'La actividad se ha creado exitosamente.',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#003366',
+                });
+                this.obtenerActividades();
+              },
+              error: (err) => {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: err.message || 'No se pudo crear la actividad.',
+                  confirmButtonColor: '#003366',
+                });
+              },
+            });
           }
-
-          // Si no hay fecha u hora, se usa un valor por defecto
-          const fechaFinal = date || '';
-          const horaFinal = hour || '';
-
-          const datetime = `${fechaFinal} ${horaFinal}`;
-
-          return {
-            name,
-            description,
-            datetime,
-            location,
-            price: price ? Number(price) : undefined,
-            observation,
-            attachment,
-            state_id,
-            program_type: tipoId,
-          } as unknown as Actividad;
-        },
-      }).then((result) => {
-        if (result.isConfirmed && result.value) {
-          this.actividadesService.crearActividad(result.value).subscribe({
-            next: () => {
-              Swal.fire({
-                icon: 'success',
-                title: 'Actividad registrada',
-                text: 'La actividad se ha creado exitosamente.',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#003366',
-              });
-              this.obtenerActividades();
-            },
-            error: (err) => {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: err.message || 'No se pudo crear la actividad.',
-                confirmButtonColor: '#003366',
-              });
-            },
-          });
-        }
-      });
-    },
-  });
-}
+        });
+      },
+    });
+  }
 
   //Metodo para actualizar una actividad
-actualizarActividad(actividad: Actividad): void {
-  actividad.showMenu = false;
-  this.actividadesService.getEstados().subscribe({
-    next: (estados: Estado[]) => {
-      const opcionesEstadosHtml = estados
-        .map((e) => `<option value="${e.id}" ${actividad.state_id === e.id ? 'selected' : ''}>${e.name}</option>`)
-        .join('');
+  actualizarActividad(actividad: Actividad): void {
+    actividad.showMenu = false;
+    this.actividadesService.getEstados().subscribe({
+      next: (estados: Estado[]) => {
+        const opcionesEstadosHtml = estados
+          .map(
+            (e) =>
+              `<option value="${e.id}" ${
+                actividad.state_id === e.id ? 'selected' : ''
+              }>${e.name}</option>`
+          )
+          .join('');
 
-      const opcionesTiposHtml = this.tiposActividad
-        .map((t) => `<option value="${t.id}" ${actividad.program_type?.id === t.id ? 'selected' : ''}>${t.name}</option>`)
-        .join('');
+        const opcionesTiposHtml = this.tiposActividad
+          .map(
+            (t) =>
+              `<option value="${t.id}" ${
+                actividad.program_type?.id === t.id ? 'selected' : ''
+              }>${t.name}</option>`
+          )
+          .join('');
 
-      //Para separar fecha y hora si vienen juntas
-      let fechaExistente = actividad.date || '';
-      const horaExistente = actividad.hour || '';
-      if (fechaExistente && fechaExistente.includes('/')) {
-        const partes = fechaExistente.split('/');
-        if (partes.length === 3) {
-          fechaExistente = `${partes[2]}-${partes[1]}-${partes[0]}`;
+        //Para separar fecha y hora si vienen juntas
+        let fechaExistente = actividad.date || '';
+        const horaExistente = actividad.hour || '';
+        if (fechaExistente && fechaExistente.includes('/')) {
+          const partes = fechaExistente.split('/');
+          if (partes.length === 3) {
+            fechaExistente = `${partes[2]}-${partes[1]}-${partes[0]}`;
+          }
         }
-      }
 
-      Swal.fire({
-        title: `<span style="font-family:'Segoe UI',sans-serif;font-weight:600;color:#003366;">Editar actividad</span>`,
-        html: `
+        Swal.fire({
+          title: `<span style="font-family:'Segoe UI',sans-serif;font-weight:600;color:#003366;">Editar actividad</span>`,
+          html: `
           <style>
             .swal-field {
               width: 100%;
@@ -366,10 +396,14 @@ actualizarActividad(actividad: Actividad): void {
           ">
             <div style="display:flex; flex-direction:column; gap:8px;">
               <label><b>Nombre *</b></label>
-              <input id="name" type="text" class="swal-field" value="${actividad.name || ''}" required>
+              <input id="name" type="text" class="swal-field" value="${
+                actividad.name || ''
+              }" required>
 
               <label><b>Descripción *</b></label>
-              <textarea id="description" class="swal-field" rows="3" required>${actividad.description || ''}</textarea>
+              <textarea id="description" class="swal-field" rows="3" required>${
+                actividad.description || ''
+              }</textarea>
 
               <label><b>Tipo de Actividad *</b></label>
               <select id="tipoSelect" class="swal-field" required>
@@ -386,13 +420,19 @@ actualizarActividad(actividad: Actividad): void {
 
             <div style="display:flex; flex-direction:column; gap:8px;">
               <label>Ubicación</label>
-              <input id="location" type="text" class="swal-field" value="${actividad.location || ''}">
+              <input id="location" type="text" class="swal-field" value="${
+                actividad.location || ''
+              }">
 
               <label>Precio</label>
-              <input id="price" type="number" class="swal-field" value="${actividad.price || ''}" >
+              <input id="price" type="number" class="swal-field" value="${
+                actividad.price || ''
+              }" >
 
               <label>Observación</label>
-              <textarea id="observation" class="swal-field" rows="3">${actividad.observation || ''}</textarea>
+              <textarea id="observation" class="swal-field" rows="3">${
+                actividad.observation || ''
+              }</textarea>
 
               <!-- 🖼️ Archivo actual -->
               <label><b>Archivo actual</b></label>
@@ -418,87 +458,109 @@ actualizarActividad(actividad: Actividad): void {
             </div>
           </form>
         `,
-        width: '820px',
-        showCancelButton: true,
-        confirmButtonText: 'Actualizar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#198754',
-        cancelButtonColor: '#dc2626',
-        preConfirm: () => {
-          const tipoId = Number((document.getElementById('tipoSelect') as HTMLSelectElement).value);
-          const name = (document.getElementById('name') as HTMLInputElement).value.trim();
-          const description = (document.getElementById('description') as HTMLTextAreaElement).value.trim();
-          const date = (document.getElementById('date') as HTMLInputElement).value;
-          const hour = (document.getElementById('hour') as HTMLInputElement).value;
-          const datetime = date && hour ? `${date} ${hour}` : '';
+          width: '820px',
+          showCancelButton: true,
+          confirmButtonText: 'Actualizar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#198754',
+          cancelButtonColor: '#dc2626',
+          preConfirm: () => {
+            const tipoId = Number(
+              (document.getElementById('tipoSelect') as HTMLSelectElement).value
+            );
+            const name = (
+              document.getElementById('name') as HTMLInputElement
+            ).value.trim();
+            const description = (
+              document.getElementById('description') as HTMLTextAreaElement
+            ).value.trim();
+            const date = (document.getElementById('date') as HTMLInputElement)
+              .value;
+            const hour = (document.getElementById('hour') as HTMLInputElement)
+              .value;
+            const datetime = date && hour ? `${date} ${hour}` : '';
 
-          const location = (document.getElementById('location') as HTMLInputElement).value.trim();
-          const price = (document.getElementById('price') as HTMLInputElement).value;
-          const observation = (document.getElementById('observation') as HTMLTextAreaElement).value.trim();
-          const attachment = (document.getElementById('attachment') as HTMLInputElement).files?.[0];
-          const state_id = Number((document.getElementById('stateSelect') as HTMLSelectElement).value);
+            const location = (
+              document.getElementById('location') as HTMLInputElement
+            ).value.trim();
+            const price = (document.getElementById('price') as HTMLInputElement)
+              .value;
+            const observation = (
+              document.getElementById('observation') as HTMLTextAreaElement
+            ).value.trim();
+            const attachment = (
+              document.getElementById('attachment') as HTMLInputElement
+            ).files?.[0];
+            const state_id = Number(
+              (document.getElementById('stateSelect') as HTMLSelectElement)
+                .value
+            );
 
-          if (!name || !description || !state_id || !tipoId) {
-            Swal.showValidationMessage('Por favor completa los campos obligatorios (*)');
-            return false;
+            if (!name || !description || !state_id || !tipoId) {
+              Swal.showValidationMessage(
+                'Por favor completa los campos obligatorios (*)'
+              );
+              return false;
+            }
+
+            return {
+              name,
+              description,
+              datetime,
+              location,
+              price: price ? Number(price) : undefined,
+              observation,
+              attachment,
+              state_id,
+              program_type: tipoId,
+            } as unknown as Actividad;
+          },
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            this.actividadesService
+              .actualizarActividad(result.value, actividad.id!)
+              .subscribe({
+                next: () => {
+                  Swal.fire({
+                    title: 'Actividad actualizada',
+                    text: 'Los datos se han guardado correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#003366',
+                  });
+                  this.obtenerActividades();
+                },
+                error: (err) => {
+                  Swal.fire({
+                    title: 'Error',
+                    text: err.message || 'No se pudo actualizar la actividad.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#003366',
+                  });
+                },
+              });
           }
+        });
+      },
+    });
+  }
+  //Metodo para ver los detalles de una actividad
+  verDetallesActividad(actividad: Actividad): void {
+    actividad.showMenu = false;
 
-          return {
-            name,
-            description,
-            datetime,
-            location,
-            price: price ? Number(price) : undefined,
-            observation,
-            attachment,
-            state_id,
-            program_type: tipoId,
-          } as unknown as Actividad;
-        },
-      }).then((result) => {
-        if (result.isConfirmed && result.value) {
-          this.actividadesService.actualizarActividad(result.value, actividad.id!).subscribe({
-            next: () => {
-              Swal.fire({
-                title: 'Actividad actualizada',
-                text: 'Los datos se han guardado correctamente.',
-                icon: 'success',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#003366',
-              });
-              this.obtenerActividades();
-            },
-            error: (err) => {
-              Swal.fire({
-                title: 'Error',
-                text: err.message || 'No se pudo actualizar la actividad.',
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#003366',
-              });
-            },
-          });
-        }
-      });
-    },
-  });
-}
-//Metodo para ver los detalles de una actividad
-verDetallesActividad(actividad: Actividad): void {
-  actividad.showMenu = false;
+    const fecha = actividad.date || '-';
+    const hora = actividad.hour
+      ? new Date('1970-01-01T' + actividad.hour).toLocaleTimeString('es-ES', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        })
+      : '-';
 
-  const fecha = actividad.date || '-';
-  const hora = actividad.hour
-    ? new Date('1970-01-01T' + actividad.hour).toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-      })
-    : '-';
-
-  Swal.fire({
-    title: `<span style="font-family: 'Segoe UI', sans-serif;">Detalles de la actividad</span>`,
-    html: `
+    Swal.fire({
+      title: `<span style="font-family: 'Segoe UI', sans-serif;">Detalles de la actividad</span>`,
+      html: `
       <div style="
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -512,7 +574,9 @@ verDetallesActividad(actividad: Actividad): void {
         </div>
 
         <div>
-          <strong>Tipo de Actividad</strong><br> ${actividad.program_type_name || 'No especificado'}
+          <strong>Tipo de Actividad</strong><br> ${
+            actividad.program_type_name || 'No especificado'
+          }
         </div>
 
         <div>
@@ -524,19 +588,27 @@ verDetallesActividad(actividad: Actividad): void {
         </div>
 
         <div>
-          <strong>Ubicación</strong><br> ${actividad.location || 'No registrada'}
+          <strong>Ubicación</strong><br> ${
+            actividad.location || 'No registrada'
+          }
         </div>
 
         <div>
-          <strong>Precio</strong><br> ${actividad.price ? '$' + actividad.price : 'Gratis'}
+          <strong>Precio</strong><br> ${
+            actividad.price ? '$' + actividad.price : 'Gratis'
+          }
         </div>
 
         <div style="grid-column: span 2;">
-          <strong>Descripción</strong><br> ${actividad.description || 'Sin descripción'}
+          <strong>Descripción</strong><br> ${
+            actividad.description || 'Sin descripción'
+          }
         </div>
 
         <div style="grid-column: span 2;">
-          <strong>Observación</strong><br> ${actividad.observation || 'Sin observaciones'}
+          <strong>Observación</strong><br> ${
+            actividad.observation || 'Sin observaciones'
+          }
         </div>
 
         <div style="grid-column: span 2;">
@@ -567,13 +639,13 @@ verDetallesActividad(actividad: Actividad): void {
         </div>
       </div>
     `,
-    width: '620px',
-    icon: 'info',
-    confirmButtonText: 'Cerrar',
-    confirmButtonColor: '#003366',
-  });
-}
-//Metodo para eliminar una actividad
+      width: '620px',
+      icon: 'info',
+      confirmButtonText: 'Cerrar',
+      confirmButtonColor: '#003366',
+    });
+  }
+  //Metodo para eliminar una actividad
   eliminarActividad(actividad: Actividad): void {
     actividad.showMenu = false;
     Swal.fire({
@@ -589,7 +661,9 @@ verDetallesActividad(actividad: Actividad): void {
       if (result.isConfirmed) {
         this.actividadesService.eliminarActividad(actividad.id!).subscribe({
           next: () => {
-            this.actividades = this.actividades.filter((a) => a.id !== actividad.id);
+            this.actividades = this.actividades.filter(
+              (a) => a.id !== actividad.id
+            );
             Swal.fire({
               title: 'Eliminada',
               text: `La actividad "${actividad.name}" ha sido eliminada.`,

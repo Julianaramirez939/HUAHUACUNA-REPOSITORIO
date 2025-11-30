@@ -1,13 +1,13 @@
 <div class="usuarios-home">
-<div class="encabezado-usuarios">
-  <h2 class="titulo-usuarios">
-    <i class="fa-solid fa-user-group"></i> Usuarios
-  </h2>
+  <div class="encabezado-usuarios">
+    <h2 class="titulo-usuarios">
+      <i class="fa-solid fa-user-group"></i> Usuarios
+    </h2>
 
-  <button class="btn-crear-usuario" (click)="crearUsuario()">
-    <i class="fa-solid fa-plus"></i> Crear Usuario
-  </button>
-</div>
+    <button class="btn-crear-usuario" (click)="crearUsuario()">
+      <i class="fa-solid fa-plus"></i> Crear Usuario
+    </button>
+  </div>
 
   <table class="tabla-usuarios" *ngIf="!cargando && usuarios.length > 0">
     <thead>
@@ -26,7 +26,10 @@
         <td class="centrado">{{ u.email }}</td>
 
         <td class="centrado">
-          <span class="estado-cuadro-full" [style.background-color]="u.state?.color">
+          <span
+            class="estado-cuadro-full"
+            [style.background-color]="u.state?.color"
+          >
             {{ u.state?.name }}
           </span>
         </td>
@@ -59,7 +62,6 @@
   <p *ngIf="!cargando && usuarios.length === 0">No hay usuarios registrados.</p>
   <p *ngIf="cargando">Cargando usuarios...</p>
 
-  <!-- PAGINACIÓN -->
   <div class="paginacion" *ngIf="!cargando && usuarios.length > 0">
     <div class="botones-navegacion">
       <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
@@ -68,7 +70,10 @@
 
       <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
 
-      <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+      <button
+        (click)="paginaSiguiente()"
+        [disabled]="paginaActual === ultimaPagina"
+      >
         Siguiente
       </button>
     </div>

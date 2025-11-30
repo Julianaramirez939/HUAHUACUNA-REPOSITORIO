@@ -1,5 +1,5 @@
+//Interface para un voluntario
 export interface Voluntario {
-
   name: string;
   last_name: string;
   phone_number: string;
@@ -7,5 +7,5 @@ export interface Voluntario {
   identification_type: number;
   identification: string;
   profession: string;
-  attachment: File; // el archivo directamente
+  attachment: File;
 }

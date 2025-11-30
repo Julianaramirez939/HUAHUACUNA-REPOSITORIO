@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './mensajes-ninos-home.component.html',
   styleUrls: ['./mensajes-ninos-home.component.css'],
 })
+
+//Componente de la seccion de mensajes desde el panel del padrino
 export class MensajesNinosHomeComponent implements OnInit {
   mensajes: ListarMensajeNino[] = [];
   padrinos: any[] = [];
@@ -37,21 +39,21 @@ export class MensajesNinosHomeComponent implements OnInit {
     this.cargarMensajes();
   }
 
-  // ================================================
-  // TRAER PADRINOS
-  // ================================================
+  //Metodo para cargar los padrinos
   cargarPadrinos(): void {
     this.padrinosService.traerPadrinosTodos().subscribe({
       next: (res: any) => {
-        this.padrinos = res.data || res; // según tu backend
+        const todosPadrinos = res.data || res;
+        this.padrinos = todosPadrinos.filter((padrino: any) => {
+          const estado = padrino.state?.name?.toLowerCase();
+          return estado === 'aceptado';
+        });
       },
       error: (err) => console.error(err),
     });
   }
 
-  // ================================================
-  // TRAER TODOS LOS MENSAJES (tu método paginado)
-  // ================================================
+  //Metodo para cargar los mensajes
   cargarMensajes(page: number = 1): void {
     this.cargando = true;
 
@@ -82,8 +84,7 @@ export class MensajesNinosHomeComponent implements OnInit {
       },
     });
   }
-
-  // ➡ SIGUIENTE
+  //Metodo para ir a la pagina siguiente
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
@@ -91,7 +92,7 @@ export class MensajesNinosHomeComponent implements OnInit {
     }
   }
 
-  // ⬅ ANTERIOR
+  //Metodo para ir a la pagina anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
@@ -99,7 +100,7 @@ export class MensajesNinosHomeComponent implements OnInit {
     }
   }
 
-  // 🔢 IR A PÁGINA
+  //Metodo para ir a una pagina especifica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
 
@@ -120,29 +121,26 @@ export class MensajesNinosHomeComponent implements OnInit {
     this.paginaActual = destino;
     this.cargarMensajes(destino);
   }
-
-  // ================================================
-  // ABRIR MODAL
-  // ================================================
+  //Metodo para la modal de enviar mensaje
   abrirModalCrearMensaje(): void {
-  const opcionesPadrinosHtml = this.padrinos
-    .map((p) => `<option value="${p.id}">${p.full_name}</option>`)
-    .join('');
+    const opcionesPadrinosHtml = this.padrinos
+      .map((p) => `<option value="${p.id}">${p.full_name}</option>`)
+      .join('');
 
-  Swal.fire({
-    title: `
+    Swal.fire({
+      title: `
       <span style="font-family:'Segoe UI'; font-weight:600; color:#003366;">
         Enviar mensaje
       </span>
     `,
-    width: '720px',
-    showCancelButton: true,
-    confirmButtonText: 'Enviar',
-    cancelButtonText: 'Cancelar',
-    confirmButtonColor: '#0b66d1',
-    cancelButtonColor: '#dc2626',
+      width: '720px',
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#0b66d1',
+      cancelButtonColor: '#dc2626',
 
-    html: `
+      html: `
       <style>
         .swal-label {
           font-family:'Segoe UI';
@@ -195,91 +193,94 @@ export class MensajesNinosHomeComponent implements OnInit {
       </div>
     `,
 
-    didOpen: () => {
-      const selPadrino = document.getElementById('padrinoSelect') as HTMLSelectElement;
-      const selNinos = document.getElementById('childrenSelect') as HTMLSelectElement;
+      didOpen: () => {
+        const selPadrino = document.getElementById(
+          'padrinoSelect'
+        ) as HTMLSelectElement;
+        const selNinos = document.getElementById(
+          'childrenSelect'
+        ) as HTMLSelectElement;
 
-      selPadrino.addEventListener('change', () => {
-        const pid = Number(selPadrino.value);
-        if (!pid) return;
+        selPadrino.addEventListener('change', () => {
+          const pid = Number(selPadrino.value);
+          if (!pid) return;
 
-        selNinos.disabled = true;
-        selNinos.innerHTML = `<option>Cargando...</option>`;
+          selNinos.disabled = true;
+          selNinos.innerHTML = `<option>Cargando...</option>`;
 
-        this.ninosService.traerNinosApadrinados(pid).subscribe({
-          next: (raw) => {
-            const ninos = raw.flat();
-            this.ninosApadrinados = ninos;
+          this.ninosService.traerNinosApadrinados(pid).subscribe({
+            next: (raw) => {
+              const ninos = raw.flat();
+              this.ninosApadrinados = ninos;
 
-            selNinos.disabled = false;
-            selNinos.innerHTML =
-              `<option value="" disabled selected>Seleccione un niño</option>` +
-              ninos.map((n) => `<option value="${n.id}">${n.full_name}</option>`).join('');
-          },
+              selNinos.disabled = false;
+              selNinos.innerHTML =
+                `<option value="" disabled selected>Seleccione un niño</option>` +
+                ninos
+                  .map((n) => `<option value="${n.id}">${n.full_name}</option>`)
+                  .join('');
+            },
+          });
         });
+      },
+
+      preConfirm: () => {
+        const padrino_id = Number(
+          (document.getElementById('padrinoSelect') as HTMLSelectElement).value
+        );
+        const children_id = Number(
+          (document.getElementById('childrenSelect') as HTMLSelectElement).value
+        );
+        const subject = (
+          document.getElementById('subjectInput') as HTMLInputElement
+        ).value.trim();
+        const content = (
+          document.getElementById('contentInput') as HTMLTextAreaElement
+        ).value.trim();
+
+        if (!padrino_id || !children_id || !subject || !content) {
+          Swal.showValidationMessage('Todos los campos son obligatorios.');
+          return false;
+        }
+
+        return { padrino_id, children_id, subject, content };
+      },
+    }).then((r) => {
+      if (!r.isConfirmed || !r.value) return;
+
+      // 🔥 Siempre is_from_admin = true
+      const payload: CrearMensajeNino = {
+        godparent_id: r.value.padrino_id,
+        children_id: r.value.children_id,
+        subject: r.value.subject,
+        content: r.value.content,
+        is_from_admin: true,
+      };
+
+      this.msgService.crearMensaje(payload, true).subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Mensaje enviado',
+            text: 'El mensaje fue enviado correctamente.',
+            icon: 'success',
+            confirmButtonColor: '#0b66d1',
+          });
+
+          this.cargarMensajes();
+        },
+        error: (err) => {
+          Swal.fire({
+            title: 'Error',
+            text: err.message || 'No se pudo enviar el mensaje.',
+            icon: 'error',
+            confirmButtonColor: '#003366',
+          });
+        },
       });
-    },
-
-    preConfirm: () => {
-      const padrino_id = Number(
-        (document.getElementById('padrinoSelect') as HTMLSelectElement).value
-      );
-      const children_id = Number(
-        (document.getElementById('childrenSelect') as HTMLSelectElement).value
-      );
-      const subject = (
-        document.getElementById('subjectInput') as HTMLInputElement
-      ).value.trim();
-      const content = (
-        document.getElementById('contentInput') as HTMLTextAreaElement
-      ).value.trim();
-
-      if (!padrino_id || !children_id || !subject || !content) {
-        Swal.showValidationMessage('Todos los campos son obligatorios.');
-        return false;
-      }
-
-      return { padrino_id, children_id, subject, content };
-    },
-  }).then((r) => {
-    if (!r.isConfirmed || !r.value) return;
-
-    // 🔥 Siempre is_from_admin = true
-    const payload: CrearMensajeNino = {
-      godparent_id: r.value.padrino_id,
-      children_id: r.value.children_id,
-      subject: r.value.subject,
-      content: r.value.content,
-      is_from_admin: true
-    };
-
-    this.msgService.crearMensaje(payload, true).subscribe({
-      next: () => {
-        Swal.fire({
-          title: 'Mensaje enviado',
-          text: 'El mensaje fue enviado correctamente.',
-          icon: 'success',
-          confirmButtonColor: '#0b66d1',
-        });
-
-        this.cargarMensajes();
-      },
-      error: (err) => {
-        Swal.fire({
-          title: 'Error',
-          text: err.message || 'No se pudo enviar el mensaje.',
-          icon: 'error',
-          confirmButtonColor: '#003366',
-        });
-      },
     });
-  });
-}
+  }
 
-
-  // ================================================
-  // FORMATEAR FECHA SIN MODIFICAR LA INTERFAZ
-  // ================================================
+  //Metodo para formatear la fecha estilo 12 h
   public formatearFecha12(fechaStr: string): string {
     if (!fechaStr) return '';
 

@@ -3,12 +3,7 @@
   <i class="fa-solid fa-arrow-left"></i>
 </button>
 <div class="login-container">
-  <!-- Logo -->
-  <img
-    [src]="logo"
-    alt="Logo de la Fundación Huahuacuna"
-    class="login-logo"
-  />
+  <img [src]="logo" alt="Logo de la Fundación Huahuacuna" class="login-logo" />
 
   <h2 class="login-title">Inicia sesión</h2>
 
@@ -18,7 +13,6 @@
     class="login-form"
     novalidate
   >
-    <!-- USUARIO -->
     <div class="form-group">
       <label for="email">Correo electrónico</label>
       <input
@@ -49,9 +43,8 @@
       </p>
     </div>
 
-    <!-- CONTRASEÑA -->
     <div class="form-group">
-      <label for="password" >Contraseña</label>
+      <label for="password">Contraseña</label>
       <input
         [type]="mostrarContrasena ? 'text' : 'password'"
         id="password"
@@ -81,22 +74,16 @@
       </label>
     </div>
 
-    <!-- BOTONES -->
-   <button
-  type="submit"
-  class="btn-login"
-  [disabled]="formularioLogin.invalid"
-  [attr.aria-disabled]="formularioLogin.invalid"
->
-  Iniciar Sesión
-</button>
-
-
     <button
-      type="button"
-      class="btn-register"
-      (click)="irARegistroPadrino()"
+      type="submit"
+      class="btn-login"
+      [disabled]="formularioLogin.invalid"
+      [attr.aria-disabled]="formularioLogin.invalid"
     >
+      Iniciar Sesión
+    </button>
+
+    <button type="button" class="btn-register" (click)="irARegistroPadrino()">
       Registrarse como padrino
     </button>
 

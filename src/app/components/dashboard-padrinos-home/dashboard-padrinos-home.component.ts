@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { FondoComponent } from "../fondo-imagen/fondo.component";
+import { FondoComponent } from '../fondo-imagen/fondo.component';
 
 @Component({
   selector: 'app-dashboard-padrinos-home',
   imports: [FondoComponent],
   templateUrl: './dashboard-padrinos-home.component.html',
-  styleUrl: './dashboard-padrinos-home.component.css'
+  styleUrl: './dashboard-padrinos-home.component.css',
 })
-export class DashboardPadrinosHomeComponent {
-
-}
+//Componente que muestra el mensaje al entrar al panel de padrino
+export class DashboardPadrinosHomeComponent {}

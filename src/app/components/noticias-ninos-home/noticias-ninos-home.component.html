@@ -58,7 +58,6 @@
   <p *ngIf="!cargando && noticias.length === 0">No hay noticias registradas.</p>
   <p *ngIf="cargando">Cargando noticias...</p>
 
-  <!-- PAGINACIÓN -->
   <div class="paginacion" *ngIf="!cargando && noticias.length > 0">
     <div class="botones-navegacion">
       <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">

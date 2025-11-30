@@ -26,20 +26,17 @@
         <td class="centrado">{{ a.name }}</td>
         <td class="centrado">{{ a.description }}</td>
 
-        <!-- FECHA -->
         <td class="centrado">
-          {{ a.date || '-' }}
+          {{ a.date || "-" }}
         </td>
 
-        <!-- HORA en formato 24h; si no viene muestra 00:00 -->
-    <td class="centrado">
-  {{
-    a.hour && a.hour !== '00:00'
-      ? ('1970-01-01T' + a.hour | date: 'hh:mm a')
-      : '-'
-  }}
-</td>
-
+        <td class="centrado">
+          {{
+            a.hour && a.hour !== "00:00"
+              ? ("1970-01-01T" + a.hour | date : "hh:mm a")
+              : "-"
+          }}
+        </td>
 
         <td class="centrado">
           <span
@@ -70,10 +67,11 @@
     </tbody>
   </table>
 
-  <p *ngIf="!cargando && actividades.length === 0">No hay actividades registradas.</p>
+  <p *ngIf="!cargando && actividades.length === 0">
+    No hay actividades registradas.
+  </p>
   <p *ngIf="cargando">Cargando actividades...</p>
 
-  <!-- PAGINACIÓN -->
   <div class="paginacion" *ngIf="!cargando && actividades.length > 0">
     <div class="botones-navegacion">
       <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
@@ -82,7 +80,10 @@
 
       <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
 
-      <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+      <button
+        (click)="paginaSiguiente()"
+        [disabled]="paginaActual === ultimaPagina"
+      >
         Siguiente
       </button>
     </div>

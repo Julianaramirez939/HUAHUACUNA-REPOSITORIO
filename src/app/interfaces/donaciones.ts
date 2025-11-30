@@ -1,3 +1,4 @@
+//Interface de las donaciones (listar)
 export interface Donaciones {
   id?: number;
   name: string;

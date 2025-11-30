@@ -20,58 +20,77 @@ export class NinosService {
   /**
    * Obtener lista de niños (paginado)
    */
-traerNinos(page: number = 1): Observable<{ data: { childrens: NinoListar[], pagination: any } }> {
-  const token = sessionStorage.getItem('token') || '';
-  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-  const url = `${this.endpoint}?page=${page}`;
+  traerNinos(
+    page: number = 1
+  ): Observable<{ data: { childrens: NinoListar[]; pagination: any } }> {
+    const token = sessionStorage.getItem('token') || '';
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const url = `${this.endpoint}?page=${page}`;
 
-  return this.http.get<{ data: { childrens: NinoListar[], pagination: any } }>(url, { headers }).pipe(
-    tap(() => console.log(`[NinosService] Lista de niños obtenida. Página ${page}`)),
-    catchError((error) => this.manejarError(error))
-  );
-}
-traerTodosLosNinos(): Observable<NinoListar[]> {
-  const token = sessionStorage.getItem('token') || '';
-  
-  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-  const url = `${this.endpoint}`; 
+    return this.http
+      .get<{ data: { childrens: NinoListar[]; pagination: any } }>(url, {
+        headers,
+      })
+      .pipe(
+        tap(() =>
+          console.log(`[NinosService] Lista de niños obtenida. Página ${page}`)
+        ),
+        catchError((error) => this.manejarError(error))
+      );
+  }
+  traerTodosLosNinos(): Observable<NinoListar[]> {
+    const token = sessionStorage.getItem('token') || '';
 
-return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
-    map(response => response.data[0]), // 👈 el backend devuelve un array dentro de otro
-    tap(ninos => console.log(`[NinosService] Lista completa de niños obtenida. Total: ${ninos?.length}`)),
-    catchError(error => this.manejarError(error))
-  );
-}
-/**
- * Obtener niños apadrinados por un padrino específico
- */
-traerNinosApadrinados(godparent_id: number): Observable<NinoListar[]> {
-  const token = sessionStorage.getItem('token') || '';
-  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-  const url = `${this.endpoint}?godparent_id=${godparent_id}`;
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const url = `${this.endpoint}`;
 
-  return this.http.get<{ data: NinoListar[] }>(url, { headers }).pipe(
-    map(response => response.data),
-    tap(ninos => console.log(`[NinosService] Niños apadrinados por padrino ${godparent_id}: ${ninos.length}`)),
-    catchError(error => this.manejarError(error))
-  );
-}
+    return this.http.get<{ data: NinoListar[][] }>(url, { headers }).pipe(
+      map((response) => response.data[0]), // 👈 el backend devuelve un array dentro de otro
+      tap((ninos) =>
+        console.log(
+          `[NinosService] Lista completa de niños obtenida. Total: ${ninos?.length}`
+        )
+      ),
+      catchError((error) => this.manejarError(error))
+    );
+  }
+  /**
+   * Obtener niños apadrinados por un padrino específico
+   */
+  traerNinosApadrinados(godparent_id: number): Observable<NinoListar[]> {
+    const token = sessionStorage.getItem('token') || '';
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const url = `${this.endpoint}?godparent_id=${godparent_id}`;
 
-/**
- * Obtener niños que no tienen padrino (excluyendo el padrino dado)
- */
-traerNinosSinPadrino(exclude_godparent_id: number): Observable<NinoListar[]> {
-  const token = sessionStorage.getItem('token') || '';
-  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-  const url = `${this.endpoint}?exclude_godparent_id=${exclude_godparent_id}`;
+    return this.http.get<{ data: NinoListar[] }>(url, { headers }).pipe(
+      map((response) => response.data),
+      tap((ninos) =>
+        console.log(
+          `[NinosService] Niños apadrinados por padrino ${godparent_id}: ${ninos.length}`
+        )
+      ),
+      catchError((error) => this.manejarError(error))
+    );
+  }
 
-  return this.http.get<{ data: NinoListar[] }>(url, { headers }).pipe(
-    map(response => response.data),
-    tap(ninos => console.log(`[NinosService] Niños sin padrino (excluyendo ${exclude_godparent_id}): ${ninos.length}`)),
-    catchError(error => this.manejarError(error))
-  );
-}
+  /**
+   * Obtener niños que no tienen padrino (excluyendo el padrino dado)
+   */
+  traerNinosSinPadrino(exclude_godparent_id: number): Observable<NinoListar[]> {
+    const token = sessionStorage.getItem('token') || '';
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const url = `${this.endpoint}?exclude_godparent_id=${exclude_godparent_id}`;
 
+    return this.http.get<{ data: NinoListar[] }>(url, { headers }).pipe(
+      map((response) => response.data),
+      tap((ninos) =>
+        console.log(
+          `[NinosService] Niños sin padrino (excluyendo ${exclude_godparent_id}): ${ninos.length}`
+        )
+      ),
+      catchError((error) => this.manejarError(error))
+    );
+  }
 
   /**
    * Crear niño (usa FormData porque incluye archivo)
@@ -104,43 +123,40 @@ traerNinosSinPadrino(exclude_godparent_id: number): Observable<NinoListar[]> {
   /**
    * Actualizar niño existente
    */
-actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
-  const token = sessionStorage.getItem('token') || '';
-  const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
+    const token = sessionStorage.getItem('token') || '';
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-  let body: FormData;
+    let body: FormData;
 
-  // Si ya viene como FormData, lo usamos directamente
-  if (nino instanceof FormData) {
-    body = nino;
-  } else {
-    // Si viene como objeto, lo convertimos en FormData
-    body = new FormData();
-    body.append('name', nino.name);
-    body.append('last_name', nino.last_name);
-    body.append('birth_date', nino.birth_date);
-    body.append('school_grade', nino.school_grade.toString());
-    body.append('likings', nino.likings);
-    body.append('state_id', nino.state_id.toString());
-    if (nino.fathers_name) body.append('fathers_name', nino.fathers_name);
-    if (nino.mothers_name) body.append('mothers_name', nino.mothers_name);
-    if (nino.additional_information)
-      body.append('additional_information', nino.additional_information);
-    if (nino.attachment) body.append('attachment', nino.attachment);
+    if (nino instanceof FormData) {
+      body = nino;
+    } else {
+      body = new FormData();
+      body.append('name', nino.name);
+      body.append('last_name', nino.last_name);
+      body.append('birth_date', nino.birth_date);
+      body.append('school_grade', nino.school_grade.toString());
+      body.append('likings', nino.likings);
+      body.append('state_id', nino.state_id.toString());
+      if (nino.fathers_name) body.append('fathers_name', nino.fathers_name);
+      if (nino.mothers_name) body.append('mothers_name', nino.mothers_name);
+      if (nino.additional_information)
+        body.append('additional_information', nino.additional_information);
+      if (nino.attachment) body.append('attachment', nino.attachment);
+    }
+
+    body.append('_method', 'PUT');
+
+    const url = `${this.endpoint}/${id}`;
+
+    return this.http.post<any>(url, body, { headers }).pipe(
+      tap(() =>
+        console.log(`[NinosService] Niño ${id} actualizado correctamente.`)
+      ),
+      catchError((error) => this.manejarError(error))
+    );
   }
-
-  // Agregamos la simulación del PUT para Laravel
-  body.append('_method', 'PUT');
-
-  // Ruta del update
-  const url = `${this.endpoint}/${id}`;
-
-  return this.http.post<any>(url, body, { headers }).pipe(
-    tap(() => console.log(`[NinosService] Niño ${id} actualizado correctamente.`)),
-    catchError((error) => this.manejarError(error))
-  );
-}
-
 
   /**
    * Eliminar niño
@@ -151,7 +167,9 @@ actualizarNino(nino: NinoActualizar | FormData, id: number): Observable<any> {
     const url = `${this.endpoint}/${id}`;
 
     return this.http.delete<any>(url, { headers }).pipe(
-      tap(() => console.log(`[NinosService] Niño ${id} eliminado correctamente.`)),
+      tap(() =>
+        console.log(`[NinosService] Niño ${id} eliminado correctamente.`)
+      ),
       catchError((error) => this.manejarError(error))
     );
   }

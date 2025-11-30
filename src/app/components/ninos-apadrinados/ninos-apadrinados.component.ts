@@ -10,18 +10,22 @@ import { PadrinoService } from '../../services/padrinos.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './ninos-apadrinados.component.html',
-  styleUrls: ['./ninos-apadrinados.component.css']
+  styleUrls: ['./ninos-apadrinados.component.css'],
 })
+//Componente para la seccion de los niños que tiene el padrino bajo patrocinio (apadrinados)
 export class NinosApadrinadosComponent implements OnInit {
   ninos: NinoListar[] = [];
   cargando = true;
 
-  constructor(private ninosService: NinosService, private padrinoService: PadrinoService) {}
+  constructor(
+    private ninosService: NinosService,
+    private padrinoService: PadrinoService
+  ) {}
 
   ngOnInit(): void {
     this.cargarNinosApadrinados();
   }
-
+  //Metodo para cargar los niños que estan apadrinados por ese padrino en especifico
   cargarNinosApadrinados(): void {
     const padrinoIdStr = sessionStorage.getItem('padrino');
     if (!padrinoIdStr) {
@@ -44,10 +48,10 @@ export class NinosApadrinadosComponent implements OnInit {
 
         const todosLosNinos = data.flat();
 
-        // Filtrar solo los activos
-        this.ninos = todosLosNinos.filter(nino =>
-          (Array.isArray(nino.state) ? nino.state : [nino.state])
-            .some(s => s?.name?.toLowerCase() === 'activo')
+        this.ninos = todosLosNinos.filter((nino) =>
+          (Array.isArray(nino.state) ? nino.state : [nino.state]).some(
+            (s) => s?.name?.toLowerCase() === 'activo'
+          )
         );
 
         console.log('Ninos apadrinados filtrados', this.ninos);
@@ -56,42 +60,44 @@ export class NinosApadrinadosComponent implements OnInit {
       error: (err) => {
         console.error('Error al cargar los niños apadrinados:', err);
         this.cargando = false;
-      }
+      },
     });
   }
+  //Metotodo para quitarle el apadrinamiento a un niño
   quitarApadrinamiento(nino: NinoListar): void {
-      const padrinoIdStr = sessionStorage.getItem('padrino');
-      if (!padrinoIdStr) {
-        Swal.fire('Error', 'No se encontró información del padrino.', 'error');
-        return;
-      }
-  
-      const padrinoId = parseInt(padrinoIdStr, 10);
-      if (isNaN(padrinoId)) {
-        Swal.fire('Error', 'ID del padrino inválido.', 'error');
-        return;
-      }
-  
-      Swal.fire({
-        title: `¿Está seguro que desea quitar el apadrinamiento a ${nino.name} ${nino.last_name}?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#003366', // azul
-        cancelButtonColor: '#d33'      // rojo
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.padrinoService.quitarApadrinamientoNino(padrinoId, [nino.id]).subscribe({
+    const padrinoIdStr = sessionStorage.getItem('padrino');
+    if (!padrinoIdStr) {
+      Swal.fire('Error', 'No se encontró información del padrino.', 'error');
+      return;
+    }
+
+    const padrinoId = parseInt(padrinoIdStr, 10);
+    if (isNaN(padrinoId)) {
+      Swal.fire('Error', 'ID del padrino inválido.', 'error');
+      return;
+    }
+
+    Swal.fire({
+      title: `¿Está seguro que desea quitar el apadrinamiento a ${nino.name} ${nino.last_name}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#003366',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.padrinoService
+          .quitarApadrinamientoNino(padrinoId, [nino.id])
+          .subscribe({
             next: () => {
               Swal.fire({
                 title: 'Niño sin apadrinar',
                 text: `${nino.name} ${nino.last_name} ahora está sin tu patrocinio.`,
                 icon: 'success',
                 confirmButtonColor: '#003366',
-                confirmButtonText: 'Aceptar'
+                confirmButtonText: 'Aceptar',
               }).then(() => {
-                // Recargar la lista de niños después de apadrinar
                 this.cargarNinosApadrinados();
               });
             },
@@ -101,11 +107,11 @@ export class NinosApadrinadosComponent implements OnInit {
                 title: 'Error',
                 text: 'No se pudo quitar el apadrinamiento al niño.',
                 icon: 'error',
-                confirmButtonColor: '#003366'
+                confirmButtonColor: '#003366',
               });
-            }
+            },
           });
-        }
-      });
-    }
+      }
+    });
+  }
 }

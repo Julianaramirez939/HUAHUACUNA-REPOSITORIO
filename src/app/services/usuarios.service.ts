@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
-import { API_URL } from '../../global';;
+import { API_URL } from '../../global';
 import { CrearUsuario } from '../interfaces/crear-usuario';
 import { ActualizarUsuario } from '../interfaces/actualizar-usuario';
 import { Estado } from '../interfaces/estados';
@@ -12,15 +12,13 @@ import { Usuario } from '../interfaces/usuario';
 @Injectable({
   providedIn: 'root',
 })
+//Servicio para los usuarios
 export class UsuariosService {
-
   private readonly endpoint = `${API_URL}/users`;
 
   constructor(private http: HttpClient) {}
 
-  // -----------------------------------------------
-  // CREATE usuario (no usa FormData porque no hay archivos)
-  // -----------------------------------------------
+  //Crear usuario
   crearUsuario(usuario: CrearUsuario): Observable<any> {
     const headers = this.getHeadersJson();
 
@@ -30,9 +28,7 @@ export class UsuariosService {
     );
   }
 
-  // -----------------------------------------------
-  // UPDATE usuario
-  // -----------------------------------------------
+  //Actualizar usuario
   actualizarUsuario(usuario: ActualizarUsuario): Observable<any> {
     const headers = this.getHeadersJson();
     const url = `${this.endpoint}/${usuario.id}`;
@@ -45,9 +41,7 @@ export class UsuariosService {
     );
   }
 
-  // -----------------------------------------------
-  // DELETE usuario
-  // -----------------------------------------------
+  //Eliminar usuario
   eliminarUsuario(id: number): Observable<any> {
     const headers = this.getHeadersTokenOnly();
     const url = `${this.endpoint}/${id}`;
@@ -58,73 +52,66 @@ export class UsuariosService {
     );
   }
 
-  // -----------------------------------------------
-  // LISTAR usuarios
-  // Nota: tu backend devuelve data[0], así que se mapea así
-  // -----------------------------------------------
+  //Listar usuario (paginado)
   getUsuarios(page: number = 1): Observable<any> {
-  const headers = this.getHeadersTokenOnly();
-  const url = `${this.endpoint}?page=${page}`;
+    const headers = this.getHeadersTokenOnly();
+    const url = `${this.endpoint}?page=${page}`;
 
-  return this.http.get<any>(url, { headers }).pipe(
-    tap(() => console.log(`[UsersService] Usuarios obtenidos. Página ${page}`)),
-    map(resp => {
-      return {
-        users: resp?.data?.users || [],
-        pagination: resp?.data?.pagination || null,
-        links: resp?.data?.links || null
-      };
-    }),
-    catchError((error) => this.manejarError(error))
-  );
-}
+    return this.http.get<any>(url, { headers }).pipe(
+      tap(() =>
+        console.log(`[UsersService] Usuarios obtenidos. Página ${page}`)
+      ),
+      map((resp) => {
+        return {
+          users: resp?.data?.users || [],
+          pagination: resp?.data?.pagination || null,
+          links: resp?.data?.links || null,
+        };
+      }),
+      catchError((error) => this.manejarError(error))
+    );
+  }
 
-
-  // -----------------------------------------------
-  // LISTAR estados
-  // -----------------------------------------------
+  //Obtener estados
   getEstados(): Observable<Estado[]> {
     const headers = this.getHeadersTokenOnly();
     const url = `${this.endpoint}/get-states`;
 
     return this.http.get<any>(url, { headers }).pipe(
       tap(() => console.log('[UsersService] Estados obtenidos.')),
-      map(resp => resp.data as Estado[]),
+      map((resp) => resp.data as Estado[]),
       catchError((error) => this.manejarError(error))
     );
   }
 
-  // -----------------------------------------------
-  // LISTAR roles para ng-select
-  // -----------------------------------------------
-getRoles(): Observable<Rol[]> {
-  const headers = this.getHeadersTokenOnly();
-  const url = `${API_URL}/roles`;
+  //Obtener roles
+  getRoles(): Observable<Rol[]> {
+    const headers = this.getHeadersTokenOnly();
+    const url = `${API_URL}/roles`;
 
-  return this.http.get<any>(url, { headers }).pipe(
-    tap(() => console.log('[UsersService] Roles obtenidos.')),
-    map(resp => {
-      const data = resp?.data || [];
+    return this.http.get<any>(url, { headers }).pipe(
+      tap(() => console.log('[UsersService] Roles obtenidos.')),
+      map((resp) => {
+        const data = resp?.data || [];
 
-      // Caso real según tu backend: data[0] contiene los roles de verdad
-      const roles = Array.isArray(data[0]) ? data[0] : [];
+        const roles = Array.isArray(data[0]) ? data[0] : [];
 
-      return roles as Rol[];
-    }),
-    catchError((error) => this.manejarError(error))
-  );
-}
+        return roles as Rol[];
+      }),
+      catchError((error) => this.manejarError(error))
+    );
+  }
+  //Obtener usuario por id
+  getUsuarioPorId(id: number): Observable<Usuario> {
+    const headers = this.getHeadersTokenOnly();
+    const url = `${this.endpoint}/${id}`;
 
-getUsuarioPorId(id: number): Observable<Usuario> {
-  const headers = this.getHeadersTokenOnly();
-  const url = `${this.endpoint}/${id}`;
-
-  return this.http.get<any>(url, { headers }).pipe(
-    tap(() => console.log(`[UsersService] Usuario ${id} obtenido.`)),
-    map(resp => resp.data as Usuario), // usamos el tipo completo
-    catchError((error) => this.manejarError(error))
-  );
-}
+    return this.http.get<any>(url, { headers }).pipe(
+      tap(() => console.log(`[UsersService] Usuario ${id} obtenido.`)),
+      map((resp) => resp.data as Usuario),
+      catchError((error) => this.manejarError(error))
+    );
+  }
 
   // -----------------------------------------------
   // HEADERS

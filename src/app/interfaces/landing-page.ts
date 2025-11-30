@@ -1,3 +1,4 @@
+//Interface para el landing page
 export interface LandingPageContent {
   id: number;
   key: string;

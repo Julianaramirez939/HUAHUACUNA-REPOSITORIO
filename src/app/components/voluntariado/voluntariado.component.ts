@@ -38,19 +38,24 @@ export class VoluntariadoComponent implements OnInit {
     this.formularioVoluntariado = this.fb.group({
       nombre: [
         '',
-        [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/),
+        ],
       ],
       apellidos: [
         '',
-        [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/),
+        ],
       ],
-  telefono: [
-  '',
-  [
-    Validators.required,
-    Validators.pattern(/^[+0-9\s]{7,20}$/),
-  ],
-],
+      telefono: [
+        '',
+        [Validators.required, Validators.pattern(/^[+0-9\s]{7,20}$/)],
+      ],
 
       email: ['', [Validators.required, Validators.email]],
       tipoIdentificacion: ['', Validators.required],
@@ -60,7 +65,11 @@ export class VoluntariadoComponent implements OnInit {
       ],
       profesion: [
         '',
-        [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/)],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/),
+        ],
       ],
       documento: [null, Validators.required],
     });
@@ -69,7 +78,7 @@ export class VoluntariadoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarTiposIdentificacion();
   }
-//Metodo para cargar los tipos de identificación desde el servicio de constantes
+  //Metodo para cargar los tipos de identificación desde el servicio de constantes
   cargarTiposIdentificacion(): void {
     this.cargandoTipos = true;
     this.constantesService.obtenerTiposIdentificacion().subscribe({
@@ -88,7 +97,7 @@ export class VoluntariadoComponent implements OnInit {
       },
     });
   }
-// Metodo para manejar la selección de archivo 
+  // Metodo para manejar la selección de archivo
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -96,7 +105,7 @@ export class VoluntariadoComponent implements OnInit {
       this.formularioVoluntariado.patchValue({ documento: file });
     }
   }
-//Metodo para enviar el formulario de postulación de voluntario
+  //Metodo para enviar el formulario de postulación de voluntario
   enviarFormulario(): void {
     if (this.formularioVoluntariado.invalid) {
       this.formularioVoluntariado.markAllAsTouched();
@@ -158,7 +167,7 @@ export class VoluntariadoComponent implements OnInit {
       },
     });
   }
-//Metodo para obtener el mensaje de error correspondiente a cada campo del formulario
+  //Metodo para obtener el mensaje de error correspondiente a cada campo del formulario
   obtenerMensajeError(campo: string): string {
     const control = this.formularioVoluntariado.get(campo);
     if (!control || !control.errors) return '';
@@ -176,7 +185,8 @@ export class VoluntariadoComponent implements OnInit {
       },
       telefono: {
         required: 'El teléfono es obligatorio',
-        pattern: 'Solo se permiten números, espacios y el signo + (7 a 20 caracteres)',
+        pattern:
+          'Solo se permiten números, espacios y el signo + (7 a 20 caracteres)',
       },
       email: {
         required: 'El correo es obligatorio',

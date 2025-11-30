@@ -1,4 +1,4 @@
-
+//Interface para crear donacion
 export interface CrearDonaciones {
   name: string;
   email: string;

@@ -1,8 +1,8 @@
 <footer class="footer-amarillo" *ngIf="!cargando && !error; else estado">
   <h2 class="titulo">Contáctanos</h2>
   <p class="descripcion">
-    Si deseas contactarnos o saber más de nosotros, por favor comunícate a las líneas o por las redes sociales,
-    y muy pronto te responderemos.
+    Si deseas contactarnos o saber más de nosotros, por favor comunícate a las
+    líneas o por las redes sociales, y muy pronto te responderemos.
   </p>
 
   <div class="contacto-info">
@@ -13,12 +13,16 @@
 
     <div class="contacto-item">
       <i class="fa-brands fa-facebook"></i>
-      <a [href]="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a [href]="facebook" target="_blank" rel="noopener noreferrer"
+        >Facebook</a
+      >
     </div>
 
     <div class="contacto-item">
       <i class="fa-brands fa-instagram"></i>
-      <a [href]="instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a [href]="instagram" target="_blank" rel="noopener noreferrer"
+        >Instagram</a
+      >
     </div>
 
     <div class="contacto-item">
@@ -31,18 +35,17 @@
       <span>{{ email }}</span>
     </div>
 
-    <!-- ⭐ GOOGLE MAPS -->
     <div class="map-container">
       <iframe
         [src]="mapUrl | safeUrl"
         width="100%"
         height="250"
-        style="border:0; border-radius: 12px; margin-top: 15px;"
+        style="border: 0; border-radius: 12px; margin-top: 15px"
         allowfullscreen=""
-        loading="lazy">
+        loading="lazy"
+      >
       </iframe>
     </div>
-
   </div>
 </footer>
 

@@ -13,13 +13,13 @@ import { ActualizarUsuario } from '../../interfaces/actualizar-usuario';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  styleUrls: ['./perfil.component.css'],
 })
+//Componente para la visualizacion del perfil del usuario
 export class PerfilComponent implements OnInit {
   userDisplay: Usuario | null = null;
   logo = LOGO;
 
-  // Campos para errores y contraseña
   camposError = '';
   mostrarPassword = false;
   password = '';
@@ -27,12 +27,15 @@ export class PerfilComponent implements OnInit {
   passwordError = '';
   mostrarPasswordInput = false;
 
-  constructor(private router: Router, private usuariosService: UsuariosService) {}
+  constructor(
+    private router: Router,
+    private usuariosService: UsuariosService
+  ) {}
 
   ngOnInit(): void {
     this.traerUsuario();
   }
-
+  //Metodo para traer el usuario que esta en sesión
   private traerUsuario(): void {
     const storedUser = sessionStorage.getItem('user');
     if (!storedUser) {
@@ -47,15 +50,17 @@ export class PerfilComponent implements OnInit {
       next: (user: Usuario) => {
         this.userDisplay = user;
       },
-      error: err => {
-        Swal.fire('Error', err.message || 'No se pudo obtener los datos del usuario.', 'error');
+      error: (err) => {
+        Swal.fire(
+          'Error',
+          err.message || 'No se pudo obtener los datos del usuario.',
+          'error'
+        );
         this.router.navigate(['/login']);
-      }
+      },
     });
   }
-
- 
-
+  //Metodo para alternar la contraseña
   togglePassword(): void {
     this.mostrarPassword = !this.mostrarPassword;
     this.password = '';
@@ -63,89 +68,93 @@ export class PerfilComponent implements OnInit {
     this.passwordError = '';
     this.mostrarPasswordInput = false;
   }
-guardarCambios(): void {
-  if (!this.userDisplay) return;
+  //Metodo para guardar los cambios en el perfil
+  guardarCambios(): void {
+    if (!this.userDisplay) return;
 
-  this.camposError = '';
+    this.camposError = '';
 
-  // Validar campos obligatorios
-  if (!this.userDisplay.name?.trim() || !this.userDisplay.last_name?.trim() || !this.userDisplay.email?.trim()) {
-    this.camposError = 'Por favor completa todos los campos obligatorios (*)';
-    return;
-  }
-
-  // Validar email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(this.userDisplay.email)) {
-    this.camposError = 'Ingresa un correo electrónico válido';
-    return;
-  }
-
-  let passwordToSend: string | undefined = undefined;
-  if (this.mostrarPassword) {
-    if (!this.password.trim() || !this.confirmPassword.trim()) {
-      this.camposError = 'Debe completar ambos campos de contraseña';
+    // Validar campos obligatorios
+    if (
+      !this.userDisplay.name?.trim() ||
+      !this.userDisplay.last_name?.trim() ||
+      !this.userDisplay.email?.trim()
+    ) {
+      this.camposError = 'Por favor completa todos los campos obligatorios (*)';
       return;
     }
 
-    if (this.password !== this.confirmPassword) {
-      this.camposError = 'Las contraseñas no coinciden';
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.userDisplay.email)) {
+      this.camposError = 'Ingresa un correo electrónico válido';
       return;
     }
 
-    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
-    if (!passRegex.test(this.password)) {
-      this.camposError = 'La contraseña debe tener mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 caracter especial';
-      return;
-    }
-
-    passwordToSend = this.password;
-  }
-
-  const payload: ActualizarUsuario = {
-    id: this.userDisplay.id,
-    name: this.userDisplay.name,
-    last_name: this.userDisplay.last_name,
-    email: this.userDisplay.email,
-    state_id: this.userDisplay.state_id,
-    roles: this.userDisplay.roles.map(r => r.id),
-    password: passwordToSend
-  };
-
-  this.usuariosService.actualizarUsuario(payload).subscribe({
-    next: updatedUser => {
-      this.userDisplay = { ...this.userDisplay!, ...updatedUser };
-      sessionStorage.setItem('user', JSON.stringify(this.userDisplay));
-
-      Swal.fire({
-        title: 'Perfil actualizado',
-        text: 'Tus datos se han actualizado correctamente.',
-        icon: 'success',
-        confirmButtonColor: '#003366'
-      });
-
-      // Limpiar campos de contraseña
-      if (this.mostrarPassword) {
-        this.password = '';
-        this.confirmPassword = '';
-        this.mostrarPassword = false;
-        this.mostrarPasswordInput = false;
+    let passwordToSend: string | undefined = undefined;
+    if (this.mostrarPassword) {
+      if (!this.password.trim() || !this.confirmPassword.trim()) {
+        this.camposError = 'Debe completar ambos campos de contraseña';
+        return;
       }
-    },
-    error: err => {
-      Swal.fire({
-        title: 'Error',
-        text: err.message || 'No se pudo actualizar el perfil.',
-        icon: 'error',
-        confirmButtonColor: '#003366'
-      });
-    }
-  });
-}
 
+      if (this.password !== this.confirmPassword) {
+        this.camposError = 'Las contraseñas no coinciden';
+        return;
+      }
+
+      const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+      if (!passRegex.test(this.password)) {
+        this.camposError =
+          'La contraseña debe tener mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 caracter especial';
+        return;
+      }
+
+      passwordToSend = this.password;
+    }
+
+    const payload: ActualizarUsuario = {
+      id: this.userDisplay.id,
+      name: this.userDisplay.name,
+      last_name: this.userDisplay.last_name,
+      email: this.userDisplay.email,
+      state_id: this.userDisplay.state_id,
+      roles: this.userDisplay.roles.map((r) => r.id),
+      password: passwordToSend,
+    };
+
+    this.usuariosService.actualizarUsuario(payload).subscribe({
+      next: (updatedUser) => {
+        this.userDisplay = { ...this.userDisplay!, ...updatedUser };
+        sessionStorage.setItem('user', JSON.stringify(this.userDisplay));
+
+        Swal.fire({
+          title: 'Perfil actualizado',
+          text: 'Tus datos se han actualizado correctamente.',
+          icon: 'success',
+          confirmButtonColor: '#003366',
+        });
+
+        // Limpiar campos de contraseña
+        if (this.mostrarPassword) {
+          this.password = '';
+          this.confirmPassword = '';
+          this.mostrarPassword = false;
+          this.mostrarPasswordInput = false;
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error',
+          text: err.message || 'No se pudo actualizar el perfil.',
+          icon: 'error',
+          confirmButtonColor: '#003366',
+        });
+      },
+    });
+  }
+  //Metodo para mostrar o no los inputs de la contraseña
   toggleMostrarPasswordInput(): void {
     this.mostrarPasswordInput = !this.mostrarPasswordInput;
   }
-
-
 }

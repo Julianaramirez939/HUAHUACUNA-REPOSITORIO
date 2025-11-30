@@ -1,3 +1,4 @@
+//Interface para actualizar un padrino
 export interface ActualizarPadrino {
   email: string;
   password?: string | null;

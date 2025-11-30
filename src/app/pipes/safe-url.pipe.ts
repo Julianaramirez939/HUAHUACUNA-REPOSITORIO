@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   name: 'safeUrl',
   standalone: true
 })
+//Pipe para el gadget de la ubicacion de google maps en el contactanos del landing page
 export class SafeUrlPipe implements PipeTransform {
 
   constructor(private sanitizer: DomSanitizer) {}

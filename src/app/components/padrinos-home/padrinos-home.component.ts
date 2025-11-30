@@ -2,13 +2,11 @@ import Swal from 'sweetalert2';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { Padrino } from '../../interfaces/padrino';
 import { ActualizarPadrino } from '../../interfaces/actualizar-padrino';
 import { PadrinoService } from '../../services/padrinos.service';
 import { Estado } from '../../interfaces/estados';
 
-// Interfaz UI para manejar showMenu
 interface PadrinoUI extends Padrino {
   showMenu: boolean;
   media_file_url?: string;
@@ -27,6 +25,7 @@ interface PadrinoUI extends Padrino {
   templateUrl: './padrinos-home.component.html',
   styleUrls: ['./padrinos-home.component.css'],
 })
+//Componente para la gestion de los padrinos desde el panel de administración
 export class PadrinosHomeComponent implements OnInit {
   padrinos: PadrinoUI[] = [];
   cargando = false;
@@ -39,20 +38,15 @@ export class PadrinosHomeComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerPadrinos();
   }
-
-  // Obtener padrinos (normaliza response.data[0])
-obtenerPadrinos(): void {
+//Metodo para obtener todos los padrinos
+  obtenerPadrinos(): void {
     this.cargando = true;
 
-    // 🔹 IMPORTANTE: enviar página al servicio
     this.padrinoService.getPadrinos(this.paginaActual).subscribe({
       next: (response: any) => {
-        console.log("Backend devolvió:", response);
-
         const raw = response?.data?.godparents;
         const lista = Array.isArray(raw) ? raw : [];
 
-        // Mapeo normalizado
         this.padrinos = lista.map((p: any) => ({
           id: p.id,
           email: p.email,
@@ -72,21 +66,17 @@ obtenerPadrinos(): void {
             ? {
                 id: p.state.id,
                 name: p.state.name,
-                color: p.state.color
+                color: p.state.color,
               }
             : undefined,
           state_id: p.state_id,
           showMenu: false,
         }));
 
-        // ============================
-        //     PAGINACIÓN
-        // ============================
         const pag = response?.data?.pagination;
         this.paginaActual = pag?.current_page || 1;
         this.ultimaPagina = pag?.last_page || 1;
 
-        // Sincroniza input "ir a página"
         this.paginaIr = this.paginaActual;
 
         this.cargando = false;
@@ -105,25 +95,21 @@ obtenerPadrinos(): void {
       },
     });
   }
-
-  // =============================
-  //      Métodos de navegación
-  // =============================
-
+//Metodo para ir a la pagina siguiente
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
       this.obtenerPadrinos();
     }
   }
-
+//Metodo para ir a la pagina anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
       this.obtenerPadrinos();
     }
   }
-
+//Metodo para ir a una pagina especifica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
 
@@ -133,7 +119,7 @@ obtenerPadrinos(): void {
         text: 'Ingrese un número de página válido',
         icon: 'warning',
         confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#003366'
+        confirmButtonColor: '#003366',
       });
       return;
     }
@@ -147,20 +133,24 @@ obtenerPadrinos(): void {
         text: 'Este número de página no existe',
         icon: 'warning',
         confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#003366'
+        confirmButtonColor: '#003366',
       });
     }
   }
-
-
-  // Actualizar estado del padrino (muestra modal con select)
+//Metodo para actualizar un padrino
   actualizarPadrino(padrino: PadrinoUI) {
     padrino.showMenu = false;
 
     this.padrinoService.getEstados().subscribe({
       next: (estadosRaw: Estado[]) => {
-        const estados = estadosRaw.map(e => ({ id: e.id, name: e.name, color: e.color }));
-        const opcionesHtml = estados.map(e => `<option value="${e.id}">${e.name}</option>`).join('');
+        const estados = estadosRaw.map((e) => ({
+          id: e.id,
+          name: e.name,
+          color: e.color,
+        }));
+        const opcionesHtml = estados
+          .map((e) => `<option value="${e.id}">${e.name}</option>`)
+          .join('');
 
         Swal.fire({
           title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">Actualizar padrino</span>`,
@@ -190,23 +180,30 @@ obtenerPadrinos(): void {
           confirmButtonColor: '#003366',
           cancelButtonColor: '#dc2626',
           didOpen: () => {
-            const selectEl = document.getElementById('estadoSelect') as HTMLSelectElement;
-            if (selectEl && padrino.state) selectEl.value = String(padrino.state.id);
+            const selectEl = document.getElementById(
+              'estadoSelect'
+            ) as HTMLSelectElement;
+            if (selectEl && padrino.state)
+              selectEl.value = String(padrino.state.id);
             if (selectEl) selectEl.style.textAlign = 'center';
           },
           preConfirm: () => {
-            const selectEl = document.getElementById('estadoSelect') as HTMLSelectElement;
-            if (!selectEl) Swal.showValidationMessage('No se encontró el selector de estado');
+            const selectEl = document.getElementById(
+              'estadoSelect'
+            ) as HTMLSelectElement;
+            if (!selectEl)
+              Swal.showValidationMessage(
+                'No se encontró el selector de estado'
+              );
             const estadoId = selectEl?.value;
             if (!estadoId) Swal.showValidationMessage('Selecciona un estado');
             return estadoId;
-          }
-        }).then(result => {
+          },
+        }).then((result) => {
           if (result.isConfirmed) {
             const estadoId = parseInt(result.value!, 10);
-            const nuevoEstado = estados.find(e => e.id === estadoId);
+            const nuevoEstado = estados.find((e) => e.id === estadoId);
 
-            // Construimos payload para ActualizarPadrino
             const actualizarData: ActualizarPadrino = {
               email: padrino.email,
               name: padrino.name,
@@ -221,48 +218,52 @@ obtenerPadrinos(): void {
               password_confirmation: undefined,
             };
 
-            // Llamada al servicio (usa id y payload)
             if (!padrino.id) {
               Swal.fire('Error', 'Padrino sin id', 'error');
               return;
             }
 
-            this.padrinoService.actualizarPadrino(padrino.id, actualizarData).subscribe({
-              next: (resp) => {
-                // Actualizar UI localmente
-                padrino.state = { id: estadoId, name: nuevoEstado?.name || '', color: nuevoEstado?.color };
-                padrino.state_id = estadoId;
+            this.padrinoService
+              .actualizarPadrino(padrino.id, actualizarData)
+              .subscribe({
+                next: (resp) => {
+                  padrino.state = {
+                    id: estadoId,
+                    name: nuevoEstado?.name || '',
+                    color: nuevoEstado?.color,
+                  };
+                  padrino.state_id = estadoId;
 
-                Swal.fire({
-                  title: 'Actualizado',
-                  text: `Estado cambiado a ${nuevoEstado?.name}`,
-                  confirmButtonColor: '#003366'
-                });
-              },
-              error: (err) => {
-                console.error('Error al actualizar padrino:', err);
-                Swal.fire({
-                  title: 'Error',
-                  text: 'No se pudo actualizar el padrino',
-                  confirmButtonColor: '#003366'
-                });
-              }
-            });
+                  Swal.fire({
+                    title: 'Actualizado',
+                    text: `Estado cambiado a ${nuevoEstado?.name}`,
+                    confirmButtonColor: '#003366',
+                  });
+                },
+                error: (err) => {
+                  console.error('Error al actualizar padrino:', err);
+                  Swal.fire({
+                    title: 'Error',
+                    text: 'No se pudo actualizar el padrino',
+                    confirmButtonColor: '#003366',
+                  });
+                },
+              });
           }
         });
       },
-      error: err => {
+      error: (err) => {
         Swal.fire({
           title: 'Error',
           text: 'No se pudieron cargar los estados',
-          confirmButtonColor: '#003366'
+          confirmButtonColor: '#003366',
         });
         console.error('Error getEstados:', err);
-      }
+      },
     });
   }
 
-  // Eliminar padrino
+  // Metodo para eliminar padrino
   eliminarPadrino(padrino: PadrinoUI) {
     padrino.showMenu = false;
 
@@ -274,7 +275,7 @@ obtenerPadrinos(): void {
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#003366',
-      cancelButtonColor: '#dc2626'
+      cancelButtonColor: '#dc2626',
     }).then((result) => {
       if (result.isConfirmed) {
         if (!padrino.id) {
@@ -284,12 +285,12 @@ obtenerPadrinos(): void {
 
         this.padrinoService.eliminarPadrino(padrino.id).subscribe({
           next: () => {
-            this.padrinos = this.padrinos.filter(p => p.id !== padrino.id);
+            this.padrinos = this.padrinos.filter((p) => p.id !== padrino.id);
             Swal.fire({
               title: 'Eliminado',
               text: `${padrino.name} ha sido eliminado`,
               icon: 'success',
-              confirmButtonColor: '#003366'
+              confirmButtonColor: '#003366',
             });
           },
           error: (err) => {
@@ -298,30 +299,30 @@ obtenerPadrinos(): void {
               title: 'Error',
               text: 'No se pudo eliminar el padrino',
               icon: 'error',
-              confirmButtonColor: '#003366'
+              confirmButtonColor: '#003366',
             });
-          }
+          },
         });
       }
     });
   }
 
-  // Ver detalles del padrino
-verDetallesPadrino(padrino: PadrinoUI) {
-  padrino.showMenu = false;
+  // Metodo para ver detalles del padrino
+  verDetallesPadrino(padrino: PadrinoUI) {
+    padrino.showMenu = false;
 
-  if (!padrino.id) {
-    Swal.fire("Error", "El padrino no tiene ID", "error");
-    return;
-  }
+    if (!padrino.id) {
+      Swal.fire('Error', 'El padrino no tiene ID', 'error');
+      return;
+    }
 
-  this.padrinoService.getPadrinoPorId(padrino.id).subscribe({
-    next: (response: any) => {
-      const detalles = response;
+    this.padrinoService.getPadrinoPorId(padrino.id).subscribe({
+      next: (response: any) => {
+        const detalles = response;
 
-      padrino.children = detalles?.children ?? [];
+        padrino.children = detalles?.children ?? [];
 
-      let html = `
+        let html = `
         <div style="
           display: grid; 
           grid-template-columns: 1fr 1fr; 
@@ -330,16 +331,22 @@ verDetallesPadrino(padrino: PadrinoUI) {
           font-family: 'Segoe UI', sans-serif; 
           text-align: left;
         ">
-          <div><strong>Nombre</strong><br> ${padrino.name} ${padrino.last_name}</div>
+          <div><strong>Nombre</strong><br> ${padrino.name} ${
+          padrino.last_name
+        }</div>
           <div><strong>Teléfono</strong><br> ${padrino.phone_number}</div>
-          <div><strong>Tipo de Identificación</strong><br> ${padrino.identification_type_name || padrino.identification_type}</div>
+          <div><strong>Tipo de Identificación</strong><br> ${
+            padrino.identification_type_name || padrino.identification_type
+          }</div>
           <div><strong>Email</strong><br> ${padrino.email}</div>
-          <div><strong>Identificación</strong><br> ${padrino.identification}</div>
+          <div><strong>Identificación</strong><br> ${
+            padrino.identification
+          }</div>
           <div><strong>País</strong><br> ${padrino.residence_country}</div>
       `;
 
-      if (padrino.media_file_url) {
-        html += `
+        if (padrino.media_file_url) {
+          html += `
           <div style="grid-column: span 2;">
             <strong>Documento de Identificación</strong><br>
             <a href="${padrino.media_file_url}" target="_blank" style="color:#2563eb; text-decoration: underline;">
@@ -347,36 +354,33 @@ verDetallesPadrino(padrino: PadrinoUI) {
             </a>
           </div>
         `;
-      }
+        }
 
-      // Niños debajo de País (segunda columna)
-      html += `<div style="margin-top: 12px;">`;  // sin grid-column: span 2, así queda en la segunda columna
-      // Lista de niños
+        html += `<div style="margin-top: 12px;">`;
 
-if ((padrino.children ?? []).length > 0) {
-  html += `
+        if ((padrino.children ?? []).length > 0) {
+          html += `
     <div style="grid-column: 2 / 3; margin-top: 12px;">
       <strong>Niños apadrinados</strong><br>
       <ul>
   `;
-  (padrino.children ?? []).forEach((c: any) => {
-    html += `<li>${c.name} ${c.last_name}</li>`;
-  });
-  html += `</ul></div>`;
-} else {
-  html += `
+          (padrino.children ?? []).forEach((c: any) => {
+            html += `<li>${c.name} ${c.last_name}</li>`;
+          });
+          html += `</ul></div>`;
+        } else {
+          html += `
     <div style="grid-column: 2 / 3; margin-top: 12px;">
       <strong>Niños apadrinados</strong><br>
       <em>No tiene niños apadrinados</em>
     </div>
   `;
-}
+        }
 
-      html += `</div>`;
+        html += `</div>`;
 
-      // Estado al ancho completo
-      if (padrino.state) {
-        html += `
+        if (padrino.state) {
+          html += `
           <div style="grid-column: span 2; margin-top: 12px;">
             <strong style="display:block; text-align: left;">Estado</strong>
             <div style="
@@ -394,25 +398,26 @@ if ((padrino.children ?? []).length > 0) {
             </div>
           </div>
         `;
-      }
+        }
 
-      html += `</div>`;
+        html += `</div>`;
 
-      Swal.fire({
-        title: `<span style="font-family: 'Segoe UI', sans-serif;">Detalles del padrino</span>`,
-        html,
-        width: '650px',
-        icon: 'info',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#003366',
-      });
-    },
-    error: () => {
-      Swal.fire("Error", "No se pudieron cargar los detalles del padrino", "error");
-    }
-  });
-}
-
-
-
+        Swal.fire({
+          title: `<span style="font-family: 'Segoe UI', sans-serif;">Detalles del padrino</span>`,
+          html,
+          width: '650px',
+          icon: 'info',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#003366',
+        });
+      },
+      error: () => {
+        Swal.fire(
+          'Error',
+          'No se pudieron cargar los detalles del padrino',
+          'error'
+        );
+      },
+    });
+  }
 }

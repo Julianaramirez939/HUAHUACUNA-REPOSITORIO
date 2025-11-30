@@ -6,7 +6,11 @@
 
     <h2 class="forgot-title">Recuperar Contraseña</h2>
 
-    <form [formGroup]="formularioRecuperar" (ngSubmit)="enviarEmail()" novalidate>
+    <form
+      [formGroup]="formularioRecuperar"
+      (ngSubmit)="enviarEmail()"
+      novalidate
+    >
       <label for="correo" class="forgot-label">Correo electrónico</label>
       <input
         type="email"
@@ -17,14 +21,24 @@
         [attr.aria-invalid]="f['correo'].invalid"
       />
 
-      <p *ngIf="f['correo'].touched && f['correo'].hasError('required')" class="error-msg">
+      <p
+        *ngIf="f['correo'].touched && f['correo'].hasError('required')"
+        class="error-msg"
+      >
         El correo es obligatorio.
       </p>
-      <p *ngIf="f['correo'].touched && f['correo'].hasError('pattern')" class="error-msg">
+      <p
+        *ngIf="f['correo'].touched && f['correo'].hasError('pattern')"
+        class="error-msg"
+      >
         Por favor, ingresa un correo electrónico válido.
       </p>
 
-      <button type="submit" class="btn-send" [disabled]="formularioRecuperar.invalid">
+      <button
+        type="submit"
+        class="btn-send"
+        [disabled]="formularioRecuperar.invalid"
+      >
         Enviar
       </button>
     </form>

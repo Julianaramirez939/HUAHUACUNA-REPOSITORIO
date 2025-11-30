@@ -21,16 +21,14 @@
   margin-bottom: 0.3rem;
 }
 
-
 .perfil-info {
   width: 100%;
   max-width: 500px;
   background: #fff;
-  padding: 1.5rem 2rem; /* mismo padding a ambos lados */
+  padding: 1.5rem 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
-
 
 .perfil-info label {
   display: block;
@@ -46,7 +44,7 @@
   border-radius: 6px;
   margin-top: 0.3rem;
   font-size: 1rem;
-  box-sizing: border-box; /* asegura borde simétrico */
+  box-sizing: border-box;
 }
 
 .password-section {
@@ -89,10 +87,10 @@
 
 .error-message {
   color: #dc3545;
-  font-size: 1rem;      /* un poco más grande */
+  font-size: 1rem;
   margin-top: 0.5rem;
-  text-align: center;   /* centrado */
-  font-weight: 600;     /* opcional, para que destaque */
+  text-align: center;
+  font-weight: 600;
 }
 
 .btn-back {

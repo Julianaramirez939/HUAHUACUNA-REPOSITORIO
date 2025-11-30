@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
   selector: 'app-quienes-somos',
   imports: [CommonModule],
   templateUrl: './quienes-somos.component.html',
-  styleUrls: ['./quienes-somos.component.css']
+  styleUrls: ['./quienes-somos.component.css'],
 })
 //Componente que muestra la sección de "Quienes somos" en la landing page
 export class QuienesSomosComponent implements OnInit {
-  @Input() imagenUrl: string = 'https://images.pexels.com/photos/8613059/pexels-photo-8613059.jpeg';
+  @Input() imagenUrl: string =
+    'https://images.pexels.com/photos/8613059/pexels-photo-8613059.jpeg';
   @Input() altura: number = 550;
   @Input() brillo: number = 0.9;
 
@@ -25,7 +26,7 @@ export class QuienesSomosComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerContenidoLanding();
   }
-//Metodo para obtener el contenido de la landing page
+  //Metodo para obtener el contenido de la landing page
   private obtenerContenidoLanding(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
@@ -40,7 +41,7 @@ export class QuienesSomosComponent implements OnInit {
         console.error('[QuienesSomosComponent] Error cargando contenido:', err);
         this.error = err.message || 'No se pudo cargar el contenido.';
         this.cargando = false;
-      }
+      },
     });
   }
 }

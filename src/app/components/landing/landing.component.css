@@ -1,26 +1,22 @@
-/* Scroll suave para la landing */
 html {
   scroll-behavior: smooth;
 }
 
-/* Contenedor principal */
 .landing-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-/* Cada sección */
 section {
   width: 100%;
-  padding: 0; /* el padding interno se maneja en cada componente */
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* arriba por defecto */
-  align-items: stretch; /* ocupa todo el ancho */
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
-/* Sección de inicio ocupa pantalla completa */
 #inicio {
   min-height: 100vh;
   display: flex;
@@ -28,12 +24,10 @@ section {
   align-items: center;
 }
 
-/* Las demás secciones se ajustan al contenido */
 section:not(#inicio) {
   min-height: auto;
 }
 
-/* Ajuste responsivo: en móviles, que las secciones no queden muy pequeñas */
 @media (max-width: 768px) {
   #inicio {
     min-height: 80vh;

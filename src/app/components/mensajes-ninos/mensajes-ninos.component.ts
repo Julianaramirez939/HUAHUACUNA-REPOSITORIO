@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './mensajes-ninos.component.html',
   styleUrls: ['./mensajes-ninos.component.css'],
 })
+
+//Componente para la sección de mensajes en el panel del padrino
 export class MensajesNinosComponent implements OnInit {
   mensajes: ListarMensajeNino[] = [];
   ninosApadrinados: NinoListar[] = [];
@@ -32,15 +34,11 @@ export class MensajesNinosComponent implements OnInit {
     this.godparent_id = Number(sessionStorage.getItem('padrino'));
     this.cargarMensajes();
   }
-
-  // ================================
-  //   CARGAR MENSAJES DEL PADRINO
-  // ================================
+  //Metodo para cargar los mensajes en el panel del padrino de los niños apadrinados
   cargarMensajes(page: number = 1): void {
     this.cargando = true;
     this.msgService.traerMensajesPorPadrino(this.godparent_id, page).subscribe({
       next: (res) => {
-        // res viene de: { data: [...], pagination: {...} }
         const mensajes = res.data ?? [];
 
         this.mensajes = mensajes.map((m) => ({
@@ -61,7 +59,7 @@ export class MensajesNinosComponent implements OnInit {
     });
   }
 
-  // ⬅ ANTERIOR
+  //Metodo para ir a una pagina anterior
   paginaAnterior(): void {
     if (this.paginaActual > 1) {
       this.paginaActual--;
@@ -69,7 +67,7 @@ export class MensajesNinosComponent implements OnInit {
     }
   }
 
-  // ➡ SIGUIENTE
+  //Metodo para ir a la pagina siguiente
   paginaSiguiente(): void {
     if (this.paginaActual < this.ultimaPagina) {
       this.paginaActual++;
@@ -77,7 +75,7 @@ export class MensajesNinosComponent implements OnInit {
     }
   }
 
-  // 🔢 IR A PÁGINA
+  //Metodo para ir a una pagina especifica
   irAPagina(): void {
     const destino = Number(this.paginaIr);
 
@@ -99,7 +97,7 @@ export class MensajesNinosComponent implements OnInit {
     this.cargarMensajes(destino);
   }
 
-  // FORMATEAR FECHA (27/11/2025 21:30:58 → 27 nov 2025, 9:30 p. m.)
+  //Metodo para formatear la fecha en formato de 12 horas
   formatearFecha12(fechaStr: string): string {
     if (!fechaStr) return '';
 
@@ -119,42 +117,41 @@ export class MensajesNinosComponent implements OnInit {
       return fechaStr;
     }
   }
-
-  // ================================
-  //       MODAL CREAR MENSAJE
-  // ================================
+  //Metodo para la modal de enviar mensaje
   abrirModalCrearMensaje(): void {
-  const padrinoIdStr = sessionStorage.getItem('padrino');
-  if (!padrinoIdStr) return;
+    const padrinoIdStr = sessionStorage.getItem('padrino');
+    if (!padrinoIdStr) return;
 
-  const godparent_id = Number(padrinoIdStr);
-  if (isNaN(godparent_id)) return;
+    const godparent_id = Number(padrinoIdStr);
+    if (isNaN(godparent_id)) return;
 
-  this.godparent_id = godparent_id;
+    this.godparent_id = godparent_id;
 
-  this.ninosService.traerNinosApadrinados(godparent_id).subscribe({
-    next: (rawNinos) => {
-      const ninos = rawNinos.flat();
-      this.ninosApadrinados = ninos;
+    this.ninosService.traerNinosApadrinados(godparent_id).subscribe({
+      next: (rawNinos) => {
+        const ninos = rawNinos.flat();
+        this.ninosApadrinados = ninos;
 
-      const opcionesHtml = ninos
-        .map((n) => `<option value="${n.id}">${n.name} ${n.last_name}</option>`)
-        .join('');
+        const opcionesHtml = ninos
+          .map(
+            (n) => `<option value="${n.id}">${n.name} ${n.last_name}</option>`
+          )
+          .join('');
 
-      Swal.fire({
-        title: `
+        Swal.fire({
+          title: `
           <span style="font-family:'Segoe UI'; font-weight:600; color:#003366;">
             Enviar mensaje
           </span>
         `,
-        width: '720px',
-        showCancelButton: true,
-        confirmButtonText: 'Enviar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#0b66d1',
-        cancelButtonColor: '#dc2626',
+          width: '720px',
+          showCancelButton: true,
+          confirmButtonText: 'Enviar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#0b66d1',
+          cancelButtonColor: '#dc2626',
 
-        html: `
+          html: `
           <style>
             .swal-label {
               font-family:'Segoe UI';
@@ -207,58 +204,58 @@ export class MensajesNinosComponent implements OnInit {
           </div>
         `,
 
-        preConfirm: () => {
-          const children_id = Number(
-            (document.getElementById('childrenSelect') as HTMLSelectElement).value
-          );
-          const subject = (
-            document.getElementById('subjectInput') as HTMLInputElement
-          ).value.trim();
-          const content = (
-            document.getElementById('contentInput') as HTMLTextAreaElement
-          ).value.trim();
+          preConfirm: () => {
+            const children_id = Number(
+              (document.getElementById('childrenSelect') as HTMLSelectElement)
+                .value
+            );
+            const subject = (
+              document.getElementById('subjectInput') as HTMLInputElement
+            ).value.trim();
+            const content = (
+              document.getElementById('contentInput') as HTMLTextAreaElement
+            ).value.trim();
 
-          if (!children_id || !subject || !content) {
-            Swal.showValidationMessage('Todos los campos son obligatorios.');
-            return false;
-          }
+            if (!children_id || !subject || !content) {
+              Swal.showValidationMessage('Todos los campos son obligatorios.');
+              return false;
+            }
 
-          return { children_id, subject, content };
-        },
-      }).then((r) => {
-        if (!r.isConfirmed || !r.value) return;
-
-        const payload: CrearMensajeNino = {
-          godparent_id,
-          children_id: r.value.children_id,
-          is_from_admin: null, // ← aquí la corrección
-          subject: r.value.subject,
-          content: r.value.content,
-        };
-
-        this.msgService.crearMensaje(payload, null).subscribe({
-          next: () => {
-            Swal.fire({
-              title: 'Mensaje enviado',
-              text: 'El mensaje fue enviado correctamente.',
-              icon: 'success',
-              confirmButtonColor: '#0b66d1',
-            });
-
-            this.cargarMensajes();
+            return { children_id, subject, content };
           },
-          error: (err) => {
-            Swal.fire({
-              title: 'Error',
-              text: err.message || 'No se pudo enviar el mensaje.',
-              icon: 'error',
-              confirmButtonColor: '#003366',
-            });
-          },
+        }).then((r) => {
+          if (!r.isConfirmed || !r.value) return;
+
+          const payload: CrearMensajeNino = {
+            godparent_id,
+            children_id: r.value.children_id,
+            is_from_admin: null, // ← aquí la corrección
+            subject: r.value.subject,
+            content: r.value.content,
+          };
+
+          this.msgService.crearMensaje(payload, null).subscribe({
+            next: () => {
+              Swal.fire({
+                title: 'Mensaje enviado',
+                text: 'El mensaje fue enviado correctamente.',
+                icon: 'success',
+                confirmButtonColor: '#0b66d1',
+              });
+
+              this.cargarMensajes();
+            },
+            error: (err) => {
+              Swal.fire({
+                title: 'Error',
+                text: err.message || 'No se pudo enviar el mensaje.',
+                icon: 'error',
+                confirmButtonColor: '#003366',
+              });
+            },
+          });
         });
-      });
-    },
-  });
-}
-
+      },
+    });
+  }
 }

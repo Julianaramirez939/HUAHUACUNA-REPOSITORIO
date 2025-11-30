@@ -28,7 +28,7 @@ export class QueHacemosComponent implements OnInit {
     this.obtenerContenidoLanding();
     this.obtenerActividades();
   }
-//Metodo para obtener el contenido de la landing page
+  //Metodo para obtener el contenido de la landing page
   private obtenerContenidoLanding(): void {
     this.landingService.getLandingPageContents().subscribe({
       next: (data: LandingPageContent[]) => {
@@ -44,19 +44,22 @@ export class QueHacemosComponent implements OnInit {
       },
     });
   }
-//Metodo para obtener las actividades activas
+  //Metodo para obtener las actividades activas
   private obtenerActividades(): void {
     this.actividadesService.traerTodasLasActividades().subscribe({
       next: (actividades) => {
-       
-        const activas = actividades.filter(a => a.state?.name === 'Activo');
+        const activas = actividades.filter((a) => a.state?.name === 'Activo');
 
-       
-        this.actividadesRegulares = activas.filter(a => a.program_type_name === 'Actividad regular');
-        this.eventos = activas.filter(a => a.program_type_name === 'Evento');
+        this.actividadesRegulares = activas.filter(
+          (a) => a.program_type_name === 'Actividad regular'
+        );
+        this.eventos = activas.filter((a) => a.program_type_name === 'Evento');
 
         console.log('[QueHacemosComponent] Actividades activas:', activas);
-        console.log('[QueHacemosComponent] Regulares:', this.actividadesRegulares);
+        console.log(
+          '[QueHacemosComponent] Regulares:',
+          this.actividadesRegulares
+        );
         console.log('[QueHacemosComponent] Eventos:', this.eventos);
       },
       error: (err) => {

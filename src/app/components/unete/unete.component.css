@@ -1,11 +1,11 @@
 .unete-wrapper {
-  width: 100%; /* 🔹 mismo ancho visual que las cards */
-  margin: 0 auto; /* 🔹 centra todo horizontalmente */
-  overflow: hidden; /* evita desbordes */
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .unete-banner {
-  background-color: #ffcc00; /* Amarillo */
+  background-color: #ffcc00;
   color: #000000;
   text-align: center;
   padding: 20px;
@@ -15,7 +15,7 @@
   letter-spacing: 3px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  box-sizing: border-box; /* evita que el padding rompa el ancho */
+  box-sizing: border-box;
 }
 
 .unete-container {
@@ -42,26 +42,23 @@
   transform: scale(1.02);
 }
 
-/* Fondo oscuro con texto centrado */
 .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(22, 38, 99, 0.75); /* capa oscura siempre visible */
+  background-color: rgba(22, 38, 99, 0.75);
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 1; /* SIEMPRE visible */
+  opacity: 1;
   font-family: "Segoe UI", sans-serif;
   text-align: center;
   padding: 1.5rem;
 }
 
-
-/* ✅ Aquí va la corrección */
 .overlay-content {
   display: flex;
-  flex-direction: column; /* apila el título y el párrafo */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 500px;

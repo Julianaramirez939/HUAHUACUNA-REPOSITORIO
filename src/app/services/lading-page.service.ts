@@ -17,38 +17,51 @@ export class LandingPageService {
   /**
    * Obtener el contenido de la landing page
    */
- getLandingPageContents(): Observable<LandingPageContent[]> {
-  return this.http
-    .get<{ success: boolean; data: LandingPageContent[]; message: string }>(
-      this.endpoint
-    )
-    .pipe(
-      map((response) => response.data),
-      tap(() => console.log('[LandingPageService] Contenido de landing page obtenido.')),
-      catchError((error) => this.manejarError(error))
-    );
-}
-// Actualizar contenido de la landing page
- actualizarLandingContent(id: number, contenido: LandingPageContent): Observable<LandingPageContent> {
-  const url = `${this.endpoint}/${id}`;
+  getLandingPageContents(): Observable<LandingPageContent[]> {
+    return this.http
+      .get<{ success: boolean; data: LandingPageContent[]; message: string }>(
+        this.endpoint
+      )
+      .pipe(
+        map((response) => response.data),
+        tap(() =>
+          console.log(
+            '[LandingPageService] Contenido de landing page obtenido.'
+          )
+        ),
+        catchError((error) => this.manejarError(error))
+      );
+  }
+  // Actualizar contenido de la landing page
+  actualizarLandingContent(
+    id: number,
+    contenido: LandingPageContent
+  ): Observable<LandingPageContent> {
+    const url = `${this.endpoint}/${id}`;
 
-  const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {})
-  });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    });
 
-  return this.http.put<{ success: boolean; data: LandingPageContent; message: string }>(
-    url,
-    contenido,
-    { headers }
-  ).pipe(
-    map(response => response.data),
-    tap(() => console.log(`[LandingPageService] Contenido de landing page con ID ${id} actualizado.`)),
-    catchError((error) => this.manejarError(error))
-  );
-}
+    return this.http
+      .put<{ success: boolean; data: LandingPageContent; message: string }>(
+        url,
+        contenido,
+        { headers }
+      )
+      .pipe(
+        map((response) => response.data),
+        tap(() =>
+          console.log(
+            `[LandingPageService] Contenido de landing page con ID ${id} actualizado.`
+          )
+        ),
+        catchError((error) => this.manejarError(error))
+      );
+  }
 
   /**
    * Manejo de errores
@@ -57,7 +70,8 @@ export class LandingPageService {
     console.error('[LandingPageService] Error:', error);
 
     const backendError = error?.error || {};
-    const mensaje = backendError.message || 'Ocurrió un error al obtener los contenidos.';
+    const mensaje =
+      backendError.message || 'Ocurrió un error al obtener los contenidos.';
     const errores = backendError.errors || null;
 
     return throwError(() => ({

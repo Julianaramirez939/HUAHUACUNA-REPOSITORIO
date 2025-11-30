@@ -17,6 +17,7 @@ import { ActualizarNinosNoticias } from '../../interfaces/actualizar-ninos-notic
   templateUrl: './noticias-ninos-home.component.html',
   styleUrls: ['./noticias-ninos-home.component.css'],
 })
+//Componente de la seccion para la gestion del progreso de los niños desde el panel de administración
 export class NoticiasNinosHomeComponent implements OnInit {
   noticias: (NinosNoticias & { showMenu: boolean })[] = [];
   cargando = false;
@@ -38,7 +39,6 @@ export class NoticiasNinosHomeComponent implements OnInit {
     this.cargando = true;
     this.noticiasService.traerNoticias(this.paginaActual).subscribe({
       next: (response) => {
-        // ✅ Ajuste según la estructura real del servicio
         const data = response?.data?.reports || [];
         this.noticias = data.map((n: NinosNoticias) => ({
           ...n,
@@ -65,21 +65,18 @@ export class NoticiasNinosHomeComponent implements OnInit {
       },
     });
   }
-  // En tu componente
+  //Metodo para formatear la fecha
   formatFecha(fechaStr: string): string {
     if (!fechaStr) return '';
 
-    // Separar fecha y hora
-    const [fecha, hora] = fechaStr.split(' '); // "25/11/2025" y "22:50:22"
+    const [fecha, hora] = fechaStr.split(' ');
     const [day, month, year] = fecha.split('/').map(Number);
     const [hours, minutes] = hora.split(':').map(Number);
 
-    // Crear objeto Date
     const date = new Date(year, month - 1, day, hours, minutes);
 
-    // Formatear a 12h con AM/PM
     let horas12 = date.getHours() % 12;
-    horas12 = horas12 === 0 ? 12 : horas12; // 0 -> 12
+    horas12 = horas12 === 0 ? 12 : horas12;
     const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
     const minutos = date.getMinutes().toString().padStart(2, '0');
 
@@ -158,8 +155,8 @@ export class NoticiasNinosHomeComponent implements OnInit {
           showCancelButton: true,
           confirmButtonText: 'Guardar',
           cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#003366', // azul oscuro
-          cancelButtonColor: '#dc2626', // rojo
+          confirmButtonColor: '#003366', 
+          cancelButtonColor: '#dc2626', 
           html: `
   <div style="font-family:'Segoe UI', sans-serif;">
     <style>
@@ -283,6 +280,7 @@ export class NoticiasNinosHomeComponent implements OnInit {
       },
     });
   }
+  //Actualizar una noticia de un niño
   actualizarNoticiaNino(noticia: NinosNoticias & { showMenu: boolean }) {
     noticia.showMenu = false;
 
@@ -491,9 +489,8 @@ export class NoticiasNinosHomeComponent implements OnInit {
     });
   }
 
-  /** Ver detalles */
+  /** Ver detalles de la noticia */
   verDetallesNoticia(noticia: NinosNoticias): void {
-    //noticia.showMenu = false;
     const childrenHtml = noticia.children.map((c) => `${c.name}`).join(', ');
     Swal.fire({
       title: `<span style="font-family:'Segoe UI';">Detalles: ${noticia.title}</span>`,

@@ -2,132 +2,296 @@
   <h2><i class="fa-solid fa-file-lines"></i> Administración de Contenido</h2>
 
   <form [formGroup]="formularioLanding" (ngSubmit)="actualizarLanding()">
-
-    <!-- Datos generales -->
     <fieldset>
       <legend>Información General</legend>
 
       <label for="email">Correo electrónico</label>
-      <input id="email" type="email" formControlName="email" placeholder="Correo electrónico" />
-      <small class="error" *ngIf="formularioLanding.get('email')?.touched && formularioLanding.get('email')?.invalid">
-        {{ obtenerMensajeError('email') }}
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="Correo electrónico"
+      />
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('email')?.touched &&
+          formularioLanding.get('email')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("email") }}
       </small>
 
       <label for="address">Dirección</label>
-      <input id="address" type="text" formControlName="address" placeholder="Dirección" />
-      <small class="error" *ngIf="formularioLanding.get('address')?.touched && formularioLanding.get('address')?.invalid">
-        {{ obtenerMensajeError('address') }}
+      <input
+        id="address"
+        type="text"
+        formControlName="address"
+        placeholder="Dirección"
+      />
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('address')?.touched &&
+          formularioLanding.get('address')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("address") }}
       </small>
 
       <label for="phoneNumber">Teléfono</label>
-      <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="Teléfono" />
-      <small class="error" *ngIf="formularioLanding.get('phoneNumber')?.touched && formularioLanding.get('phoneNumber')?.invalid">
-        {{ obtenerMensajeError('phoneNumber') }}
+      <input
+        id="phoneNumber"
+        type="text"
+        formControlName="phoneNumber"
+        placeholder="Teléfono"
+      />
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('phoneNumber')?.touched &&
+          formularioLanding.get('phoneNumber')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("phoneNumber") }}
       </small>
 
       <label for="facebook">Facebook</label>
-      <input id="facebook" type="text" formControlName="facebook" placeholder="Facebook URL" />
-      <small class="error" *ngIf="formularioLanding.get('facebook')?.touched && formularioLanding.get('facebook')?.invalid">
-        {{ obtenerMensajeError('facebook') }}
+      <input
+        id="facebook"
+        type="text"
+        formControlName="facebook"
+        placeholder="Facebook URL"
+      />
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('facebook')?.touched &&
+          formularioLanding.get('facebook')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("facebook") }}
       </small>
 
       <label for="instagram">Instagram</label>
-      <input id="instagram" type="text" formControlName="instagram" placeholder="Instagram URL" />
-      <small class="error" *ngIf="formularioLanding.get('instagram')?.touched && formularioLanding.get('instagram')?.invalid">
-        {{ obtenerMensajeError('instagram') }}
+      <input
+        id="instagram"
+        type="text"
+        formControlName="instagram"
+        placeholder="Instagram URL"
+      />
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('instagram')?.touched &&
+          formularioLanding.get('instagram')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("instagram") }}
       </small>
-
     </fieldset>
 
-    <!-- Misión y Visión -->
     <fieldset>
       <legend>Misión y Visión</legend>
 
       <label for="mission">Misión</label>
-      <textarea id="mission" formControlName="mission" placeholder="Misión"></textarea>
-      <small class="error" *ngIf="formularioLanding.get('mission')?.touched && formularioLanding.get('mission')?.invalid">
-        {{ obtenerMensajeError('mission') }}
+      <textarea
+        id="mission"
+        formControlName="mission"
+        placeholder="Misión"
+      ></textarea>
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('mission')?.touched &&
+          formularioLanding.get('mission')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("mission") }}
       </small>
 
       <label for="vision">Visión</label>
-      <textarea id="vision" formControlName="vision" placeholder="Visión"></textarea>
-      <small class="error" *ngIf="formularioLanding.get('vision')?.touched && formularioLanding.get('vision')?.invalid">
-        {{ obtenerMensajeError('vision') }}
+      <textarea
+        id="vision"
+        formControlName="vision"
+        placeholder="Visión"
+      ></textarea>
+      <small
+        class="error"
+        *ngIf="
+          formularioLanding.get('vision')?.touched &&
+          formularioLanding.get('vision')?.invalid
+        "
+      >
+        {{ obtenerMensajeError("vision") }}
       </small>
-
     </fieldset>
 
-    <!-- Impacto -->
-<fieldset>
-  <legend>Impacto</legend>
+    <fieldset>
+      <legend>Impacto</legend>
 
-  <div class="impacto-grupo">
-    <h4>Niños Apadrinados</h4>
+      <div class="impacto-grupo">
+        <h4>Niños Apadrinados</h4>
 
-    <label for="sponsoredChildrenTitle">Título</label>
-    <input id="sponsoredChildrenTitle" type="text" formControlName="sponsoredChildrenTitle" placeholder="Título"/>
-    <small class="error" *ngIf="formularioLanding.get('sponsoredChildrenTitle')?.touched && formularioLanding.get('sponsoredChildrenTitle')?.invalid">
-      {{ obtenerMensajeError('sponsoredChildrenTitle') }}
-    </small>
+        <label for="sponsoredChildrenTitle">Título</label>
+        <input
+          id="sponsoredChildrenTitle"
+          type="text"
+          formControlName="sponsoredChildrenTitle"
+          placeholder="Título"
+        />
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('sponsoredChildrenTitle')?.touched &&
+            formularioLanding.get('sponsoredChildrenTitle')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("sponsoredChildrenTitle") }}
+        </small>
 
-    <label for="sponsoredChildrenAmount">Cantidad</label>
-    <input id="sponsoredChildrenAmount" type="number" formControlName="sponsoredChildrenAmount" placeholder="Cantidad"/>
-    <small class="error" *ngIf="formularioLanding.get('sponsoredChildrenAmount')?.touched && formularioLanding.get('sponsoredChildrenAmount')?.invalid">
-      {{ obtenerMensajeError('sponsoredChildrenAmount') }}
-    </small>
+        <label for="sponsoredChildrenAmount">Cantidad</label>
+        <input
+          id="sponsoredChildrenAmount"
+          type="number"
+          formControlName="sponsoredChildrenAmount"
+          placeholder="Cantidad"
+        />
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('sponsoredChildrenAmount')?.touched &&
+            formularioLanding.get('sponsoredChildrenAmount')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("sponsoredChildrenAmount") }}
+        </small>
 
-    <label for="sponsoredChildrenSubtitle">Subtítulo</label>
-    <textarea id="sponsoredChildrenSubtitle" formControlName="sponsoredChildrenSubtitle" placeholder="Subtítulo"></textarea>
-    <small class="error" *ngIf="formularioLanding.get('sponsoredChildrenSubtitle')?.touched && formularioLanding.get('sponsoredChildrenSubtitle')?.invalid">
-      {{ obtenerMensajeError('sponsoredChildrenSubtitle') }}
-    </small>
-  </div>
+        <label for="sponsoredChildrenSubtitle">Subtítulo</label>
+        <textarea
+          id="sponsoredChildrenSubtitle"
+          formControlName="sponsoredChildrenSubtitle"
+          placeholder="Subtítulo"
+        ></textarea>
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('sponsoredChildrenSubtitle')?.touched &&
+            formularioLanding.get('sponsoredChildrenSubtitle')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("sponsoredChildrenSubtitle") }}
+        </small>
+      </div>
 
-  <div class="impacto-grupo">
-    <h4>Años de experiencia</h4>
+      <div class="impacto-grupo">
+        <h4>Años de experiencia</h4>
 
-    <label for="yearsOfExperienceTitle">Título</label>
-    <input id="yearsOfExperienceTitle" type="text" formControlName="yearsOfExperienceTitle" placeholder="Título"/>
-    <small class="error" *ngIf="formularioLanding.get('yearsOfExperienceTitle')?.touched && formularioLanding.get('yearsOfExperienceTitle')?.invalid">
-      {{ obtenerMensajeError('yearsOfExperienceTitle') }}
-    </small>
+        <label for="yearsOfExperienceTitle">Título</label>
+        <input
+          id="yearsOfExperienceTitle"
+          type="text"
+          formControlName="yearsOfExperienceTitle"
+          placeholder="Título"
+        />
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('yearsOfExperienceTitle')?.touched &&
+            formularioLanding.get('yearsOfExperienceTitle')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("yearsOfExperienceTitle") }}
+        </small>
 
-    <label for="yearsOfExperienceAmount">Cantidad</label>
-    <input id="yearsOfExperienceAmount" type="number" formControlName="yearsOfExperienceAmount" placeholder="Cantidad"/>
-    <small class="error" *ngIf="formularioLanding.get('yearsOfExperienceAmount')?.touched && formularioLanding.get('yearsOfExperienceAmount')?.invalid">
-      {{ obtenerMensajeError('yearsOfExperienceAmount') }}
-    </small>
+        <label for="yearsOfExperienceAmount">Cantidad</label>
+        <input
+          id="yearsOfExperienceAmount"
+          type="number"
+          formControlName="yearsOfExperienceAmount"
+          placeholder="Cantidad"
+        />
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('yearsOfExperienceAmount')?.touched &&
+            formularioLanding.get('yearsOfExperienceAmount')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("yearsOfExperienceAmount") }}
+        </small>
 
-    <label for="yearsOfExperienceSubtitle">Subtítulo</label>
-    <textarea id="yearsOfExperienceSubtitle" formControlName="yearsOfExperienceSubtitle" placeholder="Subtítulo"></textarea>
-    <small class="error" *ngIf="formularioLanding.get('yearsOfExperienceSubtitle')?.touched && formularioLanding.get('yearsOfExperienceSubtitle')?.invalid">
-      {{ obtenerMensajeError('yearsOfExperienceSubtitle') }}
-    </small>
-  </div>
+        <label for="yearsOfExperienceSubtitle">Subtítulo</label>
+        <textarea
+          id="yearsOfExperienceSubtitle"
+          formControlName="yearsOfExperienceSubtitle"
+          placeholder="Subtítulo"
+        ></textarea>
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('yearsOfExperienceSubtitle')?.touched &&
+            formularioLanding.get('yearsOfExperienceSubtitle')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("yearsOfExperienceSubtitle") }}
+        </small>
+      </div>
 
-  <div class="impacto-grupo">
-    <h4>Municipios impactados</h4>
+      <div class="impacto-grupo">
+        <h4>Municipios impactados</h4>
 
-    <label for="municipalitiesTitle">Título</label>
-    <input id="municipalitiesTitle" type="text" formControlName="municipalitiesTitle" placeholder="Título"/>
-    <small class="error" *ngIf="formularioLanding.get('municipalitiesTitle')?.touched && formularioLanding.get('municipalitiesTitle')?.invalid">
-      {{ obtenerMensajeError('municipalitiesTitle') }}
-    </small>
+        <label for="municipalitiesTitle">Título</label>
+        <input
+          id="municipalitiesTitle"
+          type="text"
+          formControlName="municipalitiesTitle"
+          placeholder="Título"
+        />
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('municipalitiesTitle')?.touched &&
+            formularioLanding.get('municipalitiesTitle')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("municipalitiesTitle") }}
+        </small>
 
-    <label for="municipalitiesAmount">Cantidad</label>
-    <input id="municipalitiesAmount" type="number" formControlName="municipalitiesAmount" placeholder="Cantidad"/>
-    <small class="error" *ngIf="formularioLanding.get('municipalitiesAmount')?.touched && formularioLanding.get('municipalitiesAmount')?.invalid">
-      {{ obtenerMensajeError('municipalitiesAmount') }}
-    </small>
+        <label for="municipalitiesAmount">Cantidad</label>
+        <input
+          id="municipalitiesAmount"
+          type="number"
+          formControlName="municipalitiesAmount"
+          placeholder="Cantidad"
+        />
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('municipalitiesAmount')?.touched &&
+            formularioLanding.get('municipalitiesAmount')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("municipalitiesAmount") }}
+        </small>
 
-    <label for="municipalitiesSubtitle">Subtítulo</label>
-    <textarea id="municipalitiesSubtitle" formControlName="municipalitiesSubtitle" placeholder="Subtítulo"></textarea>
-    <small class="error" *ngIf="formularioLanding.get('municipalitiesSubtitle')?.touched && formularioLanding.get('municipalitiesSubtitle')?.invalid">
-      {{ obtenerMensajeError('municipalitiesSubtitle') }}
-    </small>
-  </div>
-</fieldset>
-
+        <label for="municipalitiesSubtitle">Subtítulo</label>
+        <textarea
+          id="municipalitiesSubtitle"
+          formControlName="municipalitiesSubtitle"
+          placeholder="Subtítulo"
+        ></textarea>
+        <small
+          class="error"
+          *ngIf="
+            formularioLanding.get('municipalitiesSubtitle')?.touched &&
+            formularioLanding.get('municipalitiesSubtitle')?.invalid
+          "
+        >
+          {{ obtenerMensajeError("municipalitiesSubtitle") }}
+        </small>
+      </div>
+    </fieldset>
 
     <button type="submit" [disabled]="enviando">Actualizar Información</button>
   </form>

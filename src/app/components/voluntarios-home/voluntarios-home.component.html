@@ -1,4 +1,3 @@
-
 <div class="voluntarios-home">
   <h2 class="titulo-voluntarios">
     <i class="fa-solid fa-face-smile"></i> Voluntarios
@@ -26,9 +25,10 @@
         <td class="centrado">{{ v.email }}</td>
         <td class="centrado">{{ v.profession }}</td>
         <td class="centrado">
-          <span 
-            class="estado-cuadro-full" 
-            [style.background-color]="v.state.color">
+          <span
+            class="estado-cuadro-full"
+            [style.background-color]="v.state.color"
+          >
             {{ v.state.name }}
           </span>
         </td>
@@ -36,9 +36,15 @@
           <div class="dropdown">
             <i class="fas fa-ellipsis-v" (click)="v.showMenu = !v.showMenu"></i>
             <ul class="menu" *ngIf="v.showMenu">
-              <li (click)="actualizarVoluntario(v)"><i class="fas fa-edit"></i> Actualizar Estado</li>
-              <li (click)="eliminarVoluntario(v)"><i class="fas fa-trash-alt"></i> Eliminar</li>
-              <li (click)="verDetallesVoluntario(v)"><i class="fas fa-info-circle"></i> Ver Detalles</li>
+              <li (click)="actualizarVoluntario(v)">
+                <i class="fas fa-edit"></i> Actualizar Estado
+              </li>
+              <li (click)="eliminarVoluntario(v)">
+                <i class="fas fa-trash-alt"></i> Eliminar
+              </li>
+              <li (click)="verDetallesVoluntario(v)">
+                <i class="fas fa-info-circle"></i> Ver Detalles
+              </li>
             </ul>
           </div>
         </td>
@@ -46,9 +52,11 @@
     </tbody>
   </table>
 
-  <p *ngIf="!cargando && voluntarios.length === 0">No hay voluntarios registrados.</p>
+  <p *ngIf="!cargando && voluntarios.length === 0">
+    No hay voluntarios registrados.
+  </p>
   <p *ngIf="cargando">Cargando voluntarios...</p>
-   <div class="paginacion" *ngIf="!cargando && voluntarios.length > 0">
+  <div class="paginacion" *ngIf="!cargando && voluntarios.length > 0">
     <div class="botones-navegacion">
       <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
         Anterior
@@ -56,12 +64,14 @@
 
       <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
 
-      <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+      <button
+        (click)="paginaSiguiente()"
+        [disabled]="paginaActual === ultimaPagina"
+      >
         Siguiente
       </button>
     </div>
 
-    <!-- Ir a página -->
     <div class="ir-pagina">
       <label for="irPagina">Ir a:</label>
       <input
@@ -77,5 +87,5 @@
         Ir
       </button>
     </div>
-    </div>
+  </div>
 </div>

@@ -1,28 +1,37 @@
-
 <div class="quienes-somos-container">
-  <div class="imagen-lado"
-       [style.background-image]="'url(' + imagenUrl + ')'"
-       [style.filter]="'brightness(' + brillo + ')'">
-  </div>
+  <div
+    class="imagen-lado"
+    [style.background-image]="'url(' + imagenUrl + ')'"
+    [style.filter]="'brightness(' + brillo + ')'"
+  ></div>
   <div class="texto-lado">
     <h2>Nuestra Historia</h2>
     <p>Un Viaje de Solidaridad y Crecimiento</p>
     <p>
-      La fundación Huahuacuna inició su labor social en Junio de 2003 como "Sonrisa Italiana", apadrinando a 17 niños. 
-      Gracias a la visión y liderazgo de Mayra Alejandra López Osorio y Lina María Guapacha, con el apoyo del Padre Agostino Abate, esta iniciativa floreció.
+      La fundación Huahuacuna inició su labor social en Junio de 2003 como
+      "Sonrisa Italiana", apadrinando a 17 niños. Gracias a la visión y
+      liderazgo de Mayra Alejandra López Osorio y Lina María Guapacha, con el
+      apoyo del Padre Agostino Abate, esta iniciativa floreció.
     </p>
     <p>
-      El 31 de Mayo de 2004, se constituyó legalmente como Fundación Huahuacuna. Con la adhesión de Ángela Patricia Menza Astudillo y 
-      Maria Clarena Castaño Bedoya, nuestro alcance se expandió, beneficiando a más de 140 niños apadrinados por Cáritas de Acqui Terme, Italia, y dos padrinos de Armenia.
+      El 31 de Mayo de 2004, se constituyó legalmente como Fundación Huahuacuna.
+      Con la adhesión de Ángela Patricia Menza Astudillo y Maria Clarena Castaño
+      Bedoya, nuestro alcance se expandió, beneficiando a más de 140 niños
+      apadrinados por Cáritas de Acqui Terme, Italia, y dos padrinos de Armenia.
     </p>
     <p>
-      Nuestro programa se centra en el apadrinamiento de niños en edad escolar: brindándoles apoyo integral en educación, salud, vestido, calzado, complementos alimenticios, actividades de esparcimiento y educación no formal.
+      Nuestro programa se centra en el apadrinamiento de niños en edad escolar:
+      brindándoles apoyo integral en educación, salud, vestido, calzado,
+      complementos alimenticios, actividades de esparcimiento y educación no
+      formal.
     </p>
   </div>
 </div>
 
-
-<div class="quienes-somos-container" *ngIf="!cargando && !error; else cargandoTemplate">
+<div
+  class="quienes-somos-container"
+  *ngIf="!cargando && !error; else cargandoTemplate"
+>
   <div class="texto-lado amarillo">
     <h2>Misión</h2>
     <p>{{ mision }}</p>

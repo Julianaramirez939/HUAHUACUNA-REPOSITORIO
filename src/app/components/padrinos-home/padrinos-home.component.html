@@ -23,17 +23,26 @@
         <td class="centrado">{{ p.phone_number }}</td>
         <td class="centrado">{{ p.email }}</td>
         <td class="centrado">
-          <span class="estado-cuadro-full" [style.background-color]="p.state?.color || '#6b7280'">
-            {{ p.state?.name || '—' }}
+          <span
+            class="estado-cuadro-full"
+            [style.background-color]="p.state?.color || '#6b7280'"
+          >
+            {{ p.state?.name || "—" }}
           </span>
         </td>
         <td class="centrado acciones">
           <div class="dropdown">
             <i class="fas fa-ellipsis-v" (click)="p.showMenu = !p.showMenu"></i>
             <ul class="menu" *ngIf="p.showMenu">
-              <li (click)="actualizarPadrino(p)"><i class="fas fa-edit"></i> Actualizar Estado</li>
-              <li (click)="eliminarPadrino(p)"><i class="fas fa-trash-alt"></i> Eliminar</li>
-              <li (click)="verDetallesPadrino(p)"><i class="fas fa-info-circle"></i> Ver Detalles</li>
+              <li (click)="actualizarPadrino(p)">
+                <i class="fas fa-edit"></i> Actualizar Estado
+              </li>
+              <li (click)="eliminarPadrino(p)">
+                <i class="fas fa-trash-alt"></i> Eliminar
+              </li>
+              <li (click)="verDetallesPadrino(p)">
+                <i class="fas fa-info-circle"></i> Ver Detalles
+              </li>
             </ul>
           </div>
         </td>
@@ -46,8 +55,6 @@
 </div>
 
 <div class="paginacion" *ngIf="!cargando && padrinos.length > 0">
-
-  <!-- BOTONES ANTERIOR / SIGUIENTE -->
   <div class="botones-navegacion">
     <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
       Anterior
@@ -55,12 +62,14 @@
 
     <span>Página {{ paginaActual }} de {{ ultimaPagina }}</span>
 
-    <button (click)="paginaSiguiente()" [disabled]="paginaActual === ultimaPagina">
+    <button
+      (click)="paginaSiguiente()"
+      [disabled]="paginaActual === ultimaPagina"
+    >
       Siguiente
     </button>
   </div>
 
-  <!-- IR A PÁGINA -->
   <div class="ir-pagina">
     <label for="inputPagina">Ir a:</label>
 
@@ -71,15 +80,8 @@
       min="1"
       [max]="ultimaPagina"
       [disabled]="ultimaPagina === 1"
-    >
+    />
 
-    <button
-      (click)="irAPagina()"
-      [disabled]="ultimaPagina === 1"
-    >
-      Ir
-    </button>
+    <button (click)="irAPagina()" [disabled]="ultimaPagina === 1">Ir</button>
   </div>
-
 </div>
-

@@ -1,11 +1,11 @@
-
+//Interface para actualizar las donaciones
 export interface DonacionesActualizar {
   id: number;
   name: string;
   email: string;
   identification_type: number;
-   identification_type_name?: string;
+  identification_type_name?: string;
   identification: string;
-  date: string;          
+  date: string;
   money_amount: number;
 }

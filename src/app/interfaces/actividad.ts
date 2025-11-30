@@ -1,6 +1,6 @@
 import { Estado } from "./estados";
 import { ProgramType } from "./program-type";
-
+//Interface de una actividad (listar)
 export interface Actividad {
   id?: number;
   state: Estado;
@@ -8,8 +8,8 @@ export interface Actividad {
   name: string;
   description: string;
   datetime?: string | null;
-  date?: string;     // ✅ Fecha separada (ej: "12/11/2025")
-  hour?: string;     // ✅ Hora separada (ej: "12:55")
+  date?: string;     
+  hour?: string;     
   location?: string | null;
   program_type: ProgramType;
   program_type_name?:string;

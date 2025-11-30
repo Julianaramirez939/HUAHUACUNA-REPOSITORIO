@@ -1,3 +1,4 @@
+//Interface de los estados 
 export interface Estado {
   id: number;
   model_type: string;
