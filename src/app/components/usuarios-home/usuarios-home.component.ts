@@ -129,91 +129,34 @@ export class UsuariosHomeComponent implements OnInit {
     this.obtenerUsuarios();
   }
   //Metodo para actualizar un usuario
-  actualizarUsuario(usuario: UsuarioUI) {
-    usuario.showMenu = false;
+ actualizarUsuario(usuario: UsuarioUI) {
+  usuario.showMenu = false;
 
-    this.usuariosService.getEstados().subscribe({
-      next: (estados: Estado[]) => {
-        const opcionesEstadosHtml = estados
-          .map((e) => `<option value="${e.id}">${e.name}</option>`)
-          .join('');
+  this.usuariosService.getEstados().subscribe({
+    next: (estados: Estado[]) => {
+      const opcionesEstadosHtml = estados
+        .map((e) => `<option value="${e.id}">${e.name}</option>`)
+        .join('');
 
-        const checkboxesRolesHtml = this.rolesDisponibles
-          .map(
-            (r) => `
+      const checkboxesRolesHtml = this.rolesDisponibles
+        .map(
+          (r) => `
             <label>
               <input type="checkbox" class="rolCheck" value="${r.id}"
                 ${usuario.roles_ids.includes(r.id) ? 'checked' : ''}>
               ${r.name}
             </label>
           `
-          )
-          .join('');
+        )
+        .join('');
 
-        Swal.fire({
-          title: `<span style="font-family: 'Segoe UI', sans-serif; font-weight:600; color:#003366;">
+      Swal.fire({
+        title: `<span style="font-family:'Segoe UI'; font-weight:600; color:#003366;">
                   Actualizar usuario
                 </span>`,
-          width: '820px',
-          html: `
-          <style>
-            .swal-field {
-              width: 100%;
-              box-sizing: border-box;
-              border: 1px solid #d1d5db;
-              border-radius: 4px;
-              padding: 8px 12px;
-              font-size: 14px;
-              background-color: #fff;
-              display: block;
-            }
-            .swal-field:focus {
-              outline: none;
-              border-color: #3b82f6;
-            }
+        width: '820px',
 
-            select.swal-field {
-              appearance: none;
-              background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23666" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
-              background-repeat: no-repeat;
-              background-position: right 10px center;
-              background-size: 16px;
-              text-align-last: center;
-              height: 38px;
-            }
-
-            /* 🔵 CONTENEDOR ROLES MÁS PEQUEÑO + CHECKBOX AZUL */
-            .roles-container {
-              border: 1px solid #d1d5db;
-              border-radius: 4px;
-              padding: 8px 10px;
-              height: 90px;
-              overflow-y: auto;
-              background: #fff;
-            }
-
-            .roles-container label {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              font-size: 14px;
-              padding: 4px;
-              border-radius: 4px;
-              cursor: pointer;
-            }
-
-            .roles-container label:hover {
-              background: #f3f4f6;
-            }
-
-            .roles-container input[type="checkbox"] {
-              accent-color: #003366; /* ✔ AZUL OSCURO */
-              width: 16px;
-              height: 16px;
-              cursor: pointer;
-            }
-          </style>
-
+        html: `
           <form id="formActualizarUsuario" style="
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -253,99 +196,145 @@ export class UsuariosHomeComponent implements OnInit {
             </div>
           </form>
         `,
-          showCancelButton: true,
-          confirmButtonText: 'Actualizar',
-          cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#003366',
-          cancelButtonColor: '#dc2626',
 
-          didOpen: () => {
-            (
-              document.getElementById('estadoSelect') as HTMLSelectElement
-            ).value = usuario.state_id.toString();
-          },
+        showCancelButton: true,
+        confirmButtonText: 'Actualizar',
+        cancelButtonText: 'Cancelar',
 
-          preConfirm: () => {
-            const name = (
-              document.getElementById('nameInput') as HTMLInputElement
-            ).value.trim();
-            const lastName = (
-              document.getElementById('lastNameInput') as HTMLInputElement
-            ).value.trim();
-            const email = (
-              document.getElementById('emailInput') as HTMLInputElement
-            ).value.trim();
-            const estado = Number(
-              (document.getElementById('estadoSelect') as HTMLSelectElement)
-                .value
+        // 🔵 AHORA SÍ FUNCIONA: BOTÓN AZUL OSCURO
+        confirmButtonColor: '#003366',
+        cancelButtonColor: '#dc2626',
+
+        didOpen: () => {
+          // ✔ PONEMOS AQUÍ EL ESTILO PARA NO ROMPER confirmButtonColor
+          const style = document.createElement('style');
+          style.innerHTML = `
+            .swal-field {
+              width: 100%;
+              box-sizing: border-box;
+              border: 1px solid #d1d5db;
+              border-radius: 4px;
+              padding: 8px 12px;
+              font-size: 14px;
+              background-color: #fff;
+              display: block;
+            }
+            .swal-field:focus {
+              outline: none;
+              border-color: #3b82f6;
+            }
+            select.swal-field {
+              appearance: none;
+              background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23666" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+              background-repeat: no-repeat;
+              background-position: right 10px center;
+              background-size: 16px;
+              text-align-last: center;
+              height: 38px;
+            }
+            .roles-container {
+              border: 1px solid #d1d5db;
+              border-radius: 4px;
+              padding: 8px 10px;
+              height: 90px;
+              overflow-y: auto;
+              background: #fff;
+            }
+            .roles-container label {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              font-size: 14px;
+              padding: 4px;
+              border-radius: 4px;
+              cursor: pointer;
+            }
+            .roles-container label:hover {
+              background: #f3f4f6;
+            }
+            .roles-container input[type="checkbox"] {
+              accent-color: #003366;
+              width: 16px;
+              height: 16px;
+              cursor: pointer;
+            }
+          `;
+          document.head.appendChild(style);
+
+          (document.getElementById('estadoSelect') as HTMLSelectElement).value =
+            usuario.state_id.toString();
+        },
+
+        preConfirm: () => {
+          const name = (document.getElementById('nameInput') as HTMLInputElement).value.trim();
+          const lastName = (document.getElementById('lastNameInput') as HTMLInputElement).value.trim();
+          const email = (document.getElementById('emailInput') as HTMLInputElement).value.trim();
+          const estado = Number((document.getElementById('estadoSelect') as HTMLSelectElement).value);
+
+          const roles = Array.from(document.querySelectorAll('.rolCheck:checked'))
+            .map((c: any) => Number(c.value));
+
+          if (!name || !lastName || !email || !estado || roles.length === 0) {
+            Swal.showValidationMessage(
+              'Por favor completa todos los campos obligatorios (*)'
+            );
+            return false;
+          }
+
+          return { name, lastName, email, estado, roles };
+        },
+      }).then((result) => {
+        if (!result.isConfirmed || !result.value) return;
+
+        const { name, lastName, email, estado, roles } = result.value;
+
+        const data = {
+          id: usuario.id,
+          email,
+          name,
+          last_name: lastName,
+          state_id: estado,
+          roles,
+        };
+
+        this.usuariosService.actualizarUsuario(data).subscribe({
+          next: () => {
+            usuario.name = name;
+            usuario.last_name = lastName;
+            usuario.email = email;
+            usuario.state_id = estado;
+            usuario.roles_ids = roles;
+
+            usuario.roles = this.rolesDisponibles.filter((r) =>
+              roles.includes(r.id)
             );
 
-            const roles = Array.from(
-              document.querySelectorAll('.rolCheck:checked')
-            ).map((c: any) => Number(c.value));
+            const nuevoEstado = estados.find((e) => e.id === estado);
+            if (nuevoEstado) usuario.state = nuevoEstado;
 
-            if (!name || !lastName || !email || !estado || roles.length === 0) {
-              Swal.showValidationMessage(
-                'Por favor completa todos los campos obligatorios (*)'
-              );
-              return false;
-            }
+            this.usuarios = [...this.usuarios];
 
-            return { name, lastName, email, estado, roles };
+            Swal.fire({
+              title: 'Usuario actualizado',
+              text: 'El usuario se actualizó correctamente.',
+              icon: 'success',
+              confirmButtonColor: '#003366',
+            });
           },
-        }).then((result) => {
-          if (!result.isConfirmed || !result.value) return;
-
-          const { name, lastName, email, estado, roles } = result.value;
-
-          const data = {
-            id: usuario.id,
-            email,
-            name,
-            last_name: lastName,
-            state_id: estado,
-            roles,
-          };
-
-          this.usuariosService.actualizarUsuario(data).subscribe({
-            next: () => {
-              usuario.name = name;
-              usuario.last_name = lastName;
-              usuario.email = email;
-              usuario.state_id = estado;
-              usuario.roles_ids = roles;
-
-              usuario.roles = this.rolesDisponibles.filter((r) =>
-                roles.includes(r.id)
-              );
-
-              const nuevoEstado = estados.find((e) => e.id === estado);
-              if (nuevoEstado) {
-                usuario.state = nuevoEstado;
-              }
-
-              this.usuarios = [...this.usuarios];
-
-              Swal.fire({
-                title: 'Usuario actualizado',
-                text: 'El usuario se actualizó correctamente.',
-                icon: 'success',
-                confirmButtonColor: '#003366',
-              });
-            },
-            error: (err) => {
-              Swal.fire({
-                title: 'Error',
-                text: err.message || 'No se pudo actualizar el usuario.',
-                icon: 'error',
-                confirmButtonColor: '#003366',
-              });
-            },
-          });
+          error: (err) => {
+            Swal.fire({
+              title: 'Error',
+              text: err.message || 'No se pudo actualizar el usuario.',
+              icon: 'error',
+              confirmButtonColor: '#003366',
+            });
+          },
         });
-      },
-    });
-  }
+      });
+    },
+  });
+}
+
   //Metodo para eliminar un usuario
   eliminarUsuario(usuario: UsuarioUI) {
     usuario.showMenu = false;

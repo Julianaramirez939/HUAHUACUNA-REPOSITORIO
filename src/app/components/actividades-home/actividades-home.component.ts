@@ -220,7 +220,7 @@ export class ActividadesHomeComponent implements OnInit {
           showCancelButton: true,
           confirmButtonText: 'Guardar',
           cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#198754',
+          confirmButtonColor: '#003366',
           cancelButtonColor: '#dc2626',
           didOpen: () => {
             const selects = [
@@ -462,7 +462,7 @@ export class ActividadesHomeComponent implements OnInit {
           showCancelButton: true,
           confirmButtonText: 'Actualizar',
           cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#198754',
+          confirmButtonColor: '#003366',
           cancelButtonColor: '#dc2626',
           preConfirm: () => {
             const tipoId = Number(
@@ -668,7 +668,7 @@ export class ActividadesHomeComponent implements OnInit {
               title: 'Eliminada',
               text: `La actividad "${actividad.name}" ha sido eliminada.`,
               icon: 'success',
-              confirmButtonColor: '#198754',
+              confirmButtonColor: '#003366',
             });
           },
           error: (err) => {

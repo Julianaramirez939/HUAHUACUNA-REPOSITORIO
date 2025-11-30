@@ -137,7 +137,7 @@ export class MensajesNinosHomeComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Enviar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#0b66d1',
+      confirmButtonColor: '#003366',
       cancelButtonColor: '#dc2626',
 
       html: `
@@ -248,7 +248,6 @@ export class MensajesNinosHomeComponent implements OnInit {
     }).then((r) => {
       if (!r.isConfirmed || !r.value) return;
 
-      // 🔥 Siempre is_from_admin = true
       const payload: CrearMensajeNino = {
         godparent_id: r.value.padrino_id,
         children_id: r.value.children_id,
@@ -263,7 +262,7 @@ export class MensajesNinosHomeComponent implements OnInit {
             title: 'Mensaje enviado',
             text: 'El mensaje fue enviado correctamente.',
             icon: 'success',
-            confirmButtonColor: '#0b66d1',
+            confirmButtonColor: '#003366',
           });
 
           this.cargarMensajes();
